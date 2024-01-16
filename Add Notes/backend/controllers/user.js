@@ -22,7 +22,7 @@ const handleSingup = asyncHandler(async (req, res) => {
     if(user){
         res.status(201).json({
             _id: user._id, fullName: user.fullName, email: user.email,
-            token: generateToken(user)
+            // token: generateToken(user)
         })
     }else{
         res.status(400)
@@ -31,7 +31,7 @@ const handleSingup = asyncHandler(async (req, res) => {
 
 })
 
-const handleSignin = asyncHandler(async() => {
+const handleSignin = asyncHandler(async(req,res) => {
     const {email, password} = req.body
 
     const user = await User.findOne({email})

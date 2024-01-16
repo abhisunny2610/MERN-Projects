@@ -20,13 +20,16 @@ const Signin = () => {
       }
       setLoading(true)
 
-      const { data } = await axios.post('localhost:8000/api/users/signin', {
+      const response = await axios.post('localhost:8000/api/users/signin', {
         email, password
       }, config)
 
-      console.log(data)
-      localStorage.setItem("userInfo", JSON.stringify(data))
+      console.log(response)
+      // localStorage.setItem("userInfo", JSON.stringify(data))
       setLoading(false)
+      setPassword("")
+      setEmail("")
+      
     } catch (error) {
       setError(error.response.data.message)
     }
@@ -39,7 +42,7 @@ const Signin = () => {
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
           <input type="email" className="form-control" id="exampleInputEmail1"
-            value={email}
+            value={email} name='email'
             onChange={(e) => setEmail(e.target.value)}
           />
 
@@ -47,7 +50,7 @@ const Signin = () => {
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
           <input type="password" className="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp"
-            value={password}
+            value={password} name='password'
             onChange={(e) => setPassword(e.target.value)}
           />
           <div id="passwordHelp" className="form-text">We'll never share your email with anyone else.</div>
