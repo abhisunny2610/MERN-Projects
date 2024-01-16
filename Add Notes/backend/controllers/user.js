@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const asyncHandler = require('express-async-handler')
+const generateToken = require('../utils/generateToken')
 
 const handleSingup = asyncHandler(async (req, res) => {
     const { fullName, email, password } = req.body
@@ -20,7 +21,8 @@ const handleSingup = asyncHandler(async (req, res) => {
 
     if(user){
         res.status(201).json({
-            _id: user._id, fullName: user.fullName, email: user.email
+            _id: user._id, fullName: user.fullName, email: user.email,
+            token: generateToken(user)
         })
     }else{
         res.status(400)
@@ -34,10 +36,15 @@ const handleSignin = asyncHandler(async() => {
 
     const user = await User.findOne({email})
 
-    if(user && user.ma){
-        res.status()
+    if(user && user.matchPassword(password)){
+            res.json({
+                _id: user._id, fullName: user.fullName, email: user.email,
+                token: generateToken(user)
+            })
+    }else{
+        res.status(400);
+        throw new Error("Email or password is invalid")
     }
-
 })
 
 

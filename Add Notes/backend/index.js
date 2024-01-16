@@ -10,9 +10,10 @@ const { notFound, errorHandler } = require('./middlesware/errorMiddleware')
 connectDB()
 
 dotenv.config()
-app.use(notFound)
-app.use(errorHandler)
+// app.use(notFound)
+// app.use(errorHandler)
 app.use(express.json())
+
 app.use('/api/users', userRouter)
 
 app.listen(PORT, () => console.log("Server started at port: " + PORT))
