@@ -18,7 +18,7 @@ const Header = () => {
                     </ul>
                     <div className="d-flex" role="login">
                         <Link to="/signup" className='btn btn-md '>Signup</Link>
-                        <Link to="/signup" className='btn btn-md'>Signin</Link>
+                        <Link to="/signin" className='btn btn-md'>Signin</Link>
                     </div>
                 </div>
             </div>

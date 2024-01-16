@@ -28,7 +28,7 @@ const appRouter = createBrowserRouter([
     ]
   },
   {
-    path: 's/ignin',
+    path: '/signin',
     element: <Signin />
   },
   {
