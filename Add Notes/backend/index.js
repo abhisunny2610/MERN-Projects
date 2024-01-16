@@ -14,7 +14,7 @@ connectDB()
 
 dotenv.config()
 // app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}))
 // app.use(notFound)
 // app.use(errorHandler)
 app.use(express.json())

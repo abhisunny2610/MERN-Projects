@@ -21,7 +21,7 @@ const handleSingup = asyncHandler(async (req, res) => {
     if(user){
         res.status(201).json({
             _id: user._id, fullName: user.fullName, email: user.email,
-            // token: generateToken(user)
+          
         })
     }else{
         res.status(400)

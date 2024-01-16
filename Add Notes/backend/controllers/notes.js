@@ -15,7 +15,22 @@ const handleNotesSave = async(req,res)=> {
         res.status(400)
         throw new Error("Error Occured")
     }
-
 }
 
-module.exports = {handleNotesSave}
+const handlegetSingleNote = async (req, res) => {
+    const _id = req.params.id
+
+    const note = await Notes.findById({_id})
+    if(note){
+        res.status(200).json({
+            _id: note._id, title: note.title, description: note.description
+        })
+    }else{
+        res.status(400)
+        throw new Error("Note not found")
+    }
+}
+
+// const handleGetAllNotes = async(req,res) 
+
+module.exports = {handleNotesSave, handlegetSingleNote}

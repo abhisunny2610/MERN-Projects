@@ -1,8 +1,9 @@
 const {Router} = require("express")
-const { handleNotesSave } = require("../controllers/notes")
+const { handleNotesSave, handlegetSingleNote } = require("../controllers/notes")
 
 const router = Router()
 
 router.post('/', handleNotesSave)
+router.get('/:id', handlegetSingleNote)
 
 module.exports = router
