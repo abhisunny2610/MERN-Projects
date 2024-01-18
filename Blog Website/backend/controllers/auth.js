@@ -1,4 +1,4 @@
-const Auth = require("./models/auth")
+const Auth = require('../models/auth')
 
 const handleSignUp = async (req,res) => {
     
@@ -33,9 +33,11 @@ const handleSignUp = async (req,res) => {
 
 const handleSignIn = async (req,res) => {
     try {
-        
+        const {email, password} = req.body
+        const token = await Auth.matchPassword(res,email, password)
+        return res.cookie("token",token)
     } catch (error) {
-        
+        throw new Error("User not found", error)
     }
 }
 
