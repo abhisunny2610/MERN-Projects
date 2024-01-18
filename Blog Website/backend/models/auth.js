@@ -1,4 +1,5 @@
 const { model, Schema, default: mongoose } = require("mongoose")
+const bcrypt = require('bcrypt')
 
 const authSchema = new Schema({
     name: {
@@ -26,12 +27,20 @@ const authSchema = new Schema({
 }, {timestamps:true})
 
 authSchema.pre("save", async function(next){
-    if()
+    
+    const user = this
+
+    if(!user.isModified('password')) return next()
+    const salt = await bcrypt.genSalt(20)
+    const hashedPassword = await bcrypt.hash(user.password, salt)
+
+    user.password = hashedPassword
+
 })
 
-const AUTH = model("auth", authSchema)
+const Auth = model("auth", authSchema)
 
-module.exports = AUTH
+module.exports = Auth
 
 
 
