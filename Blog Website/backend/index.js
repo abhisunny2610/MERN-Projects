@@ -11,7 +11,7 @@ const authRouter = require('./routes/auth')
 const blogRouter = require('./routes/blog')
 
 dotenv.config()
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
 app.use(bodyParser.json())
@@ -27,12 +27,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', async () => {
     console.log('Connected to MongoDB Atlas');
 
-    // await createAuthCollection()
+    // await createBlogCollection()
 });
 
 /// routes
 app.use('/api/auth', authRouter)
 app.use('/api/blog', blogRouter)
-
 
 app.listen(PORT, () => console.log("Server started at port: " + PORT))
