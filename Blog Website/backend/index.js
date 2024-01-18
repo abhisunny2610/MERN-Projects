@@ -19,8 +19,11 @@ mongoose.connect(process.env.URL, {
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => {
+db.once('open', async () => {
     console.log('Connected to MongoDB Atlas');
+
+    // await createAuthCollection()
 });
+
 
 app.listen(PORT, () => console.log("Server started at port: " + PORT))
