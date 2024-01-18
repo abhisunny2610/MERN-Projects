@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 
 // routers
 const authRouter = require('./routes/auth')
+const blogRouter = require('./routes/blog')
 
 dotenv.config()
 app.use(express.urlencoded({extended: false}))
@@ -31,6 +32,7 @@ db.once('open', async () => {
 
 /// routes
 app.use('/api/auth', authRouter)
+app.use('/api/blog', blogRouter)
 
 
 app.listen(PORT, () => console.log("Server started at port: " + PORT))

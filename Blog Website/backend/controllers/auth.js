@@ -1,4 +1,6 @@
 const Auth = require('../models/auth')
+const { createTokenForUser } = require("../services/auth");
+const bcrypt = require('bcrypt');
 
 const handleSignUp = async (req,res) => {
     
@@ -34,8 +36,20 @@ const handleSignUp = async (req,res) => {
 const handleSignIn = async (req,res) => {
     try {
         const {email, password} = req.body
-        const token = await Auth.matchPassword(res,email, password)
-        return res.cookie("token",token)
+        const user = await Auth.findOne({ email }, { _id: 1, email: 1, password: 1 })
+
+        if(!user){
+            throw new Error("User not found")
+        }
+        
+        const validPassowrd = await bcrypt.compare(password, user.password)
+        if(!validPassowrd){
+            throw new Erro("Invalid username or password")
+        }
+    
+        const token = createTokenForUser(user)
+        return res.json({token})
+        // return res.cookie("token",token)
     } catch (error) {
         throw new Error("User not found", error)
     }

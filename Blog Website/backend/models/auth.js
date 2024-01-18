@@ -1,6 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose")
+const { model, Schema} = require("mongoose")
 const bcrypt = require('bcrypt');
-const { createTokenForUser } = require("../services/auth");
 
 const authSchema = new Schema({
     name: {
@@ -27,35 +26,22 @@ const authSchema = new Schema({
     }
 }, {timestamps:true})
 
-authSchema.pre("save", async function(next){
-    
+// Indexing the email field for faster queries
+authSchema.index({ email: 1 });
+
+authSchema.pre("save", async function(next){  
+
     const user = this
 
     if(!user.isModified('password')) return next()
+
     const salt = await bcrypt.genSalt(20)
     const hashedPassword = await bcrypt.hash(user.password, salt)
-
     user.password = hashedPassword
 
+    next()
 })
 
-authSchema.static("matchPassword", async function(res,email,password){
-    const user = await this.findOne({email})
-
-    if(!user){
-        res.status(404) 
-        throw new Error("User not found")
-    }
-    
-    const validPassowrd = await bcrypt.compare(password, user.password)
-    if(!validPassowrd){
-        res.status(404)
-        throw new Erro("Invalid username or password")
-    }
-
-    const token = createTokenForUser(user)
-    return token
-})
 
 const Auth = model("auth", authSchema)
 
