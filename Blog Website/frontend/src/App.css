@@ -1,7 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Playfair+Display:ital@0;1&display=swap');
+
 *{
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+}
+
+:root{
+    --open-sans: 'Open Sans', sans-serif;
+    --playfair-display:'Playfair Display', serif;
+    --black:#000000;
+    --dark-blue: #13113A;
+    --white: #FFFFFF;
+    --grey: #706F87;
+    --fs-14: 14px;
+    --fs-12: 12px;
+    --fs-20:20px;
+    --fs-18:18px;
+    --fs-13:13px;
 }
 
 .signup{
@@ -30,4 +46,32 @@
     background-color: white;
     padding: 8px 20px;
     border-bottom: 3px solid red;
+}
+
+header{
+    width: 100%;
+    background-color: aqua;
+    height: 6rem;
+    z-index: 999;
+
+    > .logo{
+        > img{
+            width: 100px;
+        }
+    }
+
+    > .links{
+        > a{
+            font-family: var(--playfair-display);
+            font-style: italic;
+            font-weight: 700;
+            color: black;
+        }
+    }
+}
+
+.hero-section{
+    width: 80%;
+    height: 600px;
+    background-color: var(--dark-blue);
 }

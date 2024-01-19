@@ -5,6 +5,7 @@ import Header from './Components/Header';
 import Signup from './Components/Pages/Signup';
 import Signin from './Components/Pages/Signin';
 import Error from './Components/Pages/Error'
+import Home from './Components/Pages/Home';
 
 const AppLayout = () => {
   return (
@@ -31,7 +32,8 @@ const appRouter = createBrowserRouter([
     element: <AppLayout />,
     children:[
       {
-        path: '/'
+        path: '/',
+        element: <Home />
       }
     ]
   }
