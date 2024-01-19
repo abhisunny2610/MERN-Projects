@@ -17,3 +17,17 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.popup-success{
+    font-size: 16px;
+    background-color: white;
+    padding: 8px 15px;
+    border-bottom: 3px solid green;
+}
+
+.popup-error{
+    font-size: 16px;
+    background-color: white;
+    padding: 8px 20px;
+    border-bottom: 3px solid red;
+}
