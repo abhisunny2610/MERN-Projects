@@ -69,8 +69,8 @@ const Signup = () => {
   return (
     <>
       <div className='signup vh-100 d-flex align-items-center justify-content-center'>
-      {errorMessage && <div class="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
-      {successMessage && <div class="popup-success m-3 position-fixed top-0 end-0" role="alert">{successMessage}</div>}
+      {errorMessage && <div className="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
+      {successMessage && <div className="popup-success m-3 position-fixed top-0 end-0" role="alert">{successMessage}</div>}
         <form className='w-25 shadow-lg p-3' onSubmit={submitHandler} method='POST'>
           <h4 className='text-center text-light'>Sign Un Here</h4>
           <hr className='text-light' />

@@ -27,7 +27,6 @@ const Signin = () => {
 
     const clearForm = () => {
         setFormData({
-            name: '',
             email: '',
             password: ''
         });
@@ -43,11 +42,13 @@ const Signin = () => {
                 },
             }
 
-            const response = await axios.post('http://localhost:8001/api/auth/signup', {
-                name: formData.name, email: formData.email, password: formData.password
+            const response = await axios.post('http://localhost:8001/api/auth/signin', {
+                email: formData.email, password: formData.password
             }, config)
 
             console.log(response.data)
+
+            const token = response.data.token
 
             clearForm()
 
@@ -60,7 +61,7 @@ const Signin = () => {
     return (
         <div className='signin vh-100 d-flex align-items-center justify-content-center'>
             <form className='w-25 shadow-lg p-3' method='POST' onSubmit={handleSubmit}>
-            {errorMessage && <div class="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
+            {errorMessage && <div className="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
                 <h4 className='text-center text-secondary'>Sign In Here</h4>
                 <hr />
                 <div className="mb-3">
