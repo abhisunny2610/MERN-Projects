@@ -71,7 +71,70 @@ header{
 }
 
 .hero-section{
-    width: 80%;
+    /* width: 80%; */
     height: 600px;
     background-color: var(--dark-blue);
+}
+
+.blog-card{
+    width: 350px;
+    height: fit-content;
+    background-color: #cec8f91e;
+
+    > .image-section{
+        > img{
+            width: 350px;
+            border-radius: 5px;
+        }
+    }
+
+    > .description-section{
+        padding: 40px 40px 20px 40px;
+
+        > h6{
+            font-size: var(--fs-18);
+            font-family: var(--playfair-display);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        > .date{
+            display: flex;
+            margin-top: 20px;
+            font-family: var(--open-sans);
+            font-size: var(--fs-13);
+            color: var(--grey);
+            
+            > p{
+                /* margin-right: 30px; */
+            }
+        }
+
+        > p{
+            font-size: var(--fs-14);
+            font-family: var(--open-sans);
+            word-spacing: 0.3px;
+            color: var(--grey);
+        }
+        
+        > .links{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-family: var(--open-sans);
+            
+            > a{
+                text-decoration: none;
+                color: var(--black);
+                font-weight: 600;
+                letter-spacing: 1px;
+                font-size: var(--fs-12);
+            }
+
+            > p{
+                color: var(--grey);
+                font-size: var(--fs-14);
+            }
+        }
+    }
 }
