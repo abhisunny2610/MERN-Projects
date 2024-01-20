@@ -1,6 +1,11 @@
 const Blog = require("../models/blog")
 
-const handleAddBlog = async()=> {
+const handleAddBlog = async(req, res)=> {
+    const {title, content} = req.body
+
+    const blog = await Blog.create({
+        title, content
+    })
 
 }
 
