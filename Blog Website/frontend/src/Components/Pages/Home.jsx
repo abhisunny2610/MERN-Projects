@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
     <HeroSection/>
-    <div>
+    <div className='d-flex'>
         <BlogCards />
         <Sidebar />
     </div>
