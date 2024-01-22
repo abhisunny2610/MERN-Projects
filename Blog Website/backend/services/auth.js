@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { isTokenIncluded, getAccessTokenFromHeader } = require('../Helper/tokenHepler');
 
 function createTokenForUser(user) {
   const payload = {
@@ -13,10 +14,13 @@ function createTokenForUser(user) {
 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization');
-  if (!token) return res.sendStatus(401);
+  if(!isTokenIncluded(req)){
+    throw new Error("You are not authorized to access this route ")
+  }
 
-  jwt.verify(token, process.env.SECRET, (err, user) => {
+  const access_token = getAccessTokenFromHeader(req)
+
+  jwt.verify(access_token, process.env.SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
     next();
