@@ -11,7 +11,7 @@ function createTokenForUser(user) {
   const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "30d" })
   return token
 }
-
+ 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
   if(!isTokenIncluded(req)){

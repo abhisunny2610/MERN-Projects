@@ -23,7 +23,12 @@ const authSchema = new Schema({
             },
             message: 'Password must be at least 8 characters long.'
         }
-    }
+    },
+    role: {
+        type: String,
+        default: "user",
+        enum: ["user", "admin"]
+    },
 }, {timestamps:true})
 
 // Indexing the email field for faster queries

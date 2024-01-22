@@ -15,4 +15,25 @@ const AuthContextProvider = (props) => {
         }
     })
 
+    useEffect(() => {
+        const controlAuth = async () => {
+            try {
+                const response = await axios.get('http://localhost:8001/api/auth/private', config)
+                setActiveUser(response.data.user)
+            } catch (err) {
+                localStorage.removeItem("authToken");
+
+                setActiveUser({})
+            }
+        }
+        controlAuth()
+    }, [])
+
+    return (
+        <AuthContext.Provider value={{ activeUser, setActiveUser, config, setConfig }}>
+          {props.children}
+        </AuthContext.Provider>
+      );
 }
+
+export default AuthContextProvider

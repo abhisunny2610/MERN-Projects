@@ -59,7 +59,7 @@ const handlePrivateData = async(req,res,next)=> {
     return res.status(200).json({
         success:true,
         message: 'You got access to the private data in this route',
-        user: res.user
+        user: req.user
     })
 }
 

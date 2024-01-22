@@ -17,9 +17,10 @@ const blogSchema = new Schema({
     category: {
         type:String
     },
-    Author: {
+    author: {
         type: Schema.Types.ObjectId,
-        ref : 'auth'
+        ref : 'auth',
+        required: true,
     }
 }, {timestamps:true})
 
