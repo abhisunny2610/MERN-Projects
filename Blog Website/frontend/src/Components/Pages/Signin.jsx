@@ -9,6 +9,7 @@ const Signin = () => {
         password: ""
     })
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -37,6 +38,8 @@ const Signin = () => {
         e.preventDefault()
 
         try {
+
+            setLoading(true)
             const config = {
                 headers: {
                     "Content-type": "application/json"
@@ -54,19 +57,21 @@ const Signin = () => {
 
             setTimeout(() => {
                 navigate('/')
-            }, 2000)
+            }, 1000)
 
             clearForm()
 
         } catch (error) {
             showErrorAlert('Invalid email or password');
+        } finally {
+            setLoading(false)
         }
 
     }
 
     return (
         <div className='signin vh-100 d-flex align-items-center justify-content-center'>
-            <form className='w-25 shadow-lg p-3' method='POST' onSubmit={handleSubmit}>
+            <form className='w-25 shadow-lg p-3' method='POST' onSubmit={handleSubmit} disabled={loading}>
                 {errorMessage && <div className="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
                 <h4 className='text-center text-secondary'>Sign In Here</h4>
                 <hr />
@@ -87,7 +92,9 @@ const Signin = () => {
                         required />
                     <div id="emailHelp" className="form-text">We'll never share your password with anyone else.</div>
                 </div>
-                <button type="submit" className="btn w-100 btn-primary">Sign In</button>
+                <button type="submit" className="btn w-100 btn-primary" disabled={loading}>{loading ? (<div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>) : 'Sign In'}</button>
                 <p className='text-center mt-3'>Don't have an account <Link to='/signup'>Signup Here</Link></p>
             </form>
         </div>

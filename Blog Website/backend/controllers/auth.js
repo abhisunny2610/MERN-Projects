@@ -48,7 +48,7 @@ const handleSignIn = async (req, res) => {
         }
 
         const token = createTokenForUser(user)
-        return res.json({ status: 'ok', user: token })
+        return res.json({ status: 'ok', token: token })
         // return res.cookie("token",token)
     } catch (error) {
         throw new Error("User not found", error)
