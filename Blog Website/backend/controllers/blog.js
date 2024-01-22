@@ -20,18 +20,60 @@ const handleAddBlog = async (req, res) => {
 
 }
 
-const handleDeleteBlog = async () => {
+const handleDeleteBlog = async (req, res) => {
+    const id = req.params.id
 
+    try {
+        const blog = await Blog.findById(id)
+        if (!blog) {
+            throw new Error("Blog does not exit")
+        }
+
+        await blog.remove()
+
+        return res.status(200).json({
+            success: true,
+            message: 'Story deleted'
+        })
+
+
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 
 const handleGetAllBlog = async (req, res) => {
-    const blogs = await Blog.find({})
-    return res.status(200).json(
-        {
-            success: true,
-            count: blogs.length,
-            data: blogs
-        })
+    try {
+        const blogs = await Blog.find({})
+        return res.status(200).json(
+            {
+                success: true,
+                count: blogs.length,
+                data: blogs
+            })
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 
-module.exports = { handleAddBlog, handleDeleteBlog, handleGetAllBlog }
+const handleGetSingleBlog = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const blog = await Blog.findById(id)
+        if (!blog) {
+            throw new Error("Blog does not exist")
+        }
+        return res.status(200).json({
+            success: true,
+            data: blog
+        })
+
+    } catch (error) {
+        throw new Error(error)
+    }
+
+
+}
+
+module.exports = { handleAddBlog, handleDeleteBlog, handleGetAllBlog, handleGetSingleBlog }

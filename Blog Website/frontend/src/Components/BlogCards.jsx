@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import img1 from '../Assests/pexels-plann-4549414.jpg'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 const Card = () => {
 
@@ -32,6 +33,17 @@ const Card = () => {
 }
 
 const BlogCards = () => {
+
+  const [blogs, setBlogs] = useState([])
+
+  useEffect(()=> {
+    
+  }, [])
+
+  const getBlogs = async()=> {
+    const response = axios.get
+  }
+
   return (
     <div className='blog-cards'>
     <Card />
