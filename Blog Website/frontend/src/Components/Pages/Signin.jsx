@@ -57,7 +57,7 @@ const Signin = () => {
 
             setTimeout(() => {
                 navigate('/')
-            }, 1000)
+            }, 100)
 
             clearForm()
 
@@ -92,7 +92,7 @@ const Signin = () => {
                         required />
                     <div id="emailHelp" className="form-text">We'll never share your password with anyone else.</div>
                 </div>
-                <button type="submit" className="btn w-100 btn-primary" disabled={loading}>{loading ? (<div className="spinner-border" role="status">
+                <button type="submit" className="btn w-100 btn-primary" disabled={loading}>{loading ? (<div className="spinner-border spinner-border-md" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>) : 'Sign In'}</button>
                 <p className='text-center mt-3'>Don't have an account <Link to='/signup'>Signup Here</Link></p>
