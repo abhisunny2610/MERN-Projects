@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import img1 from '../Assests/pexels-plann-4549414.jpg'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { formatDate } from '../Utils/helper'
 
 const Card = ({blog}) => {
   const { _id, title, category, content, createdAt, coverImage } = blog
@@ -15,7 +16,7 @@ const Card = ({blog}) => {
         <div className="description-section">
           <h6>{title}</h6>
           <div className="date">
-            <p><i class="fa-regular fa-calendar mx-1"></i>20th Nov, 2023</p>
+            <p><i class="fa-regular fa-calendar mx-1"></i>{formatDate(createdAt)}</p>
             <p className='mx-5'><i class="fa-regular fa-message mx-1"></i>05</p>
           </div>
           <p className="caption">
@@ -55,7 +56,7 @@ const BlogCards = () => {
   return (
     <div className='blog-cards'>
       {
-          blogs.map((blog) => (
+          blogs.slice(0,8).map((blog) => (
             <Card blog={blog} key={blog._id} />
           ))
   
