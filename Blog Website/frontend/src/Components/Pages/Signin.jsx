@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Signin = () => {
@@ -9,6 +9,7 @@ const Signin = () => {
         password: ""
     })
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -49,6 +50,11 @@ const Signin = () => {
             console.log(response.data)
 
             const token = response.data.token
+            localStorage.setItem('authToken', token)
+
+            setTimeout(() => {
+                navigate('/')
+            }, 2000)
 
             clearForm()
 
@@ -61,7 +67,7 @@ const Signin = () => {
     return (
         <div className='signin vh-100 d-flex align-items-center justify-content-center'>
             <form className='w-25 shadow-lg p-3' method='POST' onSubmit={handleSubmit}>
-            {errorMessage && <div className="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
+                {errorMessage && <div className="popup-error m-3 position-fixed top-0 end-0" role="alert">{errorMessage}</div>}
                 <h4 className='text-center text-secondary'>Sign In Here</h4>
                 <hr />
                 <div className="mb-3">
