@@ -186,67 +186,68 @@ header {
 }
 
 
-footer{
+footer {
     background-color: var(--black);
     padding: 40px 60px 120px 60px;
 
-    > .footer-content{
+    >.footer-content {
         display: flex;
         justify-content: space-between;
     }
 
-    > p{
+    >p {
         margin-top: 60px;
         text-align: center;
         font-size: var(--fs-14);
         color: var(--grey);
 
-        > span{
+        >span {
             color: var(--white);
         }
     }
 }
 
 
-.single-blog{
+.single-blog {
     display: flex;
     justify-content: center;
 
     margin: 80px 200px;
 
-    > .single-blog-content{
+    >.single-blog-content {
 
-        > h2{
+        >h2 {
             font-family: var(--open-sans);
             font-size: 42px;
             font-weight: 700;
         }
 
-        > .author{
+        >.author {
             display: flex;
             margin-top: 20px;
             align-items: center;
 
-            > .image img{
+            >.image img {
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
             }
 
-            > .details{
+            >.details {
                 margin-left: 10px;
                 margin-top: 10px;
-                > h5{
+
+                >h5 {
                     margin-bottom: 0px;
                     font-size: var(--fs-18);
                     color: var(--dark-blue);
                 }
 
-                > p{
+                >p {
                     margin-top: 0px;
                     color: var(--grey);
 
-                    > span{
+                    >span {
                         color: var(--dark-blue);
                         font-weight: 500;
                     }
@@ -255,12 +256,12 @@ footer{
         }
 
 
-        > .cover-image img{
+        >.cover-image img {
             width: 100%;
             margin-top: 50px;
         }
 
-        > .content p{
+        >.content p {
             margin-top: 50px;
             font-size: var(--fs-18);
             font-family: var(--playfair-display);
@@ -268,7 +269,7 @@ footer{
     }
 }
 
-footer h5{
+footer h5 {
     font-size: var(--fs-18);
     color: var(--white);
     font-family: var(--playfair-display);
@@ -276,13 +277,13 @@ footer h5{
     letter-spacing: 1px;
 }
 
-footer p{
+footer p {
     color: var(--grey);
     font-size: var(--fs-14);
     font-family: var(--open-sans);
 }
 
-footer input{
+footer input {
     border: none;
     outline: none;
     background: #191919;
@@ -291,19 +292,19 @@ footer input{
     width: 250px;
 }
 
-footer input:focus{
+footer input:focus {
     background: var(--white);
     color: var(--black);
 }
 
-footer button{
+footer button {
     background: var(--white);
     padding: 8px 15px;
     border: none;
     outline: none;
 }
 
-footer .icons{
+footer .icons {
     display: flex;
     gap: 10px;
     color: var(--grey);

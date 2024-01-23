@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import img1 from '../../Assests/pexels-matheus-bertelli-3856039.jpg'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { formatDate } from '../../Utils/helper'
@@ -12,10 +11,10 @@ const SingleBlog = () => {
 
     const getBlog = async (id) => {
         try {
+            
             const response = await axios.get(`http://localhost:8001/api/blog/${id}`);
             const data = await response?.data;
             setBlog(data?.data);
-            console.log("API Response:", data.data);
         } catch (error) {
             console.error("Error fetching blogs:", error);
         }

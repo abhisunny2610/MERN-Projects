@@ -13,17 +13,17 @@ const Footer = () => {
           <p>Stay update with our latest</p>
           <div className="input">
             <input type="text" placeholder='ENTER EMIAL' />
-            <button><i class="fa-solid fa-arrow-right-long "></i></button>
+            <button><i className="fa-solid fa-arrow-right-long "></i></button>
           </div>
         </div>
         <div className="social-media">
           <h5>Follow Us</h5>
           <p>Let us be social</p>
           <div className="icons">
-          <i class="fa-brands fa-facebook-f"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-x-twitter"></i>
-          <i class="fa-brands fa-internet-explorer"></i>
+          <i className="fa-brands fa-facebook-f"></i>
+          <i className="fa-brands fa-instagram"></i>
+          <i className="fa-brands fa-x-twitter"></i>
+          <i className="fa-brands fa-internet-explorer"></i>
           </div>
         </div>
       </div>
