@@ -207,6 +207,62 @@ footer{
     }
 }
 
+
+.single-blog{
+    display: flex;
+    justify-content: center;
+
+    margin: 80px 200px;
+
+    > .single-blog-content{
+
+        > h2{
+            font-family: var(--open-sans);
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        > .author{
+            display: flex;
+            margin-top: 20px;
+            align-items: center;
+
+            > .image img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+
+            > .details{
+                margin-left: 10px;
+                margin-top: 10px;
+                > h5{
+                    margin-bottom: 0px;
+                    font-size: var(--fs-18);
+                    color: var(--dark-blue);
+                }
+
+                > p{
+                    margin-top: 0px;
+                    color: var(--grey);
+                }
+            }
+        }
+
+
+        > .cover-image img{
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        > .content p{
+            margin-top: 50px;
+            font-size: var(--fs-18);
+            font-family: var(--playfair-display);
+        }
+    }
+}
+
 footer h5{
     font-size: var(--fs-18);
     color: var(--white);

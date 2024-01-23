@@ -6,6 +6,7 @@ import Signup from './Components/Pages/Signup';
 import Signin from './Components/Pages/Signin';
 import Error from './Components/Pages/Error'
 import Home from './Components/Pages/Home';
+import SingleBlog from './Components/Pages/SingleBlog';
 
 const AppLayout = () => {
   return (
@@ -34,6 +35,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/blog/:id',
+        element: <SingleBlog />
       }
     ]
   }

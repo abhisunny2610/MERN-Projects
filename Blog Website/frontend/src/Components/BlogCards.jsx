@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import img1 from '../Assests/pexels-plann-4549414.jpg'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { formatDate } from '../Utils/helper'
@@ -24,7 +23,7 @@ const Card = ({blog}) => {
           </p>
 
           <div className="links">
-            <Link>READ MORE<i class="fa-solid fa-arrow-right-long mx-2"></i></Link>
+            <Link to={'/blog/' + _id}>READ MORE<i class="fa-solid fa-arrow-right-long mx-2"></i></Link>
             <p><i class="fa-regular fa-folder-closed mx-1"></i>{category}</p>
           </div>
         </div>
@@ -43,7 +42,6 @@ const BlogCards = () => {
       const response = await axios.get('http://localhost:8001/api/blog');
       const data = await response?.data;
       setBlogs(data?.data);
-      console.log("API Response:", data.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     }
@@ -56,9 +54,9 @@ const BlogCards = () => {
   return (
     <div className='blog-cards'>
       {
-          blogs.slice(0,8).map((blog) => (
-            <Card blog={blog} key={blog._id} />
-          ))
+          blogs.slice(0,8).map((blog) => {
+            return <Link to={'/blog/' + blog._id} key={blog._id} className='text-decoration-none'><Card blog={blog} key={blog._id} /></Link>
+})
   
     }
     </div>

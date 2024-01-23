@@ -57,7 +57,7 @@ const handleGetAllBlog = async (req, res) => {
 }
 
 const handleGetSingleBlog = async (req, res) => {
-    const id = req.params.id
+    const id = parseInt(req.params.id)
 
     try {
         const blog = await Blog.findById(id)
