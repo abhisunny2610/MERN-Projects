@@ -5,7 +5,7 @@ const handleAddBlog = async (req, res) => {
 
     try {
         const newBlog = await Blog.create({
-            title, content, author: req.user._id
+            title, content,category, author: req.user._id
         })
 
         return res.status(201).json({
