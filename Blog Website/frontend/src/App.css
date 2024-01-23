@@ -245,6 +245,11 @@ footer{
                 > p{
                     margin-top: 0px;
                     color: var(--grey);
+
+                    > span{
+                        color: var(--dark-blue);
+                        font-weight: 500;
+                    }
                 }
             }
         }
