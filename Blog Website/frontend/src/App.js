@@ -7,14 +7,16 @@ import Signin from './Components/Pages/Signin';
 import Error from './Components/Pages/Error'
 import Home from './Components/Pages/Home';
 import SingleBlog from './Components/Pages/SingleBlog';
+import AuthContextProvider from './Context/AuthContext';
+import WriteBlog from './Components/Pages/WriteBlog';
 
 const AppLayout = () => {
   return (
-    <>
+    <AuthContextProvider>
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </AuthContextProvider>
   )
 }
 
@@ -39,6 +41,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/blog/:id',
         element: <SingleBlog />
+      },
+      {
+        path: '/writeBlog',
+        element: <WriteBlog />
       }
     ]
   }

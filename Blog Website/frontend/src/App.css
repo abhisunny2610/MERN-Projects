@@ -269,6 +269,47 @@ footer {
     }
 }
 
+.writeblog{
+    margin: 80px 200px;
+
+    > form{
+        display: flex;
+        flex-direction: column; 
+        gap: 10px;
+        font-family: var(--playfair-display);
+        position: relative;
+
+        > input, textarea{
+            border: none;
+            outline: none;
+        }
+
+        > .category{
+            height: 3rem;
+            font-size: var(--fs-20);
+        }
+
+        > .title{
+            height: 3rem;
+            font-size: 26px;
+        }
+
+        > .content{
+            font-size: 18px;
+        }
+
+        > button{
+            width: fit-content;
+            padding: 4px 10px;
+            border-radius: 50px;
+            background: var(--dark-blue);
+            color: var(--white);
+            border: none;
+            outline: none;
+        }
+    }
+}
+
 footer h5 {
     font-size: var(--fs-18);
     color: var(--white);
