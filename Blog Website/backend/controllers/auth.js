@@ -44,14 +44,14 @@ const handleSignIn = async (req, res) => {
 
         const validPassowrd = await bcrypt.compare(password, user.password)
         if (!validPassowrd) {
-            throw new Erro("Invalid username or password")
+            throw new Error("Invalid username or password")
         }
 
         const token = createTokenForUser(user)
         return res.json({ status: 'ok', token: token })
         // return res.cookie("token",token)
     } catch (error) {
-        throw new Error("User not found", error)
+        return res.status(500).json({ error: "Internal server error" });
     }
 }
 

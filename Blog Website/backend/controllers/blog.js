@@ -1,11 +1,31 @@
 const Blog = require("../models/blog")
 
+
+const handleOurBlogs = async (req, res) => {
+
+    try {
+        const userId = req.user._id
+
+        const userBlogs = await Blog.dinf({ author: userId })
+
+        if (userBlogs.length === 0) {
+            return res.status(400).json({ message: "No blogs found for this user" })
+        }
+
+        return res.status(200).json({ blogs: userBlogs })
+
+    } catch (error) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+
 const handleAddBlog = async (req, res) => {
-    const { title, content } = req.body
+    const { title, content, category } = req.body
 
     try {
         const newBlog = await Blog.create({
-            title, content,category, author: req.user._id
+            title, content, category, author: req.user._id
         })
 
         return res.status(201).json({
@@ -76,4 +96,4 @@ const handleGetSingleBlog = async (req, res) => {
 
 }
 
-module.exports = { handleAddBlog, handleDeleteBlog, handleGetAllBlog, handleGetSingleBlog }
+module.exports = { handleOurBlogs, handleAddBlog, handleDeleteBlog, handleGetAllBlog, handleGetSingleBlog }
