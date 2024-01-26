@@ -17,8 +17,8 @@ const Header = () => {
           <img src={logo} alt="" />
         </div>
         <div className="links d-flex gap-4">
-          <Link>Home</Link>
-          <Link>About</Link>
+          <Link to='/'>Home</Link>
+          <Link to='/about'>About</Link>
           {auth ? <Link to='/writeBlog'>Write Blog</Link> : ''}
         </div>
         <div className="account d-flex gap-4">

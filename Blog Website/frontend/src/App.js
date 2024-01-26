@@ -10,6 +10,7 @@ import SingleBlog from './Components/Pages/SingleBlog';
 import AuthContextProvider from './Context/AuthContext';
 import WriteBlog from './Components/Pages/WriteBlog';
 import OurBlogs from './Components/Pages/OurBlogs';
+import About from './Components/Pages/About';
 
 const AppLayout = () => {
   return (
@@ -38,6 +39,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path:'/about',
+        element: <About />
       },
       {
         path: '/blog/:id',
