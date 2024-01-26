@@ -12,14 +12,14 @@ const Header = () => {
 
   return (
     <>
-      <header className='d-flex align-items-center justify-content-center'>
+      <header className='d-flex align-items-center justify-content-between'>
         <div className="logo">
           <img src={logo} alt="" />
         </div>
         <div className="links d-flex gap-4">
           <Link to='/'>Home</Link>
           <Link to='/about'>About</Link>
-          {auth ? <Link to='/writeBlog'>Write Blog</Link> : ''}
+          <Link to='/writeBlog'>Write Blog</Link>
         </div>
         <div className="account d-flex gap-4">
           <Link to='/ourBlogs'>Our Blogs</Link>

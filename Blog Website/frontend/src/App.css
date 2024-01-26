@@ -49,10 +49,12 @@
 }
 
 header {
+    position: fixed;
     width: 100%;
-    background-color: aqua;
+    background-color: inherit;
     height: 6rem;
     z-index: 999;
+    padding: 0px 80px;
 
     >.logo {
         >img {
@@ -259,6 +261,29 @@ footer {
             color: var(--white);
         }
     }
+}
+
+.about-section-page{
+    margin: 100px 80px;
+}
+
+.about-section-page img{
+    width: 400px;
+}
+
+.about-section-page h3{
+    font-family: var(--playfair-display);
+    font-size: 32px;
+    text-align: center;
+    text-decoration: underline;
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+}
+
+.about-section-page p{
+    font-size: var(--fs-18);
+    text-align: center;
+    color: var(--dark-blue);
 }
 
 
