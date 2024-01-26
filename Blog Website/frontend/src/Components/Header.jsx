@@ -9,10 +9,24 @@ const Header = () => {
   const [auth, setAuth] = useState(bool)
   const {activeUser} = useContext(AuthContext)
   const navigate = useNavigate()
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.scrollY;
+      setScrollPosition(currentPosition);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
-      <header className='d-flex align-items-center justify-content-between'>
+      <header className='d-flex align-items-center justify-content-between' >
         <div className="logo">
           <img src={logo} alt="" />
         </div>
