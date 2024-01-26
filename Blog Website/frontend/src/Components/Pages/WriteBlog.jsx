@@ -39,16 +39,8 @@ const WriteBlog = () => {
             setSuccessMessage('Add story successfully ')
 
             clearForm()
-            // setTimeout(() => {
-            //     setSuccess('')
-            // }, 7000)
-
         }
         catch (error) {
-            // setTimeout(() => {
-            //     setError('')
-
-            // }, 7000)
             setErrorMessage(error.response.data.error)
 
         }

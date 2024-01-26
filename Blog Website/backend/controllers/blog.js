@@ -6,7 +6,7 @@ const handleOurBlogs = async (req, res) => {
     try {
         const userId = req.user._id
 
-        const userBlogs = await Blog.dinf({ author: userId })
+        const userBlogs = await Blog.find({ author: userId })
 
         if (userBlogs.length === 0) {
             return res.status(400).json({ message: "No blogs found for this user" })

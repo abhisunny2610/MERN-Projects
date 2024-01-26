@@ -52,13 +52,15 @@ const BlogCards = () => {
     }
   };
 
+
+
   useEffect(() => {
     getBlogs()
   }, [])
 
   return (
     <div className='blog-cards'>
-      {loading ? <Shimmer /> : (blogs.slice(0, 8).map((blog) => {
+      {loading ? <Shimmer /> : (blogs.map((blog) => {
         return <Link to={'/blog/' + blog._id} key={blog._id} className='text-decoration-none'><Card blog={blog} key={blog._id} /></Link>
       }))
       }

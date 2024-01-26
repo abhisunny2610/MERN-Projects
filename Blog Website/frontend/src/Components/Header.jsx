@@ -19,10 +19,10 @@ const Header = () => {
         <div className="links d-flex gap-4">
           <Link>Home</Link>
           <Link>About</Link>
-          {auth ? <Link>Write Blog</Link> : ''}
+          {auth ? <Link to='/writeBlog'>Write Blog</Link> : ''}
         </div>
         <div className="account d-flex gap-4">
-          <Link>Our Blogs</Link>
+          <Link to='/ourBlogs'>Our Blogs</Link>
           <Link>Sign in</Link>
         </div>
       </header>
