@@ -26,4 +26,9 @@ db.once('open', async () => {
     console.log('Connected to MongoDB Atlas');
 });
 
+
+app.get('/', (req, res)=> {
+    res.send("API IS RUNNING")
+})
+
 app.listen(PORT, () => console.log("Server started on port " + PORT))
