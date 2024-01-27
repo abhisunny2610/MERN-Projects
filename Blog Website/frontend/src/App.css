@@ -90,6 +90,18 @@ header {
     }
 }
 
+.write-button{
+    background: var(--dark-blue);
+    color: white;
+    text-decoration: none;
+    font-family: var(--playfair-display);
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: var(--fs-14);
+    
+}
+
 .hero-section {
     width: 100%;
     height: 600px;

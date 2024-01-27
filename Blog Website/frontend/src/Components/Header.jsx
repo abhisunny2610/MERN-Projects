@@ -35,8 +35,8 @@ const Header = () => {
           <Link to='/about'>About</Link>
         </div>
         <div className="account d-flex gap-4">
-          <Link to='/writeBlog'>Write Blog</Link>
           <Link to='/ourBlogs'>Our Blogs</Link>
+          <Link to='/writeBlog' className='write-button'><i className="fa-solid fa-pen" style={{color: "#fafafa"}}></i> Write</Link>
           <Link to='/signin'>Sign in</Link>
         </div>
       </header>
