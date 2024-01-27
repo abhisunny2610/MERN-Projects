@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
     name: {
@@ -30,6 +31,16 @@ const userSchema = new Schema({
         default: "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg",
     }
 }, {timestamps: true})
+
+userSchema.pre('save', async function(next){
+    if (!this.isModified){
+        next()
+    }
+
+    const salt = await bcrypt.genSalt(15)
+    this.password = await bcrypt.hash(this.password, salt)
+
+})
 
 const User = model("User", userSchema)
 
