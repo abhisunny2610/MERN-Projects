@@ -55,7 +55,10 @@ header {
     height: 6rem;
     z-index: 999;
     padding: 0px 80px;
-
+    transition: all 0.5s ease-in-out;
+    top: 0;
+    border-bottom: 1px solid var(--black);
+    
     >.logo {
         >img {
             width: 100px;
@@ -67,7 +70,22 @@ header {
             font-family: var(--playfair-display);
             font-style: italic;
             font-weight: 700;
-            color: black;
+            color: var(--black);
+            text-decoration: none;
+        }
+    }
+}
+
+.white-background{
+    background: var(--white);
+    z-index: 999;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    border: none;
+
+    >.links {
+        >a {
+            
+            color: var(--black);
         }
     }
 }
@@ -264,7 +282,7 @@ footer {
 }
 
 .about-section-page{
-    margin: 100px 80px;
+    margin: 150px 80px 100px 80px;
 }
 
 .about-section-page img{
@@ -291,7 +309,7 @@ footer {
     display: flex;
     justify-content: center;
 
-    margin: 80px 200px;
+    margin: 150px 200px 100px 200px;
 
     >.single-blog-content {
 
@@ -349,7 +367,7 @@ footer {
 }
 
 .writeblog{
-    margin: 80px 200px;
+    margin: 150px 200px 100px 200px;
 
     > form{
         display: flex;
