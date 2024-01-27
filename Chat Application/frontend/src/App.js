@@ -1,11 +1,29 @@
 import './App.css';
-import { Button } from '@chakra-ui/react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import Home from './Components/Screens/Home';
+
+
+const Routing = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path='chat' />
+    </Routes>
+  )
+}
+
+const AppLayout = () => {
+  return (
+    <BrowserRouter>
+      <Routing />
+    </BrowserRouter>
+  )
+}
 
 function App() {
   return (
     <div className="App">
-      <p>Home Page</p>
-      <Button colorScheme='blue'>Button</Button>
+      <AppLayout />
     </div>
   );
 }
