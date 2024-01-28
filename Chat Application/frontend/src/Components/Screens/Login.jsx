@@ -65,7 +65,7 @@ const Login = () => {
                 emptyColor='gray.200'
                 color='blue.500'
                 size='lg'
-            />) : 'Sign Up'}</Button>
+            />) : 'Login'}</Button>
         </VStack>
     )
 }
