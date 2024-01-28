@@ -46,4 +46,15 @@ const accessChat = async (req, res) => {
     }
 }
 
-module.exports = { accessChat }
+const fetchChats = async (req,res)=> {
+    try {
+        const chats = await Chat.find({
+            users: {$elemMatch : {$eq: req.user._id}}
+        })
+        return res.status(200).json({chats:chats})
+    } catch (error) {
+        return res.status(500).json({error:"Internal Server error"})
+    }
+}
+
+module.exports = { accessChat, fetchChats }
