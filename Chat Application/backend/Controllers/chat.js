@@ -17,7 +17,7 @@ const accessChat = async (req, res) => {
                 { users: { $elemMatch: { $eq: userId } } },
             ],
         }).populate("users", "-password")
-        .populate("latestMessage");
+            .populate("latestMessage");
 
         isChat = await User.populate(isChat, {
             path: "latestMessage.sender",
@@ -30,7 +30,7 @@ const accessChat = async (req, res) => {
             var chatData = {
                 chatName: "sender",
                 isGroupChat: false,
-                users: [req.user._id, userId] // Ensure validUserId is used here
+                users: [req.user._id, userId] 
             };
 
             const createdChat = await Chat.create(chatData);
@@ -41,19 +41,18 @@ const accessChat = async (req, res) => {
             return res.status(200).send(FullChat);
         }
     } catch (error) {
-        console.log("error", error);
         res.status(400).json({ error: "Chat error" });
     }
 }
 
-const fetchChats = async (req,res)=> {
+const fetchChats = async (req, res) => {
     try {
         const chats = await Chat.find({
-            users: {$elemMatch : {$eq: req.user._id}}
+            users: { $elemMatch: { $eq: req.user._id } }
         })
-        return res.status(200).json({chats:chats})
+        return res.status(200).json({ chats: chats })
     } catch (error) {
-        return res.status(500).json({error:"Internal Server error"})
+        return res.status(500).json({ error: "Internal Server error" })
     }
 }
 
