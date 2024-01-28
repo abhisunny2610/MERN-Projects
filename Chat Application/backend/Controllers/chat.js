@@ -30,7 +30,7 @@ const accessChat = async (req, res) => {
             var chatData = {
                 chatName: "sender",
                 isGroupChat: false,
-                users: [req.user._id, userId] 
+                users: [req.user._id, userId]
             };
 
             const createdChat = await Chat.create(chatData);
@@ -47,13 +47,52 @@ const accessChat = async (req, res) => {
 
 const fetchChats = async (req, res) => {
     try {
-        const chats = await Chat.find({
+        Chat.find({
             users: { $elemMatch: { $eq: req.user._id } }
         })
-        return res.status(200).json({ chats: chats })
+            .populate('users', '-password')
+            .populate('groupAdmin', "-password")
+            .populate("latestMessage")
+            .sort({ updatedAt: -1 })
+            .then(async (results) => {
+                results = await User.populate(results, {
+                    path: "latestMessage.sender",
+                    select: "name profileImage email"
+                })
+                return res.status(200).send(results)
+            })
     } catch (error) {
         return res.status(500).json({ error: "Internal Server error" })
     }
 }
 
-module.exports = { accessChat, fetchChats }
+const createGroupChat = async (req, res) => {
+    if (!req.body.users || !req.body.name){
+        return res.status(400).json({message : "Please fill all the fields"})
+    }
+
+    let users = JSON.parse(req.body.users)
+    if(users.length < 2){
+        return res.status(400).json({message: "More than 2 users are required to created a group"})
+    }
+
+    users.push(req.user)
+    try {
+        const groupChat = await Chat.create({
+            chatName: req.body.name,
+            users: users,
+            isGroupChat: true,
+            groupAdmin: req.user
+        })
+
+        const fullGroupChat = await Chat.findOne({_id:groupChat._id})
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password")
+
+        return res.status(200).json({groupChat:fullGroupChat})
+    } catch (error) {
+        return res.status(400).json({error: "Internal server error"})
+    }
+}
+
+module.exports = { accessChat, fetchChats, createGroupChat }
