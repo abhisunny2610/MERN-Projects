@@ -5,8 +5,12 @@ const PORT = process.env.PORT || 6001
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const authRoutes = require('./Routes/auth')
 const { handleErrors } = require('./MiddleWare/errorHandler')
+const { protect } = require('./MiddleWare/autheorised')
+
+// routers
+const authRoutes = require('./Routes/auth')
+const chatRoutes = require('./Routes/chat')
 
 dotenv.config()
 app.use(cors())
@@ -30,6 +34,7 @@ db.once('open', async () => {
 
 
 app.use('/api/auth', authRoutes)
+app.use('/api/chat', chatRoutes)
 
 app.use(handleErrors)
 

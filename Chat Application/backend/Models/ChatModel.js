@@ -9,10 +9,10 @@ const chatModalSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    users: {
+    users: [{
         type: Schema.Types.ObjectId,
         ref: "User",
-    },
+    }],
     latestMessage: {
         type: Schema.Types.ObjectId,
         ref: "Message",
