@@ -3,15 +3,13 @@ import { Image,Box,Flex,Spacer, Container, Text, Tabs, TabList, Tab, TabPanel, T
 import Login from './Login'
 import Signup from './Signup'
 import logo from '../../Assests/logo.png'
-// import { useNavigate } from "react-router";
+import { redirect } from "react-router";
 
 const Home = () => {
 
-    // const navigate = useNavigate()
-
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("token"))
-        // if(userInfo) navigate('/chats')
+        if(userInfo) redirect('/chats')
     }, [])
 
     return (
