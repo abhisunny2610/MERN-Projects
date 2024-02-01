@@ -22,7 +22,11 @@ const signup = async (req, res) => {
             name, email, password, profileImage
         })
         if (newUser) {
-            return res.status(201).json({ message: "User created successfully", token: generateToken(newUser._id) })
+            return res.status(201).json({ message: "User created successfully", _id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            // isAdmin: newUser.isAdmin,
+            profileImage: newUser.profileImage, token: generateToken(newUser._id) })
         } else {
             return res.status(500).json({ error: "Failed to create user" })
         }
@@ -44,13 +48,16 @@ const login = async (req, res) => {
 
         // if user exists
         if (user && validatePassword) {
-            return res.status(200).json({ message: "User login successfullty", token: generateToken(user._id) })
+            return res.status(200).json({ message: "User login successfullty", _id: user._id,
+            name: user.name,
+            email: user.email,
+            // isAdmin: newUser.isAdmin,
+            profileImage: user.profileImage, token: generateToken(user._id) })
         } else {
             return res.status(401).json({ error: "Invalid Email or Password" })
         }
 
     } catch (error) {
-        console.error("Error in login:", error);
         return res.status(500).json({ error: "Internal server error." })
     }
 }

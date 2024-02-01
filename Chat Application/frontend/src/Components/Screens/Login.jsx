@@ -3,7 +3,7 @@ import axios from 'axios'
 import {
     Spinner, FormControl, FormLabel, FormErrorMessage, FormHelperText, Input, VStack, Button,
 } from '@chakra-ui/react'
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -12,6 +12,7 @@ const Login = () => {
         password: ''
     })
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -28,13 +29,14 @@ const Login = () => {
             setLoading(true)
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-type": "application/json"
                 }
             }
             const response = await axios.post('http://localhost:6001/api/auth/login', formData, config)
-            localStorage.setItem("token", JSON.stringify(response.data.token))
-            redirect('/chats') 
+
+            localStorage.setItem("token", JSON.stringify(response.data))
             setLoading(false)
+            navigate('/chats') 
         } catch (error) {
             setLoading(false)
         }

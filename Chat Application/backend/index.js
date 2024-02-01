@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { handleErrors } = require('./MiddleWare/errorHandler')
-const { protect } = require('./MiddleWare/autheorised')
 
 // routers
 const authRoutes = require('./Routes/auth')

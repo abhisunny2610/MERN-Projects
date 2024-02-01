@@ -9,6 +9,7 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
+    Text
 } from '@chakra-ui/react'
 
 const ProfileModel = ({ user, children }) => {
@@ -26,8 +27,9 @@ const ProfileModel = ({ user, children }) => {
                 <ModalContent>
                     <ModalHeader fontSize='26px' fontFamily='Work sans' display='flex' justifyContent='center' >{user.name}</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody display='flex' justifyContent={'center'} >
+                    <ModalBody display='flex' justifyContent={'center'} flexDirection='column' alignItems='center' >
                         <Image borderRadius='full' boxSize='150px' src={user.profileImage} alt={user.name}></Image>
+                        <Text marginTop='20px' fontSize='18px' fontFamily='Work sans' textAlign='center' >{user.email}</Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>
