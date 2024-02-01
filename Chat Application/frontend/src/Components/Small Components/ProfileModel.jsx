@@ -27,7 +27,7 @@ const ProfileModel = ({ user, children }) => {
                     <ModalCloseButton />
                     <ModalBody display='flex' justifyContent={'center'} flexDirection='column' alignItems='center' >
                         <Image borderRadius='full' boxSize='150px' src={user?.profileImage} alt={user?.name}></Image>
-                        <Text marginTop='20px' fontSize='18px' fontFamily='Work sans' textAlign='center' >{user?.email}</Text>
+                        <Text marginTop='20px' fontSize='18px' fontFamily='Work sans' textAlign='center' >Email: {user?.email}</Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>

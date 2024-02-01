@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import {
-    Spinner, FormControl, FormLabel, FormErrorMessage, FormHelperText, Input, VStack, Button,
+    Spinner, FormControl, FormLabel,  Input, VStack, Button, useToast
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const Login = () => {
     })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
+    const toast = useToast()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -38,6 +39,13 @@ const Login = () => {
             setLoading(false)
             navigate('/chats') 
         } catch (error) {
+            toast({
+                title: "Inavlid email or password",
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+                position: "top-right"
+            })
             setLoading(false)
         }
     }
