@@ -7,7 +7,6 @@ import { ChatState } from '../../Context/ChatProvider'
 const Header = () => {
 
   const { user } = ChatState()
-  console.log("User", user)
   const navigate = useNavigate()
   const [searchResult, setSearchResult] = useState([])
   const [loading, setLoading] = useState(false)

@@ -5,10 +5,8 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button,
     Text
 } from '@chakra-ui/react'
 
@@ -25,11 +23,11 @@ const ProfileModel = ({ user, children }) => {
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader fontSize='26px' fontFamily='Work sans' display='flex' justifyContent='center' >{user.name}</ModalHeader>
+                    <ModalHeader fontSize='26px' fontFamily='Work sans' display='flex' justifyContent='center' >{user?.name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody display='flex' justifyContent={'center'} flexDirection='column' alignItems='center' >
-                        <Image borderRadius='full' boxSize='150px' src={user.profileImage} alt={user.name}></Image>
-                        <Text marginTop='20px' fontSize='18px' fontFamily='Work sans' textAlign='center' >{user.email}</Text>
+                        <Image borderRadius='full' boxSize='150px' src={user?.profileImage} alt={user?.name}></Image>
+                        <Text marginTop='20px' fontSize='18px' fontFamily='Work sans' textAlign='center' >{user?.email}</Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>
