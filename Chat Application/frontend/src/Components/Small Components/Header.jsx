@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import {
   Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useDisclosure, Drawer, DrawerBody,
-  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, Input
+  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton
 } from '@chakra-ui/react'
 import ProfileModel from './ProfileModel'
 import { useNavigate } from 'react-router'
 import { ChatState } from '../../Context/ChatProvider'
+import axios from 'axios'
+import { base_url } from '../../Utils/Helper'
+import UserList from './UserList'
+import UserListSkeleton from './UserListSkeleton'
 
 const Header = () => {
 
@@ -22,9 +26,27 @@ const Header = () => {
     navigate('/')
   }
 
-  const handleSearch = () => {
-    
+  const handleSearch = async () => {
+    if (search) {
+      try {
+        setLoading(true)
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+
+        const response = await axios.get(base_url + `auth/allUsers?search=${search}`, config)
+        setSearchResult(response?.data?.users)
+        setLoading(false)
+      } catch (error) {
+        console.log("error", error)
+      }
+
+    }
   }
+
+  console.log("results", searchResult)
 
   return (
     <>
@@ -62,23 +84,27 @@ const Header = () => {
         </div>
 
       </Box>
-      <Drawer placement='left' onClose={onclose} isOpen={isOpen} >
+      <Drawer placement='left' onClose={onClose} isOpen={isOpen} >
         <DrawerOverlay />
         <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottom='1px' fontSize='16px' borderColor='lightgrey' >Search by name or email</DrawerHeader>
 
-          <DrawerHeader textAlign='center' borderBottom='1px' borderColor='lightgrey' >Search by name or email</DrawerHeader>
-
-          <DrawerBody display={'flex'} mt='2'>
-            <Input placeholder='search here..' mr='2' value={search} onClick={(e)=> setSearch(e.target.value)} />
-            <Button onClick={handleSearch}>Go</Button>
+          <DrawerBody mt='2'>
+            <Box display='flex'>
+              <Input placeholder='search here..' mr='2' value={search} onChange={(e) => setSearch(e.target.value)} />
+              <Button onClick={handleSearch}>Go</Button>
+            </Box>
+            <Box mt='3' display='flex' flexDirection='column' >
+              {
+                loading ? <UserListSkeleton /> : (
+                  searchResult.map((user) => {
+                    return <UserList user={user} key={user._id} />
+                  })
+                )
+              }
+            </Box>
           </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme='blue'>Save</Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

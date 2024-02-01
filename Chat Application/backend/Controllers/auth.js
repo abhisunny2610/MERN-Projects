@@ -70,7 +70,7 @@ const allUsers = async (req, res) => {
         ]
     } : {}
 
-    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } })
+    const users = await User.find(keyword).select('-password -createdAt -updatedAt').find({ _id: { $ne: req.user._id } })
     return res.status(200).json({users: users})
 }
 
