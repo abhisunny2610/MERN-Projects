@@ -33,11 +33,9 @@ const Login = () => {
             }
             const response = await axios.post('http://localhost:6001/api/auth/login', formData, config)
             localStorage.setItem("token", JSON.stringify(response.data.token))
-            setLoading(false)
             redirect('/chats') 
-        } catch (error) {
             setLoading(false)
-        }finally{
+        } catch (error) {
             setLoading(false)
         }
     }
