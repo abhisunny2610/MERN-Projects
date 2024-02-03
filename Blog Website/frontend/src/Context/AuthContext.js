@@ -1,39 +1,42 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+export const AuthContext = React.createContext();
 
-export const AuthContext = createContext()
+const AuthContextProvider = props => {
 
-const AuthContextProvider = (props) => {
+  const [activeUser, setActiveUser] = useState({})
+  const [config, setConfig] = useState({
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  })
 
-    const [activeUser, setActiveUser] = useState({})
 
-    const [config, setConfig] = useState({
-        headers: {
-            "Content-type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        }
-    })
+  useEffect(() => {
 
     const controlAuth = async () => {
-        try {
-            const response = await axios.get('http://localhost:8001/api/auth/private', config)
-            setActiveUser(response.data.user)
-        } catch (err) {
-            localStorage.removeItem("authToken");
-            setActiveUser({})
-        }
-    }
+      try {
+        const { data } = await axios.get("/auth/private", config);
+        setActiveUser(data.user)
+      }
+      catch (error) {
 
-    useEffect(() => {
-        controlAuth()
-    }, [])
+        localStorage.removeItem("authToken");
 
-    return (
-        <AuthContext.Provider value={{ activeUser, setActiveUser, config, setConfig }}>
-          {props.children}
-        </AuthContext.Provider>
-      );
-}
+        setActiveUser({})
+      }
+    };
+    controlAuth()
 
-export default AuthContextProvider
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{ activeUser, setActiveUser, config, setConfig }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthContextProvider;
