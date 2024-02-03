@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useDisclosure, Drawer, DrawerBody,
-  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton
+  DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton
 } from '@chakra-ui/react'
 import ProfileModel from './ProfileModel'
 import { useNavigate } from 'react-router'
