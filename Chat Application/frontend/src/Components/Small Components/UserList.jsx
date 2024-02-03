@@ -1,9 +1,11 @@
 import { Avatar, Box, Text } from '@chakra-ui/react'
 import React from 'react'
 
-const UserList = ({ user }) => {
+const UserList = ({ user, handleFunction }) => {
     return (
-        <Box cursor="pointer"
+        <Box 
+        onClick={handleFunction}
+        cursor="pointer"
             bg="#e8f2fe"
             _hover={{
                 background: "#38B2AC",

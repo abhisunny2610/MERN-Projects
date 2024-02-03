@@ -1,9 +1,12 @@
 import React from 'react'
 
+
 const ChatArea = () => {
+
   return (
-    <div>ChatArea</div>
+    <div>Chat Area</div>
   )
 }
+
 
 export default ChatArea

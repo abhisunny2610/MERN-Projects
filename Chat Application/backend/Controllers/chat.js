@@ -38,7 +38,7 @@ const accessChat = async (req, res) => {
                 "users",
                 "-password"
             );
-            return res.status(200).send(FullChat);
+            return res.status(200).json(FullChat);
         }
     } catch (error) {
         res.status(400).json({ error: "Chat error" });

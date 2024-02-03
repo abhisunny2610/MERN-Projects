@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useDisclosure, Drawer, DrawerBody,
-  DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton
+  DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton, Spinner
 } from '@chakra-ui/react'
 import ProfileModel from './ProfileModel'
 import { useNavigate } from 'react-router'
@@ -13,13 +13,14 @@ import UserListSkeleton from './UserListSkeleton'
 
 const Header = () => {
 
-  const { user } = ChatState()
-  const navigate = useNavigate()
+  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState()
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
   const [loading, setLoading] = useState(false)
   const [loadingChat, setLoadingChat] = useState(false)
+  
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const navigate = useNavigate()
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -37,8 +38,9 @@ const Header = () => {
         }
 
         const response = await axios.get(base_url + `auth/allUsers?search=${search}`, config)
-        setSearchResult(response?.data?.users)
+        // if (!chats.find((c) => c._id === response?.data?.users?._id)) setChats([response?.data, ...chats])
         setLoading(false)
+        setSearchResult(response?.data?.users)
       } catch (error) {
         console.log("error", error)
       }
@@ -46,7 +48,26 @@ const Header = () => {
     }
   }
 
-  console.log("results", searchResult)
+  const accessChat = async (userId) => {
+
+    try {
+      setLoadingChat(true)
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`
+        }
+      }
+      const response = await axios.post(base_url + `chat`, { userId }, config)
+      if (!chats.find((c) => c._id === response.data._id)) setChats([response.data, ...chats]);
+      console.log("create chet", response.data)
+      setSelectedChat(response?.data)
+      setLoadingChat(false)
+      onClose()
+    } catch (error) {
+      console.log("error in chat", error)
+    }
+  }
 
   return (
     <>
@@ -99,7 +120,7 @@ const Header = () => {
               {
                 loading ? <UserListSkeleton /> : (
                   searchResult.map((user) => {
-                    return <UserList user={user} key={user._id} />
+                    return <UserList user={user} key={user._id} handleFunction={()=> accessChat(user._id)} />
                   })
                 )
               }
@@ -110,5 +131,6 @@ const Header = () => {
     </>
   )
 }
+
 
 export default Header
