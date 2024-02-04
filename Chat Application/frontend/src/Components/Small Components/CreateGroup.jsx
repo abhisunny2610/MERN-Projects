@@ -14,7 +14,8 @@ import {
     Input,
     useToast,
     Spinner,
-    Flex
+    Flex,
+    Badge
 } from '@chakra-ui/react'
 import { ChatState } from '../../Context/ChatProvider'
 import axios from 'axios'
@@ -28,12 +29,14 @@ const CreateGroup = ({ children }) => {
 
     const { user, chats, setChats } = ChatState()
 
-    const [groupName, setGroupName] = useState()
-    const [selectedUser, setSelectedUser] = useState([])
-    const [searchInput, setSearchInput] = useState()
-    const [searchResult, setSearchResult] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [groupName, setGroupName] = useState() // for group name
+    const [selectedUser, setSelectedUser] = useState([]) // for selected user to create group members
+    const [searchInput, setSearchInput] = useState() // for search input
+    const [searchResult, setSearchResult] = useState([]) // list of user using search
+    const [loading, setLoading] = useState(false) // loading
 
+
+    // to handle search 
     const handleSearch = async (query) => {
 
         setSearchInput(query)
@@ -50,6 +53,7 @@ const CreateGroup = ({ children }) => {
                 }
             }
 
+            // getting all the users 
             const response = await axios.get(base_url + `auth/allUsers?search=${searchInput}`, config)
             setLoading(false)
             setSearchResult(response?.data?.users)
@@ -60,12 +64,83 @@ const CreateGroup = ({ children }) => {
 
     }
 
-    const handleGroup = () => {
-
+    // to make a users array to make a guorp members
+    const handleGroup = (user) => {
+        if(selectedUser.includes(user)){
+            toast({
+                title: "User already exists",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
+            return;
+        }
+        setSelectedUser([...selectedUser, user])
     }
 
-    const handleSubmit = () => {
+    // to remove the user 
+    const handleRemoveUser = (user) => {
+        setSelectedUser(selectedUser.filter((sel)=>sel._id !== user._id))
+    }
 
+    // for handle a submit to create a group chat
+    const handleSubmit = async () => {
+        if(groupName === ""){
+            toast({
+                title: "Group name required",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
+            return
+        }
+
+        if(selectedUser.length <=1){
+            toast({
+                title: "Minimum 2 users required",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
+            return
+        }
+
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+
+            const response = await axios.post(base_url + `chat/creategroup`, {
+                name: groupName,
+                users : JSON.stringify(selectedUser.map((u) => u._id))
+            },
+            config
+            )
+            setChats([response?.data, ...chats]);
+            onClose();
+            toast({
+              title: "New Group Chat Created!",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            
+        } catch (error) {
+            toast({
+                title: "Failed to Create the Chat!",
+                description: error.response.data,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
+        }
     }
 
     return (
@@ -90,13 +165,21 @@ const CreateGroup = ({ children }) => {
                             <FormLabel>Search User</FormLabel>
                             <Input type='text' placeholder='Search User' onChange={(e) => handleSearch(e.target.value)}></Input>
                         </FormControl>
-                        {/* selected user */}
+                        
+                         {/* display selected users */}
+                        {
+                            selectedUser.map((user) => (
+                                <Badge colorScheme='purple' mb={2} mr={2} key={user._id} >{user.name} <i style={{marginLeft: "5px"}} class="fa-solid fa-xmark" onClick={()=> handleRemoveUser(user)}></i></Badge>
+                            ))
+                        }
+
+                         {/* display users list */}
                         {
                             loading ? <Flex justifyContent="center" alignItems="center">
                                 <Spinner />
                             </Flex> : (
-                                searchResult.map((user) => {
-                                    return <UserList user={user} key={user._id} handleFunction={() => handleGroup()} />
+                                searchResult?.slice(0,4).map((user) => {
+                                    return <UserList user={user} key={user._id} handleFunction={() => handleGroup(user)} />
                                 })
                             )
                         }

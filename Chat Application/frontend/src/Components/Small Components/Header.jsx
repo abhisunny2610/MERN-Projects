@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useDisclosure, Drawer, DrawerBody,
-  DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton, Spinner
+  DrawerHeader, DrawerOverlay, DrawerContent, Input, DrawerCloseButton, Spinner, useToast
 } from '@chakra-ui/react'
 import ProfileModel from './ProfileModel'
 import { useNavigate } from 'react-router'
@@ -14,11 +14,13 @@ import UserListSkeleton from './UserListSkeleton'
 const Header = () => {
 
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState()
+
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
   const [loading, setLoading] = useState(false)
   const [loadingChat, setLoadingChat] = useState(false)
-  
+
+  const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate()
 
@@ -28,23 +30,37 @@ const Header = () => {
   }
 
   const handleSearch = async () => {
-    if (search) {
-      try {
-        setLoading(true)
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        }
+    if (!search) {
+      toast({
+        title: "Please Enter something in search",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
 
-        const response = await axios.get(base_url + `auth/allUsers?search=${search}`, config)
-        if (!chats.find((c) => c._id === response?.data?.users?._id)) setChats([response?.data, ...chats])
-        setLoading(false)
-        setSearchResult(response?.data?.users)
-      } catch (error) {
-        console.log("error", error)
+    try {
+      setLoading(true)
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
       }
 
+      const response = await axios.get(base_url + `auth/allUsers?search=${search}`, config)
+      setLoading(false)
+      setSearchResult(response?.data?.users)
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
   }
 
@@ -56,15 +72,22 @@ const Header = () => {
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${user.token}`
-        }
       }
-      const response = await axios.post(base_url + `chat`, { userId }, config)
-      if (!chats.find((c) => c._id === response.data._id)) setChats([response.data, ...chats]);
-      setSelectedChat(response?.data)
+      }
+      const {data} = await axios.post(base_url + `chat`, { userId }, config)
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data)
       setLoadingChat(false)
       onClose()
     } catch (error) {
-      console.log("error in chat", error)
+      toast({
+        title: "Error fetching the chat",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
   }
 
@@ -119,11 +142,12 @@ const Header = () => {
               {
                 loading ? <UserListSkeleton /> : (
                   searchResult.map((user) => {
-                    return <UserList user={user} key={user._id} handleFunction={()=> accessChat(user._id)} />
+                    return <UserList user={user} key={user._id} handleFunction={() => accessChat(user._id)} />
                   })
                 )
               }
             </Box>
+            {loadingChat && <Spinner ml="auto" d="flex" />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

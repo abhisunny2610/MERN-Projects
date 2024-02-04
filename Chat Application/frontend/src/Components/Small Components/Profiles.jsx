@@ -6,22 +6,22 @@ import { Box, Button, Stack, Text } from '@chakra-ui/react'
 import UserListSkeleton from './UserListSkeleton'
 import CreateGroup from './CreateGroup'
 
-const Profiles = () => {
+const Profiles = ({fetchAgain}) => {
 
   const [loggedUser, setLoggedUser] = useState()
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState()
 
 
-  const fetchChats = async (userId) => {
+  const fetchChats = async () => {
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`
-        }
       }
-      const response = await axios.get(base_url + `chat`, config)
-      setChats(response?.data)
+      }
+      const {data} = await axios.get(base_url + `chat`, config)
+      setChats(data)
 
     } catch (error) {
       console.log("error in chat", error)
@@ -31,7 +31,7 @@ const Profiles = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("token")))
     fetchChats()
-  }, [])
+  }, [fetchAgain])
 
   return (
     <>
