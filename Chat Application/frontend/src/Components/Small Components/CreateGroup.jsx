@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
-    Divider, useDisclosure ,
+    Divider, useDisclosure,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -12,12 +12,62 @@ import {
     FormControl,
     FormLabel,
     Input,
+    useToast,
+    Spinner,
+    Flex
 } from '@chakra-ui/react'
+import { ChatState } from '../../Context/ChatProvider'
+import axios from 'axios'
+import { base_url } from '../../Utils/Helper'
+import UserList from './UserList'
 
 const CreateGroup = ({ children }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-    
+    const toast = useToast()
+
+    const { user, chats, setChats } = ChatState()
+
+    const [groupName, setGroupName] = useState()
+    const [selectedUser, setSelectedUser] = useState([])
+    const [searchInput, setSearchInput] = useState()
+    const [searchResult, setSearchResult] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const handleSearch = async (query) => {
+
+        setSearchInput(query)
+
+        if (!query) {
+            return;
+        }
+
+        try {
+            setLoading(true)
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+
+            const response = await axios.get(base_url + `auth/allUsers?search=${searchInput}`, config)
+            setLoading(false)
+            setSearchResult(response?.data?.users)
+
+        } catch (error) {
+            console.log("error in get all user", error)
+        }
+
+    }
+
+    const handleGroup = () => {
+
+    }
+
+    const handleSubmit = () => {
+
+    }
+
     return (
         <>
             <span onClick={onOpen}>{children}</span>
@@ -33,15 +83,30 @@ const CreateGroup = ({ children }) => {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Group Name</FormLabel>
-                            <Input placeholder='Group Name' />
+                            <Input type='text' placeholder='Group Name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
                         </FormControl>
+
+                        <FormControl mt={4} mb={2}>
+                            <FormLabel>Search User</FormLabel>
+                            <Input type='text' placeholder='Search User' onChange={(e) => handleSearch(e.target.value)}></Input>
+                        </FormControl>
+                        {/* selected user */}
+                        {
+                            loading ? <Flex justifyContent="center" alignItems="center">
+                                <Spinner />
+                            </Flex> : (
+                                searchResult.map((user) => {
+                                    return <UserList user={user} key={user._id} handleFunction={() => handleGroup()} />
+                                })
+                            )
+                        }
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
+                        <Button onClick={onClose} mr={3}>Cancel</Button>
+                        <Button colorScheme='blue' onClick={handleSubmit}>
                             Create
                         </Button>
-                        <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

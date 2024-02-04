@@ -38,7 +38,7 @@ const Header = () => {
         }
 
         const response = await axios.get(base_url + `auth/allUsers?search=${search}`, config)
-        // if (!chats.find((c) => c._id === response?.data?.users?._id)) setChats([response?.data, ...chats])
+        if (!chats.find((c) => c._id === response?.data?.users?._id)) setChats([response?.data, ...chats])
         setLoading(false)
         setSearchResult(response?.data?.users)
       } catch (error) {
@@ -60,7 +60,6 @@ const Header = () => {
       }
       const response = await axios.post(base_url + `chat`, { userId }, config)
       if (!chats.find((c) => c._id === response.data._id)) setChats([response.data, ...chats]);
-      console.log("create chet", response.data)
       setSelectedChat(response?.data)
       setLoadingChat(false)
       onClose()

@@ -33,7 +33,6 @@ const Profiles = () => {
     fetchChats()
   }, [])
 
-  console.log("profile list", chats)
   return (
     <>
       <Box
