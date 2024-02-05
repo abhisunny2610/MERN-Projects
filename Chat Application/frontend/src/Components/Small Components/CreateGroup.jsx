@@ -169,7 +169,7 @@ const CreateGroup = ({ children }) => {
                          {/* display selected users */}
                         {
                             selectedUser.map((user) => (
-                                <Badge colorScheme='purple' mb={2} mr={2} key={user._id} >{user.name} <i style={{marginLeft: "5px"}} class="fa-solid fa-xmark" onClick={()=> handleRemoveUser(user)}></i></Badge>
+                                <Badge colorScheme='purple' mb={2} mr={2} key={user._id} >{user.name} <i style={{marginLeft: "5px"}} className="fa-solid fa-xmark" onClick={()=> handleRemoveUser(user)}></i></Badge>
                             ))
                         }
 

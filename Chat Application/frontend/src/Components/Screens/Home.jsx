@@ -14,7 +14,7 @@ const Home = () => {
 
     return (
         <Flex minWidth='max-content' alignItems='center' gap='2' p='30px'>
-            <Box>
+            <Box display={{base:"none", md:"block"}}>
                 <Image src={logo} alt='logo' boxSize='400px' />
             </Box>
             <Spacer />

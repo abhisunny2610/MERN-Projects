@@ -5,3 +5,11 @@
     padding: 0px;
     box-sizing: border-box;
 }
+
+.messages{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin-bottom: 10px;
+}

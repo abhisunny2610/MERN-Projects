@@ -23,7 +23,7 @@ import axios from 'axios'
 import { base_url } from '../../Utils/Helper'
 import UserList from './UserList'
 
-const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupModel = ({ fetchAgain, setFetchAgain, fetchAllMessages }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
@@ -191,6 +191,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
 
             user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
+            fetchAllMessages()
             setLoading(false);
         } catch (error) {
             toast({
@@ -211,7 +212,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
         <>
             <IconButton
                 display={{ base: "flex" }}
-                backgroundColor="lightgrey" icon={<i class="fa-solid fa-eye"></i>}
+                backgroundColor="lightgrey" icon={<i className="fa-solid fa-eye"></i>}
                 onClick={onOpen}></IconButton>
 
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -222,7 +223,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
                     <ModalBody>
                         {
                             selectedChat.users.map((user) => (
-                                <Badge colorScheme='purple' mb={2} mr={2} key={user._id} >{user.name} <i style={{ marginLeft: "5px" }} class="fa-solid fa-xmark" onClick={() => handleRemoveUser(user)}></i></Badge>
+                                <Badge colorScheme='purple' mb={2} mr={2} key={user._id} >{user.name} <i style={{ marginLeft: "5px" }} className="fa-solid fa-xmark" onClick={() => handleRemoveUser(user)}></i></Badge>
                             ))
                         }
                         <FormControl display="flex" mt="2">
