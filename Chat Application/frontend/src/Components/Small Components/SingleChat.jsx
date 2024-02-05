@@ -5,7 +5,7 @@ import { getSender, getSenderDetails } from '../../Utils/Helper'
 import ProfileModel from './ProfileModel'
 import UpdateGroupModel from './UpdateGroupModel'
 
-const SingleChat = () => {
+const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     const { user, selectedChat, setSelectedChat } = ChatState()
 
@@ -39,8 +39,8 @@ const SingleChat = () => {
                                     </>
                                 ) : (
                                     <>
-                                    {selectedChat.chatName.toUpperCase()}
-                                    <UpdateGroupModel />
+                                        {selectedChat.chatName.toUpperCase()}
+                                        <UpdateGroupModel fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
                                     </>
                                 )
                             }
