@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
 
+::-webkit-scrollbar {
+    width: 0;
+}
+
 *{
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    scrollbar-width: none;
 }
 
 .messages{
