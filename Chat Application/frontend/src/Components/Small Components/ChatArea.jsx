@@ -17,7 +17,6 @@ const ChatArea = ({ fetchAgain, setFetchAgain }) => {
         display={{ base: selectedChat ? 'flex' : "none", md: "flex" }}
         alignItems='center'
         flexDir='column'
-        p={3}
         backgroundColor="transparent"
         height='88vh'
         w={{ base: "100%", md: "96%" }}
