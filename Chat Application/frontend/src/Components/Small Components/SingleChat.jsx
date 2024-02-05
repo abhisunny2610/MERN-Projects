@@ -1,12 +1,13 @@
 import React from 'react'
 import { ChatState } from '../../Context/ChatProvider'
 import { Box, IconButton, Text } from '@chakra-ui/react'
-import { getSender } from '../../Utils/Helper'
+import { getSender, getSenderDetails } from '../../Utils/Helper'
 import ProfileModel from './ProfileModel'
+import UpdateGroupModel from './UpdateGroupModel'
 
 const SingleChat = () => {
 
-    const { user, chat, selectedChat, setSelectedChat } = ChatState()
+    const { user, selectedChat, setSelectedChat } = ChatState()
 
     return (
         <>
@@ -33,11 +34,14 @@ const SingleChat = () => {
                             {
                                 !selectedChat.isGroupChat ? (
                                     <>
-                                    {getSender(user, selectedChat.users)}
-                                    <ProfileModel user={getSender(user, selectedChat.users)} />
+                                        {getSender(user, selectedChat.users)}
+                                        <ProfileModel user={getSenderDetails(user, selectedChat.users)} />
                                     </>
                                 ) : (
-                                    selectedChat.chatName.toUpperCase()
+                                    <>
+                                    {selectedChat.chatName.toUpperCase()}
+                                    <UpdateGroupModel />
+                                    </>
                                 )
                             }
                             {/* <IconButton
@@ -51,7 +55,6 @@ const SingleChat = () => {
                         <Text fontSize='3xl' pb='3' fontFamily='Work sans' color='white' >
                             Click on a user to start chatting.
                         </Text>
-
                     </Box>
                 )
             }
