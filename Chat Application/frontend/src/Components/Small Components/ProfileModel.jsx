@@ -17,7 +17,7 @@ const ProfileModel = ({ user, children }) => {
         <>
             {
                 children ? (<span onClick={onOpen}>{children}</span>) : (
-                    <IconButton backgroundColor="lightgrey" icon={<i class="fa-solid fa-eye"></i>} onClick={onOpen} display={{ base: 'flex' }} />
+                    <IconButton backgroundColor="lightgrey" icon={<i className="fa-solid fa-eye"></i>} onClick={onOpen} display={{ base: 'flex' }} />
                 )
             }
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
