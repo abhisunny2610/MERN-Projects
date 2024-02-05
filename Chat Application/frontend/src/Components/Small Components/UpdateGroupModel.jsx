@@ -109,7 +109,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
 
     // to make a users array to make a guorp members
     const handleAddUser = async (user1) => {
-        if (selectedUser.users.find((u) => u._id === user1._id)) {
+        if (selectedChat.users.find((u) => u._id === user1._id)) {
             toast({
                 title: "User already exists",
                 status: "warning",
@@ -120,7 +120,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
             return;
         }
 
-        if (selectedUser.groupAdmin._id !== user._id) {
+        if (selectedChat.groupAdmin._id !== user._id) {
             toast({
                 title: "Only admin can add someone!",
                 status: "error",
@@ -234,7 +234,7 @@ const UpdateGroupModel = ({ fetchAgain, setFetchAgain }) => {
                             </Button>
                         </FormControl>
                         <FormControl mt={2} mb={2}>
-                            <Input type='text' size='sm' placeholder='Search User' onChange={(e) => handleSearch(e.target.value)}></Input>
+                            <Input type='text' size='sm' placeholder='Search user to add' onChange={(e) => handleSearch(e.target.value)}></Input>
                         </FormControl>
                         {
                             loading ? <Flex justifyContent="center" alignItems="center">

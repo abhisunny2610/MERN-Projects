@@ -10,6 +10,7 @@ const { handleErrors } = require('./MiddleWare/errorHandler')
 // routers
 const authRoutes = require('./Routes/auth')
 const chatRoutes = require('./Routes/chat')
+const messageRoues = require('./Routes/message')
 
 dotenv.config()
 app.use(cors())
@@ -34,6 +35,7 @@ db.once('open', async () => {
 
 app.use('/api/auth', authRoutes)
 app.use('/api/chat', chatRoutes)
+app.use('/api/message', messageRoues)
 
 app.use(handleErrors)
 

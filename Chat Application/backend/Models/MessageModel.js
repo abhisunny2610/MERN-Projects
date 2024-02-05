@@ -1,4 +1,4 @@
-const { Schema, modal } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const messageSchema = new Schema({
     sender: {
@@ -15,6 +15,6 @@ const messageSchema = new Schema({
     }
 }, { timestamps: true })
 
-const Message = modal('Message', messageSchema)
+const Message = model('Message', messageSchema)
 
 module.exports = Message
