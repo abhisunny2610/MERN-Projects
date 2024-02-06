@@ -22,16 +22,16 @@ This is a full-stack chat application created using the MERN stack **(MongoDB, E
 ## Screenshots
 
 ### Homepage
-![Homepage](./screenshots/home.png)
+![Homepage](./Screenshots/home.png)
 
 ### Registration Page
-![Registration Page](./screenshots/register.png)
+![Registration Page](./Screenshots/register.png)
 
 ### Login Page
-![Login Page](./screenshots/login.png)
+![Login Page](./Screenshots/login.png)
 
 ### Chat Interface
-![Chat Interface](./screenshots/chat-interface.png)
+![Chat Interface](./Screenshots/chat-interface.png)
 
 ## Usage
 - Open your browser and go to http://localhost:3000.
