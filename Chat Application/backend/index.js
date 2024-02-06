@@ -39,4 +39,15 @@ app.use('/api/message', messageRoues)
 
 app.use(handleErrors)
 
-app.listen(PORT, () => console.log("Server started on port " + PORT))
+const server = app.listen(PORT, () => console.log("Server started on port " + PORT))
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors:  {
+        origin: `http://localhost:${PORT}`
+    }
+})
+
+io.on("connection", (socket)=> {
+    console.log("Connected to socket.io")
+})

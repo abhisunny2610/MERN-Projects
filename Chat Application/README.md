@@ -1,28 +1,28 @@
 # MERN Chat Application
 
-This is a full-stack chat application created using the MERN stack (MongoDB, Express.js, React.js, Node.js). The application allows users to register, login, and chat with other users in real-time. It utilizes WebSocket protocol for real-time communication and MongoDB Atlas for data storage. Below is the detailed guide on how to set up and use the application.
+This is a full-stack chat application created using the MERN stack **(MongoDB, Express.js, React.js, Node.js)**. The application allows users to register, login, and chat with other users in real-time. It utilizes WebSocket protocol for real-time communication and MongoDB Atlas for data storage. Below is the detailed guide on how to set up and use the application.
 
 ## Technologies Used
 
-- MongoDB: A NoSQL database used for storing user information and chat messages.
-- Express.js: A web application framework for Node.js used for building the backend server.
-- React.js: A JavaScript library used for building the frontend user interface.
-- Node.js: A JavaScript runtime used for building the backend server.
-- Socket.IO: A library used for real-time bidirectional event-based communication.
+- **MongoDB:** A NoSQL database used for storing user information and chat messages.
+- **Express.js:** A web application framework for Node.js used for building the backend server.
+- **React.js:** A JavaScript library used for building the frontend user interface.
+- **Node.js:** A JavaScript runtime used for building the backend server.
+- **Socket.IO:** A library used for real-time bidirectional event-based communication.
 
 ## Features
 
-- `User Registration`: Users can register for an account using their email and password.
-- `User Authentication`: Users can securely login and logout to their accounts.
-- `Real-time Chat`: Users can send and receive messages in real-time.
-- `Typing Indicator`: Users can see when another user is typing a message.
-- `Message Notifications`: Users receive notifications for new messages when the chat window is not active.
-- `Create Group Chat`: Users can create a group chats.
+- **User Registration:** Users can register for an account using their email and password.
+- **User Authentication:** Users can securely login and logout to their accounts.
+- **Real-time Chat:** Users can send and receive messages in real-time.
+- **Typing Indicator:** Users can see when another user is typing a message.
+- **Message Notifications:** Users receive notifications for new messages when the chat window is not active.
+- **Create Group Chat:** Users can create a group chats.
 
 ## Screenshots
 
 ### Homepage
-![Homepage](/screenshots/homepage.png)
+![Homepage](/screenshots/home.png)
 
 ### Registration Page
 ![Registration Page](/screenshots/register.png)
@@ -31,7 +31,7 @@ This is a full-stack chat application created using the MERN stack (MongoDB, Exp
 ![Login Page](/screenshots/login.png)
 
 ### Chat Interface
-![Chat Interface](/screenshots/chat.png)
+![Chat Interface](/screenshots/chat-interface.png)
 
 ## Usage
 - Open your browser and go to http://localhost:3000.
