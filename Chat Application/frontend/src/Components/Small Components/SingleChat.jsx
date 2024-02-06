@@ -17,7 +17,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [loading, setLoading] = useState(false)
     const [newMessage, setNewMessage] = useState("")
     const [socketConnected, setSocketConnected] = useState(false)
-    
+    const [typing, setTyping] = useState(false)
+    const [isTyping, setIsTyping] = useState(false)
 
     const { user, selectedChat, setSelectedChat } = ChatState()
     const toast = useToast()
@@ -26,6 +27,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         socket = io(ENDPOINT)
         socket.emit("setup", user)
         socket.on("connection", () => setSocketConnected(true))
+        socket.on("typing", ()=> setIsTyping(true))
+        socket.on("stop typing", ()=> setIsTyping(false))
     }, [])
 
     const typingHandler = async (e) => {
