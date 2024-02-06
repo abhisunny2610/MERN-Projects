@@ -6,22 +6,50 @@ import ProfileModel from './ProfileModel'
 import UpdateGroupModel from './UpdateGroupModel'
 import axios from 'axios'
 import ScrollableChat from './ScrollableChat'
+import io from "socket.io-client"
+
+const ENDPOINT = "http://localhost:6001"
+var socket, selectedChatCompare
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
     const [newMessage, setNewMessage] = useState("")
-
+    const [socketConnected, setSocketConnected] = useState(false)
+    
 
     const { user, selectedChat, setSelectedChat } = ChatState()
     const toast = useToast()
+
+    useEffect(() => {
+        socket = io(ENDPOINT)
+        socket.emit("setup", user)
+        socket.on("connection", () => setSocketConnected(true))
+    }, [])
 
     const typingHandler = async (e) => {
         setNewMessage(e.target.value)
 
         // Typing indicator logic
     }
+
+
+    useEffect(() => {
+        fetchAllMessages()
+        selectedChatCompare = selectedChat
+    }, [selectedChat])
+
+    useEffect(()=> {
+        socket.on("message received", (newMessageReceived)=> {
+            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+                // give notification
+
+            }else{
+                setMessages([...messages, newMessageReceived])
+            }
+        })
+    })
 
     const sendMessage = async (e) => {
         if (e.key === "Enter" && newMessage) {
@@ -39,7 +67,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     chatId: selectedChat._id,
                     content: newMessage
                 }, config)
-
+                socket.emit("new message", data)
                 setMessages([...messages, data])
             } catch (error) {
                 toast({
@@ -55,7 +83,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
 
     const fetchAllMessages = async () => {
-        if(!selectedChat) return;
+        if (!selectedChat) return;
 
         setLoading(true)
         try {
@@ -65,9 +93,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 },
             };
 
-            const {data} = await axios.get(base_url + `message/${selectedChat._id}`, config)
+            const { data } = await axios.get(base_url + `message/${selectedChat._id}`, config)
             setMessages(data)
             setLoading(false)
+
+            socket.emit("join chat", selectedChat._id)
+
         } catch (error) {
             toast({
                 title: "Error Occured",
@@ -79,10 +110,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             })
         }
     }
-
-    useEffect(()=> {
-        fetchAllMessages()
-    }, [selectedChat])
 
     return (
         <>
