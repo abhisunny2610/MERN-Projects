@@ -35,6 +35,25 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setNewMessage(e.target.value)
 
         // Typing indicator logic
+        if(!socketConnected) return;
+        if(!typing){
+            setTyping(true)
+            socket.emit("typing", selectedChat._id)
+        }
+
+        let lastTypingTime = new Date().getTime()
+        var timerLength = 3000;
+
+        setTimeout(() => {
+          var timeNow = new Date().getTime()
+          var timeDiff = timeNow - lastTypingTime
+
+          if(timeDiff >= timerLength && typing){
+            socket.emit("stop typing", selectedChat._id)
+            setTyping(false)
+          }
+
+        },timerLength);
     }
 
 
