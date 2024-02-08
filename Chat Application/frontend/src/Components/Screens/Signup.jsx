@@ -3,6 +3,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { base_url } from '../../Utils/Helper'
 
 // CLOUDINARY_URL=cloudinary://254422416915595:YbMjjS3h8SyxEKTiXQVBPn36MRE@deprtb7in
 
@@ -42,7 +43,7 @@ const Signup = () => {
                 }
             }
 
-            const response = await axios.post('http://localhost:6001/api/auth/signup', formDataToSend, config)
+            const response = await axios.post(base_url+'auth', formDataToSend, config)
 
             console.log("response", response)
             setLoading(false)

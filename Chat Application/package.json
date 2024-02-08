@@ -4,9 +4,9 @@
   "description": "This is chat application",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd backend && nodemon index.js"
+    "start": "nodemon backend/index.js",
+    "server": "nodemon backend/index.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Abhishek",
   "license": "ISC",

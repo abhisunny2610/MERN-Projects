@@ -4,7 +4,7 @@ const { protect } = require('../MiddleWare/autheorised')
 const router = express.Router()
 
 router.post('/login', login)
-router.post('/signup', signup)
+router.post('/', signup)
 router.get('/allUsers', protect, allUsers)
 
 module.exports = router

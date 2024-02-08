@@ -4,6 +4,7 @@ import {
     Spinner, FormControl, FormLabel,  Input, VStack, Button, useToast
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
+import { base_url } from '../../Utils/Helper';
 
 const Login = () => {
 
@@ -33,7 +34,7 @@ const Login = () => {
                     "Content-type": "application/json"
                 }
             }
-            const response = await axios.post('http://localhost:6001/api/auth/login', formData, config)
+            const response = await axios.post(base_url + 'auth/login', formData, config)
 
             localStorage.setItem("token", JSON.stringify(response.data))
             setLoading(false)

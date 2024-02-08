@@ -1,16 +1,15 @@
 const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
-const PORT = process.env.PORT || 6001
+const PORT = process.env.PORT || 5000
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { handleErrors } = require('./MiddleWare/errorHandler')
+const path = require("path");
 
 // routers
-const authRoutes = require('./Routes/auth')
-const chatRoutes = require('./Routes/chat')
-const messageRoues = require('./Routes/message')
+const IndexRoute = require("./Routes/index")
 
 dotenv.config()
 app.use(cors())
@@ -33,9 +32,26 @@ db.once('open', async () => {
 });
  
 
-app.use('/api/auth', authRoutes)
-app.use('/api/chat', chatRoutes)
-app.use('/api/message', messageRoues)
+app.use("/",IndexRoute)
+
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "../frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname1, "../frontend/build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+// --------------------------deployment------------------------------
+
 
 app.use(handleErrors)
 
@@ -49,7 +65,7 @@ const io = require('socket.io')(server, {
 })
 
 io.on("connection", (socket) => {
-    console.log("Connected to socket.io")
+    // console.log("Connected to socket.io")
 
     socket.on("setup", (userData) => {
         socket.join(userData._id);
