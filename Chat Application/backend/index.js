@@ -31,7 +31,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', async () => {
     console.log('Connected to MongoDB Atlas');
 });
-
+ 
 
 app.use('/api/auth', authRoutes)
 app.use('/api/chat', chatRoutes)
@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
 
     socket.on("join chat", (room) => {
         socket.join(room)
-        console.log("User joined room" + room)
+        // console.log("User joined room" + room)
     })
 
     socket.on("typing", (room)=> socket.in(room).emit("typing"))
@@ -68,12 +68,16 @@ io.on("connection", (socket) => {
     socket.on("new message", (newMessageReceived) => {
         var chat = newMessageReceived.chat
 
-        if (!chat.users) return console.log("chat.users not defined")
+        if (!chat.users) return  // console.log("chat.users not defined")
 
         chat.users.forEach(user => {
             if (user._id == newMessageReceived.sender._id) return
             socket.in(user._id).emit("message received", newMessageReceived)
         })
 
+    })
+
+    socket.of("setup", () => {
+        socket.leave("disconnected");
     })
 })

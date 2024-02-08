@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider'
-import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react'
+import { Box, Flex, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react'
 import { base_url, getSender, getSenderDetails } from '../../Utils/Helper'
 import ProfileModel from './ProfileModel'
 import UpdateGroupModel from './UpdateGroupModel'
 import axios from 'axios'
 import ScrollableChat from './ScrollableChat'
+import Lottie from 'react-lottie'
 import io from "socket.io-client"
+import animationData from '../../Assests/Animation.json'
 
 const ENDPOINT = "http://localhost:6001"
 var socket, selectedChatCompare
@@ -23,20 +25,29 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState()
     const toast = useToast()
 
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice"
+        }
+    }
+
     useEffect(() => {
         socket = io(ENDPOINT)
         socket.emit("setup", user)
-        socket.on("connection", () => setSocketConnected(true))
-        socket.on("typing", ()=> setIsTyping(true))
-        socket.on("stop typing", ()=> setIsTyping(false))
+        socket.on("connected", () => setSocketConnected(true))
+        socket.on("typing", () => setIsTyping(true))
+        socket.on("stop typing", () => setIsTyping(false))
     }, [])
 
     const typingHandler = async (e) => {
         setNewMessage(e.target.value)
 
         // Typing indicator logic
-        if(!socketConnected) return;
-        if(!typing){
+        if (!socketConnected) return;
+        if (!typing) {
             setTyping(true)
             socket.emit("typing", selectedChat._id)
         }
@@ -45,15 +56,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         var timerLength = 3000;
 
         setTimeout(() => {
-          var timeNow = new Date().getTime()
-          var timeDiff = timeNow - lastTypingTime
+            var timeNow = new Date().getTime()
+            var timeDiff = timeNow - lastTypingTime
 
-          if(timeDiff >= timerLength && typing){
-            socket.emit("stop typing", selectedChat._id)
-            setTyping(false)
-          }
+            if (timeDiff >= timerLength && typing) {
+                socket.emit("stop typing", selectedChat._id)
+                setTyping(false)
+            }
 
-        },timerLength);
+        }, timerLength);
     }
 
 
@@ -62,12 +73,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         selectedChatCompare = selectedChat
     }, [selectedChat])
 
-    useEffect(()=> {
-        socket.on("message received", (newMessageReceived)=> {
-            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+    useEffect(() => {
+        socket.on("message received", (newMessageReceived) => {
+            if (!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
                 // give notification
 
-            }else{
+            } else {
                 setMessages([...messages, newMessageReceived])
             }
         })
@@ -75,6 +86,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     const sendMessage = async (e) => {
         if (e.key === "Enter" && newMessage) {
+            socket.emit("stop typing", selectedChat._id)
             try {
 
                 const config = {
@@ -193,20 +205,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     </>
                                 )
                             }
-                            <FormControl display="flex" onKeyDown={sendMessage} isRequired>
-                                <Input placeholder='Type a message'
-                                    fontFamily="Work sans"
-                                    borderRadius="none"
-                                    bg="light"
-                                    value={newMessage}
-                                    onChange={typingHandler}
-                                />
-                                <IconButton
-                                    onClick={() => sendMessage({ key: "Enter" })}
-                                    borderRadius="none"
-                                    icon={<i className="fa-regular fa-paper-plane fa-rotate-by" style={{ color: "#ffffff" }}></i>}
-                                    bg="green"
-                                />
+                                {isTyping ? (
+                                    <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '10px' }}>
+                                        <Lottie
+                                            width={70}
+                                            options={defaultOptions}
+                                        />
+                                    </div>
+                                ) : null}
+                            <FormControl onKeyDown={sendMessage} isRequired>
+                                <Flex alignItems="center">
+                                    <Input placeholder='Type a message'
+                                        fontFamily="Work sans"
+                                        borderRadius="none"
+                                        bg="light"
+                                        value={newMessage}
+                                        onChange={typingHandler}
+                                    />
+                                    <IconButton
+                                        onClick={() => sendMessage({ key: "Enter" })}
+                                        borderRadius="none"
+                                        icon={<i className="fa-regular fa-paper-plane fa-rotate-by" style={{ color: "#ffffff" }}></i>}
+                                        bg="green"
+                                    />
+                                </Flex>
                             </FormControl>
                         </Box>
                     </>
