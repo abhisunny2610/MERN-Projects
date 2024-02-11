@@ -28,7 +28,7 @@ const register = asyncHandler(async (req, res, next) => {
 
         if (type === "agent") {
             const agent = new Agent({
-                user: user._id
+                user: user._id, firstName, lastName, email, phoneNumber,
             })
 
             await agent.save()

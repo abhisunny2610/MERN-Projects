@@ -61,6 +61,10 @@ const propertySchema = new mongoose.Schema({
         type: String,
         // required: true
     },
+    status: {
+        type: Boolean,
+        default: true
+    },
     images: [{
         type: String,
         // required: true
