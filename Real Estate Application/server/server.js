@@ -3,11 +3,15 @@ const app = express()
 const dotenv = require("dotenv")
 const cors = require("cors")
 const path = require("path")
+const dbconnection = require("./utils/database/dbConnection")
+
 
 // config dotenv file
 dotenv.config({
     path: './config/config.env'
 })
+
+dbconnection()
 
 app.use(express.json())
 app.use(cors())
