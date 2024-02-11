@@ -32,6 +32,36 @@ const addProperty = expressAsyncHandler(async (req, res, next) => {
     }
 })
 
+// get all properties
+const getAllProperties = async (req, res) => {
+    try {
+        const properties = await Property.find()
+            .populate('agent', '-password');
+
+        res.status(200).json({ properties: properties });
+    } catch (error) {
+        res.status(500).json({ error: 'Server Error' });
+    }
+};
+
+const getSingleProperties = expressAsyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the property by its ID
+        const property = await Property.findById(id);
+
+        if (!property) {
+            return res.status(404).json({ error: 'Property not found' });
+        }
+
+        return res.status(200).json({ property });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server Error');
+    }
+})
+
 // Query recent properties sorted by createdAt timestamp
 const getRecentProperties = async (req, res) => {
     try {
@@ -46,28 +76,28 @@ const getRecentProperties = async (req, res) => {
     }
 };
 
-// Query recent properties sorted by createdAt timestamp
+// Query rent properties
 const getRentProperties = async (req, res) => {
     try {
-        const recentProperties = await Property.find({ fortype: "rent" })
+        const properties = await Property.find({ fortype: "rent" })
             .populate('agent', '-password');
 
-        res.status(200).json({ properties: recentProperties });
+        res.status(200).json({ properties: properties });
     } catch (error) {
         res.status(500).json({ error: 'Server Error' });
     }
 };
-// Query recent properties sorted by createdAt timestamp
+// Query sell properties 
 const getSellProperties = async (req, res) => {
     try {
-        const recentProperties = await Property.find({ fortype: "sell" })
+        const properties = await Property.find({ fortype: "sell" })
             .populate('agent', '-password');
 
-        res.status(200).json({ properties: recentProperties });
+        res.status(200).json({ properties: properties });
     } catch (error) {
         res.status(500).json({ error: 'Server Error' });
     }
 };
 
 
-module.exports = { addProperty, getRecentProperties, getRentProperties, getSellProperties }
+module.exports = { addProperty, getRecentProperties, getRentProperties, getSellProperties, getAllProperties, getSingleProperties }
