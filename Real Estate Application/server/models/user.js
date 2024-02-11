@@ -36,10 +36,8 @@ const UserSchema = new Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: 'Property'
     //   }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+}, {
+    timestamps: true
 });
 
 // hashing the password before save the data in database
