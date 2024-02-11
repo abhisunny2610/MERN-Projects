@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler")
 const User = require("../models/user")
 const { generateToken } = require("../utils/auth/token")
 const bcrypt = require("bcrypt")
+const Agent = require("../models/agent")
 
 // for register
 const register = asyncHandler(async (req, res, next) => {
@@ -24,9 +25,19 @@ const register = asyncHandler(async (req, res, next) => {
         })
         // save the user to database
         await user.save()
+
+        if (type === "agent") {
+            const agent = new Agent({
+                user: user._id
+            })
+
+            await agent.save()
+        }
+
         const token = await generateToken(user)
         return res.status(201).json({ msg: "User successfully created", token: token })
     } catch (error) {
+        console.error(error)
         return res.status(500).send("Server Error")
     }
 })

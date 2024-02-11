@@ -8,9 +8,7 @@ const dbconnection = require("./utils/database/dbConnection")
 const indexRoute = require("./routers/index")
 
 // config dotenv file
-dotenv.config({
-    path: './config/config.env'
-})
+dotenv.config()
 
 dbconnection()
 

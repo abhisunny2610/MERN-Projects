@@ -30,7 +30,7 @@ const UserSchema = new Schema({
     type:{
         type: String,
         default: "buyer",
-        enum: ["buyer", "seller"]
+        enum: ["buyer", "agent"]
     },
     //   properties: [{
     //     type: Schema.Types.ObjectId,
