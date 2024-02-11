@@ -7,7 +7,7 @@ const addProperty = expressAsyncHandler(async (req, res, next) => {
     try {
         // Create a new property
         const property = new Property({
-            agent: agentId, 
+            agent: req.agentId, 
             fortype: req.body.fortype,
             title: req.body.title,
             description: req.body.description,

@@ -11,5 +11,21 @@ const generateToken = expressAsyncHandler(async (user) => {
     return token
 })
 
+const isTokenIncluded = (req) => {
+    return (
+        req.headers.authorization && req.headers.authorization.startsWith("Bearer")
+    );
+};
 
-module.exports = { generateToken }
+const getAccessTokenFromHeader = (req) => {
+    const authorization = req.headers.authorization;
+
+    if (authorization && authorization.startsWith("Bearer")) {
+        const access_token = authorization.split(" ")[1];
+        return access_token;
+    }
+
+    return null;
+};
+
+module.exports = { generateToken, isTokenIncluded, getAccessTokenFromHeader }
