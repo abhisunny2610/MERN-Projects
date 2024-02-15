@@ -28,6 +28,7 @@ const addProperty = expressAsyncHandler(async (req, res, next) => {
 
         return res.status(201).json({ message: "Property successfully created", property });
     } catch (error) {
+        console.error(error)
         return res.status(500).send("Server Error");
     }
 })
@@ -49,7 +50,7 @@ const getSingleProperties = expressAsyncHandler(async (req, res) => {
 
     try {
         // Find the property by its ID
-        const property = await Property.findById(id);
+        const property = await Property.findById(id).populate('agent', '-password');
 
         if (!property) {
             return res.status(404).json({ error: 'Property not found' });
