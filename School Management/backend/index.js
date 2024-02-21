@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const dbconnection = require('./utils/dbconnect')
+const indexRouter = require('./routes/index')
 
 // config 
 dotenv.config()
@@ -14,6 +15,9 @@ app.use(express.json())
 
 // connecting database
 dbconnection()
+
+// routes
+app.use("/api", indexRouter)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
