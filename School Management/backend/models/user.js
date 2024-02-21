@@ -33,11 +33,17 @@ const UserSchema = new Schema({
     }
 }, {timestamps: true})
 
-UserSchema.pre("save", async function(this){
-    if(!this.isModified) next()
+UserSchema.pre("save", async function(next){
+    if(!this.isModified('password')) return next();
 
-    const salt = await bcrypt.genSalt(16)
-    this.password = bcrypt.hash(this.password , salt)
+    try {
+        const salt = await bcrypt.genSalt(16);
+        const hashedPassword = await bcrypt.hash(this.password, salt);
+        this.password = hashedPassword;
+        return next();
+    } catch (error) {
+        return next(error);
+    }
 })
 
 const User = model("User", UserSchema)

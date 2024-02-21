@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index')
 dotenv.config()
 app.use(cors())
 app.use(bodyParser.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // connecting database
@@ -23,9 +23,9 @@ app.use("/api", indexRouter)
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
-  });
+});
 
 const PORT = process.env.PORT || 8000
-app.listen(PORT, ()=>{
-    console.log(`Server started at port: ${PORT}`)    
+app.listen(PORT, () => {
+    console.log(`Server started at port: ${PORT}`)
 })
