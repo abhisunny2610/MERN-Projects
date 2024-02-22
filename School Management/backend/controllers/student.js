@@ -10,7 +10,6 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
         return res.status(400).send("Please fill all the mandatory fields");
     }
 
-
     try {
         const user = await User.findOne({ email })
         if (user) return res.status(400).send("User already exists")
@@ -42,4 +41,8 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
 
 })
 
-module.exports = { registerStudent }
+const updateStudent = expressAsyncHandler(async (req, res)=> {
+    const {id} = req.params.id
+})
+
+module.exports = { registerStudent, updateStudent }
