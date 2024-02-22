@@ -3,17 +3,17 @@ const { Schema, model } = require("mongoose");
 const teacherSchema = new Schema({
     name: {
         type: String,
-        require: true,
-        trim:true
+        required: true,
+        trim: true
     },
-    email:{
+    email: {
         type: String,
-        require:true,
-        trim:true
+        required: true,
+        trim: true
     },
     profileImage: {
         type: String,
-        default: "https://unsplash.com/photos/man-standing-near-white-wall-d1UPkiFd04A"
+        default: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fwoman%2F&psig=AOvVaw1iYfnUY32Zx3Z7nQ9omQjh&ust=1708666770702000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNC_oPGdvoQDFQAAAAAdAAAAABAE"
     },
     age: {
         type: Number,
@@ -22,15 +22,15 @@ const teacherSchema = new Schema({
     gender: {
         type: String,
         enum: ["male", "female", "other"],
-        default: ""
+        required: true
     },
     qualification: {
         type: String,
-        default: ""
+        required: true
     },
     subjects: {
         type: [String],
-        default: []
+        required: true
     },
     address: {
         street: {
@@ -57,12 +57,12 @@ const teacherSchema = new Schema({
     contact: {
         phone: {
             type: String,
-            default: ""
+            required: true
         }
     },
     dateOfBirth: {
         type: Date,
-        default: Date.now
+        required: true
     },
     dateOfJoining: {
         type: Date,
@@ -82,7 +82,7 @@ const teacherSchema = new Schema({
     },
     salary: {
         type: Number,
-        default: 0
+        required: true
     },
     isPermanent: {
         type: Boolean,
@@ -97,7 +97,7 @@ const teacherSchema = new Schema({
         default: []
     },
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 const Teacher = model("teacher", teacherSchema);
 

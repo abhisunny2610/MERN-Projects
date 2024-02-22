@@ -51,7 +51,7 @@ const studentSchema = new Schema({
     std: {
         type: String,
         trim: true,
-        required: true
+        require: true
     },
     address: {
         street: {
@@ -84,7 +84,7 @@ const studentSchema = new Schema({
     },
     dateOfBirth: {
         type: Date,
-        required: true
+        require: true
     },
 
 }, {timestamps: true})
