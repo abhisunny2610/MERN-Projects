@@ -3,8 +3,8 @@ const { isTokenIncluded, getAccessToken } = require("../utils/token");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-const authenticateUser = expressAsyncHandler(async (req, res, next)=> {
-    if(!isTokenIncluded(req)){
+const authenticateUser = expressAsyncHandler(async (req, res, next) => {
+    if (!isTokenIncluded(req)) {
         return res.status(401).send("Unauthorized no token provided")
     }
 
@@ -13,7 +13,7 @@ const authenticateUser = expressAsyncHandler(async (req, res, next)=> {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
         const user = await User.findOne({ email: decoded.email })
-        if(!user){
+        if (!user) {
             return res.status(401).send("Unauthorized: Invalid token")
         }
         req.user = user

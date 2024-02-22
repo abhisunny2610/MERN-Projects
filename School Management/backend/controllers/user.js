@@ -1,7 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const generateToken = require("../utils/token");
+const { generateToken } = require("../utils/token");
 const Student = require("../models/student");
 const Teacher = require("../models/teacher");
 
@@ -39,32 +39,40 @@ const login = expressAsyncHandler(async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(400).send("User not found")
-        } else {
-            const passwordMatch = await bcrypt.compare(password, user.password)
-            if (passwordMatch) {
-                if (role === "student") {
-                    const student = await Student.findOne({ email })
-                    if (!student) {
-                        return res.status(404).json({ message: "Student details not found" });
-                    }
-                    const token = await generateToken(user)
-                    return res.status(200).json({ token, student })
-                }
-                if (role === "teacher") {
-                    const teacher = await Teacher.findOne({ email })
-                    if (!teacher) {
-                        return res.status(404).json({ message: "Teacher details not found" });
-                    }
-                    const token = await generateToken(user)
-                    return res.status(200).json({ token, teacher })
-                }
-            } else {
-                return res.status(401).send("Username or password is incorrect")
+            return res.status(404).send("User not found")
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password)
+        if (!passwordMatch) {
+            return res.status(401).json({ message: "Incorrect password" });
+        }
+
+        let token;
+        let userData;
+
+        if (role === "student") {
+            userData = await Student.findOne({ email })
+        } else if (role === "teacher") {
+            userData = await Teacher.findOne({ email })
+        } else if (role === "admin") {
+            userData = {
+                username: user.username,
+                _id: user._id,
+                email: user.email,
+                role: "admin"
             }
         }
+
+        if (!userData) {
+            return res.status(404).json({ message: `${role} details not found` });
+        }
+
+        token = generateToken(user);
+
+        return res.status(200).json({ token, userData });
+
     } catch (error) {
-        console.error("Error occurred while creating user:", error);
+        console.error("Error occurred while login user:", error);
         return res.status(500).send("Internal Server Error. Please try again later.");
     }
 })

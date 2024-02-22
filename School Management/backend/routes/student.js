@@ -5,6 +5,6 @@ const authenticateUser = require("../middleware/authenticate")
 const router = Router()
 
 router.post("/register", registerStudent)
-router.put("/update", [authenticateUser, isAdmin] , updateStudent)
+router.put("/update/:id", [authenticateUser, isAdmin] , updateStudent)
 
 module.exports = router

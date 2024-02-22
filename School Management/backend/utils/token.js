@@ -1,10 +1,9 @@
-const expressAsyncHandler = require("express-async-handler")
 const jwt = require("jsonwebtoken")
 
-const generateToken = expressAsyncHandler(async (user) => {
+const generateToken = (user) => {
     try {
         const payload = {
-            email: user.email, username: user.username
+            email: user.email, username: user.username, _id: user._id, role: user.role
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "3d" })
@@ -12,11 +11,11 @@ const generateToken = expressAsyncHandler(async (user) => {
     } catch (error) {
         throw new Error("Token generation failed")
     }
-})
+}
 
 const isTokenIncluded = (req) => {
     return (
-        req.authorization && req.authorization.startsWith("Bearer")
+        req.headers.authorization && req.headers.authorization.startsWith("Bearer")
     )
 }
 
