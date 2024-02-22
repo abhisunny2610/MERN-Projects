@@ -10,7 +10,8 @@
       - [Key Features](#key-features)
     - [Project 2: NexVerse Blogging Site](#project-2-nexverse-blogging-site)
       - [Key Features](#key-features-1)
-    - [Project 3: Project Name](#project-3-project-name)
+    - [Project 3: School Management System](#project-3-school-management-system)
+      - [Key Features](#key-features-2)
 
 ## Introduction
 
@@ -18,7 +19,7 @@
 Welcome to the MERN Stack Projects repository! This repository contains various projects built using the MERN stack, which includes MongoDB, Express.js, React, and Node.js.
 
 ## Projects
-
+---
 ### Project 1: ChitChat Messaging App
 
 Introducing our ChitChat Messaging App, a cutting-edge platform designed to communication and connectivity. Built on the powerful MERN stack - MongoDB, Express.js, React.js, and Node.js - this application offers seamless real-time messaging capabilities with a sleek and intuitive user interface.
@@ -42,7 +43,7 @@ Introducing our ChitChat Messaging App, a cutting-edge platform designed to comm
 ---
 - **Technologies Used**: Node JS, Express JS, MongoDB, React JS, Sockit IO and Chakra UI.
 - **Demo**: Provide a link to a live demo or the project repository.
-
+---
 ### Project 2: NexVerse Blogging Site
 
 Introducing our dynamic NexVerse Blog Site, a sophisticated platform designed to empower creators, storytellers, and thought leaders to share their ideas with the world. Crafted using the MERN stack - MongoDB, Express.js, React.js, and Node.js - this website offers a seamless blogging experience with a modern and intuitive interface
@@ -66,11 +67,30 @@ Introducing our dynamic NexVerse Blog Site, a sophisticated platform designed to
 ---
 - **Technologies Used**: Node JS, Express JS, MongoDB, React JS, Redux and Bootstrap.
 - **Demo**: Provide a link to a live demo or the project repository.
+---
+### Project 3: School Management System
 
-### Project 3: Project Name
+The School Management System is a web application built using the MERN stack, which stands for MongoDB, Express.js, React.js, and Node.js. It aims to provide a comprehensive solution for managing various aspects of a school such as student records, teacher information, classes, attendance, and more.
 
-- Description: Briefly describe the third project in the repository.
-- Technologies Used: List the main technologies used in this project.
+#### Key Features
+
+- **User Authentication**: Secure authentication system for administrators, teachers, and students.
+- **Dashboard**: Customizable dashboards for administrators, teachers, and students providing relevant information at a glance.
+- **Student Management**: Ability to manage student profiles, enrollments, grades, attendance, and fees records.
+- **Teacher Management**: Features for managing teacher profiles, assignments, class schedules, and performance evaluations.
+- **Attendance Tracking**: System for tracking student and teacher attendance, generating reports, and analyzing trends.
+- **Announcements and Communication**: Platform for posting announcements, sending notifications, and facilitating communication between stakeholders.
+- **Responsive Design**: Responsive and user-friendly interface accessible from various devices including desktops, tablets, and smartphones.
+  
+---
+**Technologies Used**
+- **Frontend**: React.js, Redux, HTML5, CSS3, JavaScript
+- **Backend**: Node.js, Express.js, MongoDB
+- **Authentication**: JSON Web Tokens (JWT)
+- **Styling**: Bootstrap, Chakra-UI
+- **Data Visualization**: Chart.js
+- **API Testing**: Postman
+- **Version Control**: Git, GitHub
 - Demo: Provide a link to a live demo or the project repository.
-
+---
 
