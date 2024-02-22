@@ -1,11 +1,13 @@
-const {Router} = require("express")
-const { registerTeacher, updateTeacher, deleteTeacher } = require("../controllers/teacher")
+const { Router } = require("express")
+const { registerTeacher, updateTeacher, deleteTeacher, getAllTeacher, getSingleTeacher } = require("../controllers/teacher")
 const authenticateUser = require("../middleware/authenticate")
 const isAdmin = require("../middleware/isAdmin")
 const router = Router()
 
 router.post("/register", registerTeacher)
-router.put("/update/:id", [authenticateUser, isAdmin] ,updateTeacher)
-router.delete("/delete/:id", [authenticateUser, isAdmin] ,deleteTeacher)
+router.get("/:id", authenticateUser, getSingleTeacher)
+router.get("/", authenticateUser, getAllTeacher)
+router.put("/update/:id", authenticateUser, updateTeacher)
+router.delete("/delete/:id", [authenticateUser, isAdmin], deleteTeacher)
 
 module.exports = router

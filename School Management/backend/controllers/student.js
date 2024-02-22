@@ -46,18 +46,37 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
 
 })
 
+const getSingleStudent = expressAsyncHandler(async (req, res) => {
+    try {
+        const studentId = req.params.id
+        const student = await Student.findById(studentId)
+        if (!student) return res.status(404).send("Student not found")
+        return res.status(200).json({ student })
+    } catch (error) {
+        console.error("Error occured while fetching single student", error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
+const getAllStudent = expressAsyncHandler(async (req, res) => {
+    try {
+        const students = await Student.find()
+        return res.status(200).json({ students })
+    } catch (error) {
+        console.error("Error occured while fetching students", error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
 const updateStudent = expressAsyncHandler(async (req, res) => {
 
     try {
         const studentId = req.params.id
-        if(!studentId){
+        if (!studentId) {
             return res.status(403).send("Student not found")
         }
-
-        if (req.user.role === "admin") {
-            const updatedStudent = await Student.findByIdAndUpdate(studentId, req.body, { new: true })
-            return res.status(200).json({message: "Student updated successfully",updatedStudent})
-        }
+        const updatedStudent = await Student.findByIdAndUpdate(studentId, req.body, { new: true })
+        return res.status(200).json({ message: "Student updated successfully", updatedStudent })
     } catch (error) {
         console.error("Error occured while updating the student", error);
         return res.status(500).json({ message: 'Internal Server Error' });
@@ -65,7 +84,7 @@ const updateStudent = expressAsyncHandler(async (req, res) => {
 
 })
 
-const deleteStudent = expressAsyncHandler(async(req, res)=> {
+const deleteStudent = expressAsyncHandler(async (req, res) => {
     try {
         const studentId = req.params.id
         const deletedStudent = await Student.findByIdAndDelete(studentId)
@@ -73,14 +92,14 @@ const deleteStudent = expressAsyncHandler(async(req, res)=> {
             return res.status(404).json({ message: 'Student not found' });
         }
 
-        const deletedUser = await User.findOneAndDelete({email: deletedStudent.email})
-        if(!deletedUser) return res.status(400).send("User not found")
+        const deletedUser = await User.findOneAndDelete({ email: deletedStudent.email })
+        if (!deletedUser) return res.status(400).send("User not found")
 
         return res.status(200).json({ message: 'Student deleted successfully' });
     } catch (error) {
-        console.log("Error occured while deleting student", error)s
+        console.log("Error occured while deleting student", error)
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 })
 
-module.exports = { registerStudent, updateStudent, deleteStudent}
+module.exports = { registerStudent, getSingleStudent, getAllStudent,updateStudent, deleteStudent }

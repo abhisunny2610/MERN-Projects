@@ -47,6 +47,28 @@ const registerTeacher = expressAsyncHandler(async (req, res) => {
 })
 
 
+const getSingleTeacher = expressAsyncHandler(async (req, res) => {
+    try {
+        const teacherId = req.params.id
+        const teacher = await Teacher.findById(teacherId)
+        if (!teacher) return res.status(404).send("Student not found")
+        return res.status(200).json({ teacher })
+    } catch (error) {
+        console.error("Error occured while fetching single teacher", error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
+const getAllTeacher = expressAsyncHandler(async (req, res) => {
+    try {
+        const teachers = await Teacher.find()
+        return res.status(200).json({ teachers })
+    } catch (error) {
+        console.error("Error occured while fetching teachers", error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
 const updateTeacher = expressAsyncHandler(async (req, res) => {
     try {
         const teacherId = req.params.id
@@ -83,4 +105,4 @@ const deleteTeacher = expressAsyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { registerTeacher, updateTeacher, deleteTeacher }
+module.exports = { registerTeacher, getSingleTeacher, getAllTeacher, updateTeacher, deleteTeacher }
