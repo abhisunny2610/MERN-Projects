@@ -1,6 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Teacher = require("../models/teacher");
+const generatePassword = require("../utils/generatePassword");
 
 const registerTeacher = expressAsyncHandler(async (req, res)=> {
     const {name, email, salary, gender, qualification, subjects, phone, dateOfBirth} = req.body
@@ -11,7 +12,7 @@ const registerTeacher = expressAsyncHandler(async (req, res)=> {
         if(user) return res.status(400).send("User already exits")
 
         
-        const teacherPassword = name + "@teacher" + dateOfBirth
+        const teacherPassword = generatePassword(name, dateOfBirth)
         const newUser = await User.create({ 
             username: name, 
             email: email, 

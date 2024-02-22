@@ -1,6 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Student = require("../models/student");
+const generatePassword = require("../utils/generatePassword");
 
 const registerStudent = expressAsyncHandler(async (req, res) => {
     const { name, email, phone, gender, std, dateOfBirth } = req.body;
@@ -14,7 +15,7 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
         const user = await User.findOne({ email })
         if (user) return res.status(400).send("User already exists")
 
-        const studentpassword = name + "@" + dateOfBirth
+        const studentpassword = generatePassword(name, dateOfBirth)
         const newUser = await User.create({ 
             username: name, 
             email: email, 

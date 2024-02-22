@@ -14,19 +14,13 @@ const register = expressAsyncHandler(async (req, res) => {
 
     try {
 
-        const user = await User.findOne({email})
-        if(user) return res.status(400).send("User already exists")
+        const user = await User.findOne({ email })
+        if (user) return res.status(400).send("User already exists")
 
         const newUser = await User.create({
             username, email, role, password
         })
 
-        // for teacher
-        if (role === "teacher") {
-            const student = await Teacher.create({
-                name:username, email:email
-            })
-        }
         return res.status(201).send("User account successfully created.")
     } catch (error) {
         console.error("Error occurred while creating user:", error);
@@ -49,8 +43,22 @@ const login = expressAsyncHandler(async (req, res) => {
         } else {
             const passwordMatch = await bcrypt.compare(password, user.password)
             if (passwordMatch) {
-                const token = await generateToken(user)
-                return res.status(200).json({ token })
+                if (role === "student") {
+                    const student = await Student.findOne({ email })
+                    if (!student) {
+                        return res.status(404).json({ message: "Student details not found" });
+                    }
+                    const token = await generateToken(user)
+                    return res.status(200).json({ token, student })
+                }
+                if (role === "teacher") {
+                    const teacher = await Teacher.findOne({ email })
+                    if (!teacher) {
+                        return res.status(404).json({ message: "Teacher details not found" });
+                    }
+                    const token = await generateToken(user)
+                    return res.status(200).json({ token, teacher })
+                }
             } else {
                 return res.status(401).send("Username or password is incorrect")
             }
