@@ -13,16 +13,13 @@ const register = expressAsyncHandler(async (req, res) => {
     }
 
     try {
-        const user = await User.create({
+
+        const user = await User.findOne({email})
+        if(user) return res.status(400).send("User already exists")
+
+        const newUser = await User.create({
             username, email, role, password
         })
-
-        // for student
-        if (role === "student") {
-            const student = await Student.create({
-                name:username, email:email
-            })
-        }
 
         // for teacher
         if (role === "teacher") {

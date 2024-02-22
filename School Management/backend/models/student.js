@@ -14,7 +14,7 @@ const studentSchema = new Schema({
     gender: {
         type: String,
         enum: ["male", "female", "other"],
-        default:"other"
+        required: true
     },
     profileImage: {
         type: String,
@@ -48,10 +48,10 @@ const studentSchema = new Schema({
         type: Number,
         default: 0
     },
-    grade: {
+    std: {
         type: String,
         trim: true,
-        default: ""
+        required: true
     },
     address: {
         street: {
@@ -79,12 +79,12 @@ const studentSchema = new Schema({
         phone: {
             type: String,
             trim: true,
-            default: ""
+            // required: true
         }
     },
     dateOfBirth: {
         type: Date,
-        default: Date.now()
+        required: true
     },
 
 }, {timestamps: true})
