@@ -72,9 +72,13 @@ const deleteStudent = expressAsyncHandler(async(req, res)=> {
         if (!deletedStudent) {
             return res.status(404).json({ message: 'Student not found' });
         }
+
+        const deletedUser = await User.findOneAndDelete({email: deletedStudent.email})
+        if(!deletedUser) return res.status(400).send("User not found")
+
         return res.status(200).json({ message: 'Student deleted successfully' });
     } catch (error) {
-        console.log("Error occured while deleting student", error)
+        console.log("Error occured while deleting student", error)s
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 })
