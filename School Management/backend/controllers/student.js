@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Student = require("../models/student");
 const generatePassword = require("../utils/generatePassword");
-const { calculateAge } = require("../utils/helper");
+const { calculateAge, generateRandomId } = require("../utils/helper");
 
 const registerStudent = expressAsyncHandler(async (req, res) => {
     const { name, email, phone, gender, std, dateOfBirth } = req.body;
@@ -15,7 +15,7 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
         const user = await User.findOne({ email })
         if (user) return res.status(400).send("User already exists")
         const age = calculateAge(dateOfBirth)
-
+        const studentId = generateRandomId()
         const studentpassword = generatePassword(name, dateOfBirth)
         const newUser = await User.create({
             username: name,
@@ -33,7 +33,8 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
             gender: gender,
             std: std,
             dateOfBirth: dateOfBirth,
-            age: age
+            age: age,
+            studentId: studentId
         });
 
         return res.status(201).send("Student successfully created.")

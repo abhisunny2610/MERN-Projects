@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const teacherSchema = new Schema({
+    teacherId: {
+        type: Number,
+        trim: true,
+        required: true
+    },
     name: {
         type: String,
         required: true,

@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Teacher = require("../models/teacher");
 const generatePassword = require("../utils/generatePassword");
-const { calculateAge } = require("../utils/helper");
+const { calculateAge, generateRandomId } = require("../utils/helper");
 
 const registerTeacher = expressAsyncHandler(async (req, res) => {
     const { name, email, salary, gender, qualification, subjects, phone, dateOfBirth } = req.body
@@ -13,6 +13,7 @@ const registerTeacher = expressAsyncHandler(async (req, res) => {
         if (user) return res.status(400).send("User already exits")
 
         const age = calculateAge(dateOfBirth)
+        const teacherId = generateRandomId()
         const teacherPassword = generatePassword(name, dateOfBirth)
         const newUser = await User.create({
             username: name,
@@ -32,7 +33,8 @@ const registerTeacher = expressAsyncHandler(async (req, res) => {
             salary: salary,
             gender: gender,
             dateOfBirth: dateOfBirth,
-            age: age
+            age: age,
+            teacherId: teacherId
         });
 
         return res.status(201).send("Teacher successfully created.")
@@ -62,13 +64,18 @@ const updateTeacher = expressAsyncHandler(async (req, res) => {
     }
 })
 
-const deleteTeacher = expressAsyncHandler(async(req, res)=> {
+const deleteTeacher = expressAsyncHandler(async (req, res) => {
     try {
         const teacherId = req.params.id
         const deletedTeacher = await Teacher.findByIdAndDelete(teacherId)
         if (!deletedTeacher) {
             return res.status(404).json({ message: 'Teacher not found' });
         }
+        const deletedUser = await User.findOneAndDelete({ email: deletedTeacher.email })
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" })
+        }
+
         return res.status(200).json({ message: 'Teacher deleted successfully' });
     } catch (error) {
         console.log("Error occured while deleting teacher", error)
