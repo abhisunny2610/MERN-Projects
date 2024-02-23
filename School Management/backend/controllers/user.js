@@ -39,12 +39,12 @@ const login = expressAsyncHandler(async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(404).send("User not found")
+            return res.status(404).json({message: "User not found"})
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password)
         if (!passwordMatch) {
-            return res.status(401).json({ message: "Incorrect password" });
+            return res.status(401).json({ message: "Incorrect email or password" });
         }
 
         let token;
