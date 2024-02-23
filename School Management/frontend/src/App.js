@@ -5,7 +5,10 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useSelector } from 'react-redux';
 
 function App() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
+
+  console.log("User",user, "token",token)
+
   return (
     <div className="App">
       <Router>

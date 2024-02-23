@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-    user:null,
+    user:{},
     token:localStorage.getItem('token') ||null,
     isLoading:false,
     error:null,
@@ -11,9 +11,9 @@ const initialState = {
 export const login = createAsyncThunk('auth/login', async(credentials, {rejectWithValue})=> {
     try {
         const response = await axios.post('/api/user/login', credentials)
-        const {token, userData} = response.data
-        localStorage.setItem('token', token)
-        return(token, userData)
+        console.log("user data", response.data)
+        localStorage.setItem('token', response.data.token)
+        return response.data
     } catch (error) {
         if (!error.response) {
             // Network error
@@ -30,9 +30,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            localStorage.removeItem('token'),
-            state.user = null,
-            state.token = null
+            localStorage.removeItem('token');
+            state.user = null;
+            state.token = null;
         }
     },
     extraReducers: (builder) => {
@@ -43,8 +43,8 @@ const authSlice = createSlice({
         })
         .addCase(login.fulfilled, (state, action)=> {
             state.isLoading = false;
-            state.user = action.payload.userData;
             state.token = action.payload.token;
+            state.user = action.payload.userData;            ;
         })
         .addCase(login.rejected, (state, action) => {
             state.isLoading = false;
