@@ -7,9 +7,9 @@ const addNotice = expressAsyncHandler(async (req, res) => {
         if (req.user.role === "admin" || req.user.role === "teacher") {
             const newNotice = await Notice.create({
                 content: content,
-                publishedBy: req.user.id
+                publishedBy: req.user._id
             })
-
+            await newNotice.populate('publishedBy', 'username')
             return res.status(201).json({ message: "Notice added successfully", newNotice })
         }
     } catch (error) {
@@ -73,7 +73,7 @@ const updateNotice = expressAsyncHandler(async (req, res) => {
 const getNoticeById = expressAsyncHandler(async (req, res) => {
     try {
         const noticeId = req.params.id
-        const notice = await Notice.findById(noticeId)
+        const notice = await Notice.findById(noticeId).populate("publishedBy", "username")
         if (!noticeId) {
             return res.status(404).send("Notice not found")
         }
