@@ -54,8 +54,8 @@ const studentSchema = new Schema({
         default: 0
     },
     std: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "class",
         require: true
     },
     address: {
@@ -84,7 +84,6 @@ const studentSchema = new Schema({
         phone: {
             type: String,
             trim: true,
-            // required: true
         }
     },
     dateOfBirth: {

@@ -4,7 +4,7 @@ const isAdmin = require("../middleware/isAdmin")
 const authenticateUser = require("../middleware/authenticate")
 const router = Router()
 
-router.post("/register", registerStudent)
+router.post("/register", [authenticateUser, isAdmin] ,registerStudent)
 router.get("/:id", authenticateUser, getSingleStudent)
 router.get("/", authenticateUser, getAllStudent)
 router.put("/update/:id", authenticateUser, updateStudent)
