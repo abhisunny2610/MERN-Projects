@@ -21,7 +21,7 @@ const addNotice = expressAsyncHandler(async (req, res) => {
 const getAllNotice = expressAsyncHandler(async (req, res) => {
     try {
         const notices = await Notice.find().populate({
-            path: "publishedBy", 
+            path: "publishedBy",
             select: "username"
         })
         if (!notices) return res.status(404).send("No notice found...")
@@ -32,16 +32,16 @@ const getAllNotice = expressAsyncHandler(async (req, res) => {
     }
 })
 
-const deleteNotice = expressAsyncHandler(async (req, res)=> {
+const deleteNotice = expressAsyncHandler(async (req, res) => {
     try {
         const noticeId = req.params.id
-        if (req.user.role === "admin"){
+        if (req.user.role === "admin") {
             const deletedNotice = await Notice.findByIdAndDelete(noticeId)
-            if(!deletedNotice){
+            if (!deletedNotice) {
                 return res.status(404).send("Notice not found")
             }
             return res.status(200).send("Notice successfully deleted")
-        }else{
+        } else {
             return res.status(400).send("User not authorized")
         }
     } catch (error) {
@@ -50,6 +50,38 @@ const deleteNotice = expressAsyncHandler(async (req, res)=> {
     }
 })
 
+const updateNotice = expressAsyncHandler(async (req, res) => {
+    const { content } = req.body
+    try {
+        const noticeId = req.params.id
 
+        if (req.user.role === "admin") {
+            const updatedNotice = await Notice.findByIdAndUpdate(noticeId, { content: content }, { new: true })
+            if (!updatedNotice) {
+                return res.status(404).send("Notice not found")
+            }
+            return res.status(200).json({ messgae: "Notice successfully updated", updatedNotice })
+        } else {
+            return res.status(400).send("User not authorized")
+        }
+    } catch (error) {
+        console.log("Error occur in update notice", error)
+        return res.status(500).send("Internal Server Error. Please try again later.");
+    }
+})
 
-module.exports = { addNotice, getAllNotice, deleteNotice }
+const getNoticeById = expressAsyncHandler(async (req, res) => {
+    try {
+        const noticeId = req.params.id
+        const notice = await Notice.findById(noticeId)
+        if (!noticeId) {
+            return res.status(404).send("Notice not found")
+        }
+        return res.status(200).json({ notice })
+    } catch (error) {
+        console.log("Error occur in single notice", error)
+        return res.status(500).send("Internal Server Error. Please try again later.");
+    }
+})
+
+module.exports = { addNotice, getAllNotice, deleteNotice, updateNotice, getNoticeById }
