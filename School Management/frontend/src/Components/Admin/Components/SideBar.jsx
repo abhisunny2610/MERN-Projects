@@ -13,11 +13,17 @@ import {
 } from '@chakra-ui/react';
 import { FaBell } from 'react-icons/fa';
 import { AiOutlineTeam, AiOutlineHome } from 'react-icons/ai';
-import { BsFolder2, BsCalendarCheck } from 'react-icons/bs';
+import { BsFolder2, BsCalendarCheck,  BsClipboard2Plus, BsClipboard2Check } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { RiFlashlightFill } from 'react-icons/ri';
+import { GoPersonAdd } from "react-icons/go";
+import { IoMdLogOut } from "react-icons/io";
+import { PiStudent } from "react-icons/pi";
+import { LiaCommentAltSolid } from "react-icons/lia";
+
 import { useSelector } from 'react-redux';
 import LogoutButton from '../../SmallComponents/LogoutButton';
+
 
 export default function SideBar() {
     const { isOpen, onClose, onOpen } = useDisclosure();
@@ -107,9 +113,16 @@ const SidebarContent = ({ ...props }) => (
         <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
             <NavItem icon={AiOutlineHome}>Dashboard</NavItem>
             <NavItem icon={AiOutlineTeam}>All Teacher</NavItem>
-            <NavItem icon={AiOutlineTeam}>New Teacher</NavItem>
+            <NavItem icon={GoPersonAdd}>New Teacher</NavItem>
+            <NavItem icon={PiStudent}>Students</NavItem>
+            <NavItem icon={GoPersonAdd}>New Student</NavItem>
+            
+            <NavItem icon={BsClipboard2Check}>Notices</NavItem>
+            <NavItem icon={BsClipboard2Plus}>New Notice</NavItem>
+            <NavItem icon={LiaCommentAltSolid}>Complains</NavItem>
             <NavItem icon={BsFolder2}>Projects</NavItem>
             <NavItem icon={BsCalendarCheck}>Calendar</NavItem>
+            <NavItem icon={IoMdLogOut}><LogoutButton /></NavItem>
         </Flex>
     </Box>
 );
