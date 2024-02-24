@@ -22,23 +22,19 @@ export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (
     }
 })
 
-export const getSingleTeacher = (id, config) => createAsyncThunk(
-    'teachers/getSingleTeacher',
-    async (_, thunkAPI) => {
-      const { rejectWithValue } = thunkAPI;
-      try {
-        const response = await axios.get(`/api/teacher/${id}`, config);
-        return response.data;
-      } catch (error) {
+export const getSingleTeacher = (id, config) =>  createAsyncThunk('teachers/getSingleTeacher', async ({ rejectWithValue }) => {
+    try {
+        const response = await axios.get(`/api/teacher/${id}`, config)
+        console.log("getsingleteacher" ,response)
+        return response.data
+    } catch (error) {
         if (!error.response) {
-          // Network error
-          throw error;
+            // Network error
+            throw error;
         }
         return rejectWithValue(error.response.data);
-      }
     }
-  );
-  
+})
 
 const teacherSlice = createSlice({
     name: "adminTeacher",
