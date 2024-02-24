@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", role: "admin", password: "" })
   const dispatch = useDispatch()
 
-  const {isLoading, error} = useSelector((state) => state.auth)
+  const {isLoading} = useSelector((state) => state.auth)
 
   const handleLogin = () => {
     dispatch(login(credentials))

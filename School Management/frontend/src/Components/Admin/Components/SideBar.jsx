@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { FaBell } from 'react-icons/fa';
 import { AiOutlineTeam, AiOutlineHome } from 'react-icons/ai';
-import { BsFolder2, BsCalendarCheck,  BsClipboard2Plus, BsClipboard2Check } from 'react-icons/bs';
+import { BsFolder2, BsCalendarCheck, BsClipboard2Plus, BsClipboard2Check } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { RiFlashlightFill } from 'react-icons/ri';
 import { GoPersonAdd } from "react-icons/go";
@@ -23,13 +23,13 @@ import { LiaCommentAltSolid } from "react-icons/lia";
 
 import { useSelector } from 'react-redux';
 import LogoutButton from '../../SmallComponents/LogoutButton';
+import AdminRouting from '../Routing/AdminRouting';
 
 
 export default function SideBar() {
     const { isOpen, onClose, onOpen } = useDisclosure();
 
     const { user } = useSelector((state) => state.auth)
-    console.log(user)
 
     return (
         <Box as="section" bg={useColorModeValue('gray.50', 'gray.700')} minH="100vh">
@@ -75,7 +75,7 @@ export default function SideBar() {
                 </Flex>
 
                 <Box as="main" p={14} minH="25rem" bg={useColorModeValue('auto', 'gray.800')}>
-
+                    <AdminRouting />
                 </Box>
             </Box>
         </Box>
@@ -116,7 +116,7 @@ const SidebarContent = ({ ...props }) => (
             <NavItem icon={GoPersonAdd}>New Teacher</NavItem>
             <NavItem icon={PiStudent}>Students</NavItem>
             <NavItem icon={GoPersonAdd}>New Student</NavItem>
-            
+
             <NavItem icon={BsClipboard2Check}>Notices</NavItem>
             <NavItem icon={BsClipboard2Plus}>New Notice</NavItem>
             <NavItem icon={LiaCommentAltSolid}>Complains</NavItem>
