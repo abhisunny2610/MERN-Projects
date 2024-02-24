@@ -10,6 +10,7 @@ import {
     useDisclosure,
     DrawerOverlay,
     useColorModeValue,
+    VStack,
 } from '@chakra-ui/react';
 import { FaBell } from 'react-icons/fa';
 import { AiOutlineTeam, AiOutlineHome } from 'react-icons/ai';
@@ -24,6 +25,8 @@ import { LiaCommentAltSolid } from "react-icons/lia";
 import { useSelector } from 'react-redux';
 import LogoutButton from '../../SmallComponents/LogoutButton';
 import AdminRouting from '../Routing/AdminRouting';
+import { NavLink } from 'react-router-dom';
+import { capitalizeFirstLetter } from '../../../Helper';
 
 
 export default function SideBar() {
@@ -60,7 +63,7 @@ export default function SideBar() {
                         icon={<FiMenu />}
                         size="md"
                     />
-
+                    
                     <Flex align="center">
                         <Icon color="gray.500" as={FaBell} cursor="pointer" />
                         <Avatar
@@ -70,11 +73,14 @@ export default function SideBar() {
                             src="https://avatars2.githubusercontent.com/u/37842853?v=4"
                             cursor="pointer"
                         />
-                        <Text>{user.username}</Text>
+                        <VStack marginLeft="5px" spacing="0" alignItems="flex-start">
+                            <Text fontWeight="bold" color='teal'>{user.username}</Text>
+                            <Text>{capitalizeFirstLetter(user.role)}</Text>
+                        </VStack>
                     </Flex>
                 </Flex>
 
-                <Box as="main" p={14} minH="25rem" bg={useColorModeValue('auto', 'gray.800')}>
+                <Box as="main" p={10} minH="25rem" bg={useColorModeValue('auto', 'gray.800')}>
                     <AdminRouting />
                 </Box>
             </Box>
@@ -116,7 +122,6 @@ const SidebarContent = ({ ...props }) => (
             <NavItem icon={GoPersonAdd}>New Teacher</NavItem>
             <NavItem icon={PiStudent}>Students</NavItem>
             <NavItem icon={GoPersonAdd}>New Student</NavItem>
-
             <NavItem icon={BsClipboard2Check}>Notices</NavItem>
             <NavItem icon={BsClipboard2Plus}>New Notice</NavItem>
             <NavItem icon={LiaCommentAltSolid}>Complains</NavItem>
