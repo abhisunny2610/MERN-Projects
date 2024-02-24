@@ -11,7 +11,6 @@ const AdminRouting = () => {
     const { user } = useSelector((state) => state.auth);
 
     return (
-        <Router>
             <Routes>
                 <Route path="/adminlogin" element={<LoginPage />} />
                 <Route
@@ -27,7 +26,6 @@ const AdminRouting = () => {
                     element={(user && user.role === "admin") ? <AddTeacher /> : <Navigate to="/adminlogin" replace />}
                 />
             </Routes>
-        </Router>
     )
 }
 

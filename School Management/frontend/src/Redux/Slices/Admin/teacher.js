@@ -22,19 +22,28 @@ export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (
     }
 })
 
-export const getSingleTeacher = (id, config) =>  createAsyncThunk('teachers/getSingleTeacher', async ({ rejectWithValue }) => {
-    try {
-        const response = await axios.get(`/api/teacher/${id}`, config)
-        console.log("getsingleteacher" ,response)
-        return response.data
-    } catch (error) {
-        if (!error.response) {
-            // Network error
-            throw error;
+export const getSingleTeacher = createAsyncThunk(
+    'teachers/getSingleTeacher',
+    async ({ id, config }, { rejectWithValue }) => {
+        try {
+            console.log("getsingleteacher");
+            const response = await axios.get(`/api/teacher/${id}`, config);
+            console.log("getsingleteacher", response);
+            return response.data.teacher; // Assuming response contains a 'teacher' property
+        } catch (error) {
+            console.error('Error getting single teacher:', error);
+            if (error.response) {
+                // Server responded with a status code outside the range of 2xx
+                console.log('Server error response:', error.response.data);
+                return rejectWithValue(error.response.data.message || 'Server Error');
+            } else {
+                // Network error or request was aborted
+                console.error('Network error:', error.message);
+                return rejectWithValue('Network Error');
+            }
         }
-        return rejectWithValue(error.response.data);
     }
-})
+);
 
 const teacherSlice = createSlice({
     name: "adminTeacher",
@@ -53,10 +62,7 @@ const teacherSlice = createSlice({
             .addCase(getAllTeachers.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload ? action.payload.message : action.error.message;
-            });
-
-        // Reducer for single a teacher
-        builder
+            })
             .addCase(getSingleTeacher.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;

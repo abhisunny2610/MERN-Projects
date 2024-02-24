@@ -23,10 +23,8 @@ import { getSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
 import { config } from '../../../Redux/Slices/Admin/auth';
 
 const TeachersList = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const { singleTeacher } = useSelector((state) => state.adminTeacher)
-
     const dispatch = useDispatch()
+    const [searchTerm, setSearchTerm] = useState('');
     const { teachers } = useSelector((state) => state.adminTeacher)
     const [isModalOpen, setIsModalOpen] = useState(false);
 

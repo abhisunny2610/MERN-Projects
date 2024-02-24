@@ -77,8 +77,8 @@ export default function SideBar() {
                             cursor="pointer"
                         />
                         <VStack marginLeft="5px" spacing="0" alignItems="flex-start">
-                            <Text fontWeight="bold" color='teal'>{user.username}</Text>
-                            <Text>{capitalizeFirstLetter(user.role)}</Text>
+                            <Text fontWeight="bold" color='teal'>{user?.username}</Text>
+                            {/* <Text>{capitalizeFirstLetter(user?.role)}</Text> */}
                         </VStack>
                     </Flex>
                 </Flex>
@@ -120,9 +120,9 @@ const SidebarContent = ({ ...props }) => (
             </Text>
         </Flex>
         <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
-            <NavItem icon={AiOutlineHome}>Dashboard</NavItem>
-            <NavItem icon={AiOutlineTeam}>All Teacher</NavItem>
-            <NavItem icon={GoPersonAdd}>New Teacher</NavItem>
+            <NavItem to='/dashboard' icon={AiOutlineHome}>Dashboard</NavItem>
+            <NavItem to='/teachers' icon={AiOutlineTeam}>All Teacher</NavItem>
+            <NavItem to='/addteacher'icon={GoPersonAdd}>New Teacher</NavItem>
             <NavItem icon={PiStudent}>Students</NavItem>
             <NavItem icon={GoPersonAdd}>New Student</NavItem>
             <NavItem icon={BsClipboard2Check}>Notices</NavItem>
@@ -135,36 +135,46 @@ const SidebarContent = ({ ...props }) => (
     </Box>
 );
 
-const NavItem = (props) => {
+
+const NavItem = ({ icon, children, to }) => {
     const color = useColorModeValue('gray.600', 'gray.300');
 
-    const { icon, children } = props;
     return (
-        <Flex
-            align="center"
-            px="4"
-            py="3"
-            cursor="pointer"
-            role="group"
-            fontWeight="semibold"
-            transition=".15s ease"
-            color={useColorModeValue('inherit', 'gray.400')}
-            _hover={{
-                bg: useColorModeValue('gray.100', 'gray.900'),
-                color: useColorModeValue('gray.900', 'gray.200')
+        <NavLink
+            to={to}
+            exact
+            activeClassName="active"
+            style={{
+                textDecoration: 'none',
+                color: 'inherit',
             }}
         >
-            {icon && (
-                <Icon
-                    mx="2"
-                    boxSize="4"
-                    _groupHover={{
-                        color: color
-                    }}
-                    as={icon}
-                />
-            )}
-            {children}
-        </Flex>
+            <Flex
+                align="center"
+                px="4"
+                py="3"
+                cursor="pointer"
+                role="group"
+                fontWeight="semibold"
+                transition=".15s ease"
+                color={useColorModeValue('inherit', 'gray.400')}
+                _hover={{
+                    bg: useColorModeValue('gray.100', 'gray.900'),
+                    color: useColorModeValue('gray.900', 'gray.200')
+                }}
+            >
+                {icon && (
+                    <Icon
+                        mx="2"
+                        boxSize="4"
+                        _groupHover={{
+                            color: color
+                        }}
+                        as={icon}
+                    />
+                )}
+                {children}
+            </Flex>
+        </NavLink>
     );
 };

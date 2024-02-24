@@ -11,7 +11,7 @@ const initialState = {
 export const config = {
     headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        authorization: `Bearer ${localStorage.getItem('token')}`
     }
 }
 

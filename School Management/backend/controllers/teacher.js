@@ -51,7 +51,7 @@ const getSingleTeacher = expressAsyncHandler(async (req, res) => {
     try {
         const teacherId = req.params.id
         const teacher = await Teacher.findById(teacherId)
-        if (!teacher) return res.status(404).send("Student not found")
+        if (!teacher) return res.status(404).send("Teacher not found")
         return res.status(200).json({ teacher })
     } catch (error) {
         console.error("Error occured while fetching single teacher", error);
