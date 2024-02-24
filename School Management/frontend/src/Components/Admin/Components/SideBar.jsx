@@ -23,7 +23,7 @@ import { PiStudent } from "react-icons/pi";
 import { LiaCommentAltSolid } from "react-icons/lia";
 
 import { useSelector } from 'react-redux';
-import LogoutButton from '../../SmallComponents/LogoutButton';
+import LogoutButton from './LogoutButton';
 import AdminRouting from '../Routing/AdminRouting';
 import { NavLink } from 'react-router-dom';
 import { capitalizeFirstLetter } from '../../../Helper';

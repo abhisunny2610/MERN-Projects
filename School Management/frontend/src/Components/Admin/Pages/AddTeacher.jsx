@@ -10,7 +10,10 @@ import {
   Select,
   Flex
 } from '@chakra-ui/react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTeachers } from '../../../Redux/Slices/Admin/teacher';
+import { config } from '../../../Redux/Slices/Admin/auth';
 
 const AddTeacher = () => {
 
@@ -24,6 +27,9 @@ const AddTeacher = () => {
     phone: "",
     dateOfBirth: null
   });
+
+  const dispatch = useDispatch()
+  const {teachers} = useSelector((state) => state.adminTeacher)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

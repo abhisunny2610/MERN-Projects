@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../../../Redux/Slices/auth'
+import { login } from '../../../Redux/Slices/Admin/auth'
 import { useNavigate} from 'react-router-dom'
 import { Box, Button, Container, FormControl, Heading, Input, Stack, FormLabel, HStack, Divider, Spinner } from '@chakra-ui/react'
 
