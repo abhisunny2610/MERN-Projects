@@ -8,9 +8,20 @@ const initialState = {
     error: null,
 }
 
+export const config = {
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+}
+
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
     try {
-        const response = await axios.post('/api/user/login', credentials)
+        const response = await axios.post('/api/user/login', credentials, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         localStorage.setItem('token', response.data.token)
         localStorage.setItem('userData', JSON.stringify(response.data.userData));
         return response.data
