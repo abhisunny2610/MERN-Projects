@@ -43,8 +43,10 @@ export default function SideBar() {
                     <SidebarContent w="full" borderRight="none" />
                 </DrawerContent>
             </Drawer>
-            <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
+            <Box ml={{ base: 0, md: 60 }} transition=".3s ease" position='relative'>
                 <Flex
+                    position='sticky'
+                    top='0'
                     as="header"
                     align="center"
                     justifyContent={{ base: 'space-between', md: 'flex-end' }}
@@ -55,6 +57,7 @@ export default function SideBar() {
                     bg={useColorModeValue('white', 'gray.800')}
                     boxShadow="sm"
                     h="14"
+                    zIndex='999'
                 >
                     <IconButton
                         aria-label="Menu"
@@ -63,7 +66,7 @@ export default function SideBar() {
                         icon={<FiMenu />}
                         size="md"
                     />
-                    
+
                     <Flex align="center">
                         <Icon color="gray.500" as={FaBell} cursor="pointer" />
                         <Avatar

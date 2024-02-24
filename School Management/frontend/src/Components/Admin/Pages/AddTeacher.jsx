@@ -10,49 +10,104 @@ import {
   RadioGroup,
   Stack,
   HStack,
+  Select,
+
 } from '@chakra-ui/react'
+import { useState } from 'react';
 
-const AddTeacher = () => (
-  <Container>
-    <Stack spacing="8">
-      <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+const AddTeacher = () => {
 
-        <Heading size={{ base: 'xs', md: 'sm' }}>Add New Teacher</Heading>
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    salary: "",
+    gender: "",
+    qualification: "",
+    subjects: [],
+    phone: "",
+    dateOfBirth: null
+  });
 
-      </Stack>
-      <Box
-        py={{ base: '0', sm: '8' }}
-        px={{ base: '4', sm: '10' }}
-        bg={{ base: 'transparent', sm: 'bg.surface' }}
-        boxShadow={{ base: 'none', sm: 'md' }}
-        borderRadius={{ base: 'none', sm: 'xl' }}
-      >
-        <form method='post'>
-          <Stack spacing="6">
-            <Stack spacing="2">
-              <Input id="name" type="text" placeholder='Name' required />
-              <Input id="email" type="email" placeholder='Email' required />
-              <Input id="salary" type="number" placeholder='Salary' required />
-              <Input id="qualification" type="text" placeholder='Qualification' required />
-              <FormControl as='fieldset'>
-                <RadioGroup defaultValue='Itachi' colorScheme='teal'>
-                  <HStack spacing='24px'>
-                    <Radio value='Sasuke'>Male</Radio>
-                    <Radio value='Nagato'>Female</Radio>
-                  </HStack>
-                </RadioGroup>
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData); // You can handle form submission here
+  };
+  return (
+    <Container>
+      <Stack spacing="8">
+        <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+
+          <Heading size={{ base: 'xs', md: 'sm' }}>Add New Teacher</Heading>
+
+        </Stack>
+        <Box
+          py={{ base: '0', sm: '8' }}
+          px={{ base: '4', sm: '10' }}
+          bg={{ base: 'transparent', sm: 'bg.surface' }}
+          boxShadow={{ base: 'none', sm: 'md' }}
+          borderRadius={{ base: 'none', sm: 'xl' }}
+        >
+          <form onSubmit={handleSubmit} method='post'>
+            <Stack spacing={4}>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input type="text" name="name" value={formData.name} onChange={handleInputChange} />
               </FormControl>
-              <Input id="email" type="email" placeholder='Enter email' required />
-              <Input id="email" type="email" placeholder='Enter email' required />
-              <Input id="email" type="email" placeholder='Enter email' required />
-              <Input id="email" type="email" placeholder='Enter email' required />
+
+              <FormControl>
+                <FormLabel>Email</FormLabel>
+                <Input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Salary</FormLabel>
+                <Input type="number" name="salary" value={formData.salary} onChange={handleInputChange} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Gender</FormLabel>
+                <Select name="gender" value={formData.gender} onChange={handleInputChange}>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </Select>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Qualification</FormLabel>
+                <Input type="text" name="qualification" value={formData.qualification} onChange={handleInputChange} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Subjects</FormLabel>
+                <Input type="text" name="subjects" value={formData.subjects} onChange={handleInputChange} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Phone</FormLabel>
+                <Input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Date of Birth</FormLabel>
+                {/* <DatePicker name="dateOfBirth" selected={formData.dateOfBirth} onChange={(date) => setFormData({...formData, dateOfBirth: date})} /> */}
+              </FormControl>
+
+              <Button type="submit" colorScheme="blue">Submit</Button>
             </Stack>
-            <Button colorScheme='teal'>Submit</Button>
-          </Stack>
-        </form>
-      </Box>
-    </Stack>
-  </Container>
-)
+          </form>
+        </Box>
+      </Stack>
+    </Container>
+  )
+}
 
 export default AddTeacher
