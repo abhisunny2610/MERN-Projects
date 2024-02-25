@@ -34,6 +34,9 @@ export default function SideBar() {
 
     const { user } = useSelector((state) => state.auth)
 
+    let role = user?.role
+
+
     return (
         <Box as="section" bg={useColorModeValue('gray.50', 'gray.700')} minH="100vh">
             <SidebarContent display={{ base: 'none', md: 'unset' }} />
@@ -78,7 +81,7 @@ export default function SideBar() {
                         />
                         <VStack marginLeft="5px" spacing="0" alignItems="flex-start">
                             <Text fontWeight="bold" color='teal'>{user?.username}</Text>
-                            {/* <Text>{capitalizeFirstLetter(user?.role)}</Text> */}
+                            <Text>{capitalizeFirstLetter(role)}</Text>
                         </VStack>
                     </Flex>
                 </Flex>
@@ -142,8 +145,8 @@ const NavItem = ({ icon, children, to }) => {
     return (
         <NavLink
             to={to}
-            exact
-            activeClassName="active"
+            exact="true"
+            activeclassname="active"
             style={{
                 textDecoration: 'none',
                 color: 'inherit',

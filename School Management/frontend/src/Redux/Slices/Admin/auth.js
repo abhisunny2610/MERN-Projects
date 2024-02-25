@@ -8,12 +8,6 @@ const initialState = {
     error: null,
 }
 
-export const config = {
-    headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-}
 
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
     try {

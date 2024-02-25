@@ -19,13 +19,12 @@ import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../../Helper';
 import TeacherProfile from './TeacherProfile';
-import { getSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
-import { config } from '../../../Redux/Slices/Admin/auth';
+import { getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
 
 const TeachersList = () => {
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState('');
-    const { teachers } = useSelector((state) => state.adminTeacher)
+    const { teachers, singleTeacher } = useSelector((state) => state.adminTeacher)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -34,11 +33,12 @@ const TeachersList = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+        dispatch(resetSingleTeacher())
     };
 
     const handleViewClick = (id) => {
         console.log('Viewing teacher with ID:', id);
-        dispatch(getSingleTeacher(id, config))
+        dispatch(getSingleTeacher(id))
         openModal()
     }
 

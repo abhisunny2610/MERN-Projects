@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getConfig } from "../../../Helper";
 
 const initialState = {
     teachers: [],
@@ -8,9 +9,9 @@ const initialState = {
     error: null,
 }
 
-export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (config, { rejectWithValue }) => {
+export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (args, { rejectWithValue }) => {
     try {
-        const response = await axios.get("/api/teacher", config)
+        const response = await axios.get("/api/teacher", getConfig())
         return response.data.teachers
     } catch (error) {
         if (!error.response) {
@@ -24,12 +25,10 @@ export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (
 
 export const getSingleTeacher = createAsyncThunk(
     'teachers/getSingleTeacher',
-    async ({ id, config }, { rejectWithValue }) => {
+    async (id, { rejectWithValue }) => {
         try {
-            console.log("getsingleteacher");
-            const response = await axios.get(`/api/teacher/${id}`, config);
-            console.log("getsingleteacher", response);
-            return response.data.teacher; // Assuming response contains a 'teacher' property
+            const response = await axios.get(`/api/teacher/${id}`, getConfig());
+            return response.data.teacher;
         } catch (error) {
             console.error('Error getting single teacher:', error);
             if (error.response) {
@@ -48,7 +47,11 @@ export const getSingleTeacher = createAsyncThunk(
 const teacherSlice = createSlice({
     name: "adminTeacher",
     initialState,
-    reducers: {},
+    reducers: {
+        resetSingleTeacher: (state) => {
+            state.singleTeacher = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllTeachers.pending, (state) => {
@@ -63,6 +66,8 @@ const teacherSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload ? action.payload.message : action.error.message;
             })
+
+        builder
             .addCase(getSingleTeacher.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -78,4 +83,5 @@ const teacherSlice = createSlice({
     }
 })
 
+export const {resetSingleTeacher} = teacherSlice.actions
 export default teacherSlice.reducer
