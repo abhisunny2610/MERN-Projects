@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../../Helper';
 import TeacherProfile from './TeacherProfile';
 import { deleteTeacher, getAllTeachers, getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
+import { Link, NavLink } from 'react-router-dom';
 
 const TeachersList = () => {
     const dispatch = useDispatch()
@@ -56,7 +57,7 @@ const TeachersList = () => {
     const handleDeleteTeacher = (id) => {
         dispatch(deleteTeacher(id))
     }
-    
+
     return (
         <Box>
             <Flex align="center" justify="space-between" mb={2}>
@@ -98,7 +99,7 @@ const TeachersList = () => {
                                     <Td>
                                         <HStack spacing='0'>
                                             <IconButton icon={<ViewIcon color="teal" />} size='sm' background="none" onClick={() => handleViewClick(teacher._id)} />
-                                            <IconButton icon={<EditIcon color="orange" />} size='sm' background="none" />
+                                            <Link style={{textDecoration: "none"}} to={`/updateteacher/${teacher._id}`} ><IconButton icon={<EditIcon color="orange" />} size='sm' background="none" /></Link>
                                             <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" onClick={() => handleDeleteTeacher(teacher._id)} />
                                         </HStack></Td>
                                 </Tr>

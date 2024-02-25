@@ -73,10 +73,6 @@ const teacherSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    classTeacher: {
-        type: Schema.Types.ObjectId,
-        ref: "class"
-    },
     classesHandled: {
         type: [String],
         default: []

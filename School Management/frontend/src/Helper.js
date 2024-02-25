@@ -36,12 +36,12 @@ export const getConfig = () => {
 const colorSchemes = ['blue', 'green', 'yellow', 'red', 'purple', 'teal', 'orange', 'cyan', 'gray', 'pink'];
 
 export const getRandomColorScheme = () => {
-  // Generate a random index to select a color scheme from the array
-  const randomIndex = Math.floor(Math.random() * colorSchemes.length);
-  return colorSchemes[randomIndex];
+    // Generate a random index to select a color scheme from the array
+    const randomIndex = Math.floor(Math.random() * colorSchemes.length);
+    return colorSchemes[randomIndex];
 };
 
- export const subjects = [
+export const subjects = [
     "English",
     "Mathematics",
     "Physics",
@@ -78,4 +78,43 @@ export const getRandomColorScheme = () => {
     "Media Studies",
     "Theater Studies",
     "Games"
+];
+
+export const teacherResponsibilities = [
+    "Lesson planning",
+    "Classroom management",
+    "Teaching curriculum",
+    "Grading assignments",
+    "Providing feedback",
+    "Parent-teacher communication",
+    "Professional development",
+    "Creating learning materials",
+    "Differentiated instruction",
+    "Student assessment",
+    "Curriculum development",
+    "Maintaining student records",
+    "Adapting to student needs",
+    "Promoting student engagement",
+    "Fostering a positive learning environment"
+];
+
+export const classes = [
+    "Nursery",
+    "LKG",
+    "UKG",
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI Commerce",
+    "XI Science",
+    "XII Commerce",
+    "XII Science"
   ];
+  

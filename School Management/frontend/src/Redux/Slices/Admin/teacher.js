@@ -7,9 +7,10 @@ const initialState = {
     singleTeacher: null,
     isLoading: false,
     error: null,
+    updateSuceesMsg : ""
 }
 
-export const registerTeacher = createAsyncThunk('teacher/registerTeacher', async (credentials, { rejectWithValue }) => {
+export const registerTeacher = createAsyncThunk('teachers/registerTeacher', async (credentials, { rejectWithValue }) => {
     try {
         const response = await axios.post("/api/teacher/register", credentials, getConfig())
         return response?.data
@@ -40,11 +41,23 @@ export const getSingleTeacher = createAsyncThunk(
 );
 
 export const deleteTeacher = createAsyncThunk(
-    'teacher/deleteTeacher',
+    'teachers/deleteTeacher',
     async (id, { rejectWithValue }) => {
         try {
             const response = await axios.delete(`/api/teacher/${id}`, getConfig());
             return id
+        } catch (error) {
+            return rejectWithValue(getErrorMessage(error))
+        }
+    }
+)
+
+export const updateTeacher = createAsyncThunk(
+    "teachers/updateTeacher",
+    async({id, credentials}, {rejectWithValue})=> {
+        try {
+            const response = await axios.put(`/api/teacher/${id}`, credentials,getConfig())
+            return response.data.message
         } catch (error) {
             return rejectWithValue(getErrorMessage(error))
         }
@@ -116,6 +129,21 @@ const teacherSlice = createSlice({
                 state.teachers = state.teachers.filter((teacher) => teacher._id !== action.payload)
             })
             .addCase(deleteTeacher.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload
+            });
+
+        // for update the tecaher
+        builder
+            .addCase(updateTeacher.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(updateTeacher.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.updateSuceesMsg = action.payload
+            })
+            .addCase(updateTeacher.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload
             });

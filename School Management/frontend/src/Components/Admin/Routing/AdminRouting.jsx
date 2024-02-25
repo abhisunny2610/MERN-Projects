@@ -1,10 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import LoginPage from '../Pages/loginpage';
 import Dashboard from '../Pages/Dashboard';
 import AllTeachers from '../Pages/AllTeachers';
 import AddTeacher from '../Pages/AddTeacher';
+import UpdateTeacher from '../Pages/UpdateTeacher';
 
 const AdminRouting = () => {
 
@@ -24,6 +25,10 @@ const AdminRouting = () => {
                 <Route
                     path="/addteacher"
                     element={(user && user.role === "admin") ? <AddTeacher /> : <Navigate to="/adminlogin" replace />}
+                />
+                <Route
+                    path="/updateteacher/:id"
+                    element={(user && user.role === "admin") ? <UpdateTeacher /> : <Navigate to="/adminlogin" replace />}
                 />
             </Routes>
     )
