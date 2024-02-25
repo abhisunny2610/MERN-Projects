@@ -8,11 +8,12 @@ import {
   Input,
   Stack,
   Select,
-  Flex
+  Flex,
+  Badge
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeachers } from '../../../Redux/Slices/Admin/teacher';
+import { getAllTeachers, registerTeacher } from '../../../Redux/Slices/Admin/teacher';
 import { config } from '../../../Redux/Slices/Admin/auth';
 
 const AddTeacher = () => {
@@ -29,7 +30,45 @@ const AddTeacher = () => {
   });
 
   const dispatch = useDispatch()
-  const {teachers} = useSelector((state) => state.adminTeacher)
+  const subjects = [
+    "English",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "History",
+    "Geography",
+    "Civics",
+    "Economics",
+    "Physical Education",
+    "Computer Science",
+    "Art / Drawing",
+    "Hindi",
+    "Music",
+    "Environmental Science",
+    "Moral Science / Ethics",
+    "Health Education",
+    "Home Science",
+    "General Knowledge",
+    "Sanskrit",
+    "Psychology",
+    "Business Studies",
+    "Accounting",
+    "Economics",
+    "Political Science",
+    "Sociology",
+    "Legal Studies",
+    "Statistics",
+    "Agricultural Science",
+    "Engineering Drawing",
+    "Information Technology",
+    "Design and Technology",
+    "Religious Studies",
+    "Media Studies",
+    "Theater Studies",
+    "Games"
+  ];
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +78,19 @@ const AddTeacher = () => {
         ...formData,
         [name]: parseInt(value)
       });
-    }else{
+    } if (name === "subjects") {
+      if (!formData.subjects.includes(value)) {
+        setFormData({
+          ...formData,
+          subjects: [...formData.subjects, value]
+        });
+      } else {
+        setFormData({
+          ...formData,
+          subjects: formData.subjects.filter(subject => subject !== value)
+        });
+      }
+    } else {
       setFormData({
         ...formData,
         [name]: value
@@ -50,6 +101,7 @@ const AddTeacher = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(registerTeacher(formData))
     console.log(formData); // You can handle form submission here
   };
 
@@ -88,7 +140,7 @@ const AddTeacher = () => {
 
                 <FormControl flex="1">
                   <FormLabel>Gender</FormLabel>
-                  <Select name="gender" value={formData.gender} onChange={handleInputChange}>
+                  <Select name="gender" value={formData.gender} onChange={handleInputChange} multiple={false}>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -114,8 +166,20 @@ const AddTeacher = () => {
               </Flex>
               <FormControl>
                 <FormLabel>Subjects</FormLabel>
-                <Input type="text" name="subjects" value={formData.subjects} onChange={(date) => setFormData({...formData, dateOfBirth: date})} />
+                <Select name="subjects" value={formData.subjects} onChange={handleInputChange} multiple={false}>
+                  {
+                    subjects.map((subject, index) => {
+                      return <option value={subject} key={index}>{subject}</option>
+                    })
+                  }
+                </Select>
               </FormControl>
+
+              <Flex flexWrap="wrap">
+              {formData.subjects.map((subject, index) => (
+                <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
+              ))}
+              </Flex>
 
               <Button type="submit" colorScheme="blue">Submit</Button>
             </Stack>

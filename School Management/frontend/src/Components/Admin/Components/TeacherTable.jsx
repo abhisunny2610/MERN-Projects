@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Box,
     Flex,
@@ -19,7 +19,7 @@ import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../../Helper';
 import TeacherProfile from './TeacherProfile';
-import { getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
+import { deleteTeacher, getAllTeachers, getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
 
 const TeachersList = () => {
     const dispatch = useDispatch()
@@ -27,20 +27,7 @@ const TeachersList = () => {
     const { teachers } = useSelector((state) => state.adminTeacher)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        dispatch(resetSingleTeacher())
-    };
-
-    const handleViewClick = (id) => {
-        dispatch(getSingleTeacher(id))
-        openModal()
-    }
-
+    // filter the teacher on the basis of teacher name or email
     const filteredTeachers = teachers[0]?.filter(
         teacher =>
             teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -48,6 +35,28 @@ const TeachersList = () => {
     );
 
 
+    // for open the modal
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    // for close the modal
+    const closeModal = () => {
+        setIsModalOpen(false);
+        dispatch(resetSingleTeacher())
+    };
+
+    // to handle the view profile and open the modal
+    const handleViewClick = (id) => {
+        dispatch(getSingleTeacher(id))
+        openModal()
+    }
+
+    // for delete the teacher
+    const handleDeleteTeacher = (id) => {
+        dispatch(deleteTeacher(id))
+    }
+    
     return (
         <Box>
             <Flex align="center" justify="space-between" mb={2}>
@@ -90,7 +99,7 @@ const TeachersList = () => {
                                         <HStack spacing='0'>
                                             <IconButton icon={<ViewIcon color="teal" />} size='sm' background="none" onClick={() => handleViewClick(teacher._id)} />
                                             <IconButton icon={<EditIcon color="orange" />} size='sm' background="none" />
-                                            <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" />
+                                            <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" onClick={() => handleDeleteTeacher(teacher._id)} />
                                         </HStack></Td>
                                 </Tr>
                             )

@@ -7,7 +7,23 @@ const initialState = {
     singleTeacher: null,
     isLoading: false,
     error: null,
+    registrationSuccess: null
 }
+
+export const registerTeacher = createAsyncThunk('teacher/registerTeacher', async (credentials, { rejectWithValue }) => {
+    try {
+        const response = await axios.post("/api/teacher/register", credentials, {
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        console.log("Register teacher", response)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
 
 export const getAllTeachers = createAsyncThunk('teachers/getAllTeacher', async (args, { rejectWithValue }) => {
     try {
@@ -34,7 +50,7 @@ export const deleteTeacher = createAsyncThunk(
     'teacher/deleteTeacher',
     async (id, { rejectWithValue }) => {
         try {
-            const response = axios.delete(`/api/teacher/${id}`, getConfig());
+            const response = await axios.delete(`/api/teacher/${id}`, getConfig());
             return id
         } catch (error) {
             return rejectWithValue(getErrorMessage(error))
@@ -51,6 +67,22 @@ const teacherSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+
+        // for register teacher
+        builder
+            .addCase(registerTeacher.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(registerTeacher.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.registrationSuccess = action.payload
+            })
+            .addCase(registerTeacher.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload
+            })
+
         // for fetching all teachers list
         builder
             .addCase(getAllTeachers.pending, (state) => {
