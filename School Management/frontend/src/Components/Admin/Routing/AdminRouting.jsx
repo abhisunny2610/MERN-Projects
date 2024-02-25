@@ -6,6 +6,7 @@ import Dashboard from '../Pages/Dashboard';
 import AllTeachers from '../Pages/AllTeachers';
 import AddTeacher from '../Pages/AddTeacher';
 import UpdateTeacher from '../Pages/UpdateTeacher';
+import AllNotices from '../Pages/AllNotices';
 
 const AdminRouting = () => {
 
@@ -29,6 +30,10 @@ const AdminRouting = () => {
                 <Route
                     path="/updateteacher/:id"
                     element={(user && user.role === "admin") ? <UpdateTeacher /> : <Navigate to="/adminlogin" replace />}
+                />
+                <Route
+                    path="/notices"
+                    element={(user && user.role === "admin") ? <AllNotices /> : <Navigate to="/adminlogin" replace />}
                 />
             </Routes>
     )

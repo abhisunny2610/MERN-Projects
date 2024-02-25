@@ -22,7 +22,7 @@ const getAllNotice = expressAsyncHandler(async (req, res) => {
     try {
         const notices = await Notice.find().populate({
             path: "publishedBy",
-            select: "username"
+            select: "username role -_id"
         })
         if (!notices) return res.status(404).send("No notice found...")
         return res.status(200).json({ notices })

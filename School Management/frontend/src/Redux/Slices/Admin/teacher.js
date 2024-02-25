@@ -7,7 +7,7 @@ const initialState = {
     singleTeacher: null,
     isLoading: false,
     error: null,
-    updateSuceesMsg : ""
+    updateSuceesMsg: ""
 }
 
 export const registerTeacher = createAsyncThunk('teachers/registerTeacher', async (credentials, { rejectWithValue }) => {
@@ -54,9 +54,9 @@ export const deleteTeacher = createAsyncThunk(
 
 export const updateTeacher = createAsyncThunk(
     "teachers/updateTeacher",
-    async({id, credentials}, {rejectWithValue})=> {
+    async ({ id, credentials }, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`/api/teacher/${id}`, credentials,getConfig())
+            const response = await axios.put(`/api/teacher/${id}`, credentials, getConfig())
             return response.data.message
         } catch (error) {
             return rejectWithValue(getErrorMessage(error))

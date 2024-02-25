@@ -128,7 +128,7 @@ const SidebarContent = ({ ...props }) => (
             <NavItem to='/addteacher'icon={GoPersonAdd}>New Teacher</NavItem>
             <NavItem icon={PiStudent}>Students</NavItem>
             <NavItem icon={GoPersonAdd}>New Student</NavItem>
-            <NavItem icon={BsClipboard2Check}>Notices</NavItem>
+            <NavItem to="/notices" icon={BsClipboard2Check}>Notices</NavItem>
             <NavItem icon={BsClipboard2Plus}>New Notice</NavItem>
             <NavItem icon={LiaCommentAltSolid}>Complains</NavItem>
             <NavItem icon={BsFolder2}>Projects</NavItem>

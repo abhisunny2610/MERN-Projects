@@ -3,6 +3,7 @@ const {model, Schema} = require("mongoose")
 const noticeSchema = new Schema({
     publishedBy: {
         type: Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     content: {

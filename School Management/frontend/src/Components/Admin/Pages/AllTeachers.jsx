@@ -8,7 +8,7 @@ const AllTeachers = () => {
 
   useEffect(()=> {
     dispatch(getAllTeachers())
-  }, [dispatch])
+  }, [])
 
   return (
     <>
