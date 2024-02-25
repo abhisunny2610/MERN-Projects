@@ -6,11 +6,11 @@ const { calculateAge, generateRandomId } = require("../utils/helper");
 
 const registerTeacher = expressAsyncHandler(async (req, res) => {
     const { name, email, salary, gender, qualification, subjects, phone, dateOfBirth } = req.body
-    if (!name || !email) return res.status(400).send("Please fill all the mediatory fields.")
+    if (!name || !email) return res.status(400).json({ message: "Please fill all the mediatory fields." })
 
     try {
         const user = await User.findOne({ email })
-        if (user) return res.status(400).send("User already exits")
+        if (user) return res.status(400).json({ message: "User already exits" })
 
         const age = calculateAge(dateOfBirth)
         const teacherId = generateRandomId()

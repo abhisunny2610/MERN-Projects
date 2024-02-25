@@ -7,19 +7,12 @@ const initialState = {
     singleTeacher: null,
     isLoading: false,
     error: null,
-    registrationSuccess: null
 }
 
 export const registerTeacher = createAsyncThunk('teacher/registerTeacher', async (credentials, { rejectWithValue }) => {
     try {
-        const response = await axios.post("/api/teacher/register", credentials, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        console.log("Register teacher", response)
-        return response.data
+        const response = await axios.post("/api/teacher/register", credentials, getConfig())
+        return response?.data
     } catch (error) {
         return rejectWithValue(getErrorMessage(error))
     }
@@ -76,7 +69,6 @@ const teacherSlice = createSlice({
             })
             .addCase(registerTeacher.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.registrationSuccess = action.payload
             })
             .addCase(registerTeacher.rejected, (state, action) => {
                 state.isLoading = false;

@@ -9,12 +9,14 @@ import {
   Stack,
   Select,
   Flex,
-  Badge
+  Badge,
+  useToast,
+  Spinner
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeachers, registerTeacher } from '../../../Redux/Slices/Admin/teacher';
-import { config } from '../../../Redux/Slices/Admin/auth';
+import { registerTeacher } from '../../../Redux/Slices/Admin/teacher';
+import { subjects } from '../../../Helper';
 
 const AddTeacher = () => {
 
@@ -30,44 +32,8 @@ const AddTeacher = () => {
   });
 
   const dispatch = useDispatch()
-  const subjects = [
-    "English",
-    "Mathematics",
-    "Physics",
-    "Chemistry",
-    "Biology",
-    "History",
-    "Geography",
-    "Civics",
-    "Economics",
-    "Physical Education",
-    "Computer Science",
-    "Art / Drawing",
-    "Hindi",
-    "Music",
-    "Environmental Science",
-    "Moral Science / Ethics",
-    "Health Education",
-    "Home Science",
-    "General Knowledge",
-    "Sanskrit",
-    "Psychology",
-    "Business Studies",
-    "Accounting",
-    "Economics",
-    "Political Science",
-    "Sociology",
-    "Legal Studies",
-    "Statistics",
-    "Agricultural Science",
-    "Engineering Drawing",
-    "Information Technology",
-    "Design and Technology",
-    "Religious Studies",
-    "Media Studies",
-    "Theater Studies",
-    "Games"
-  ];
+  const toast = useToast()
+  const { isLoading, error} = useSelector((state) => state.adminTeacher)
 
 
   const handleInputChange = (e) => {
@@ -99,10 +65,36 @@ const AddTeacher = () => {
   }
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerTeacher(formData))
-    console.log(formData); // You can handle form submission here
+    try {
+      await dispatch(registerTeacher(formData))
+      toast({
+        title: "New Teacher Successfully Added",
+        status: "success",
+        position: 'top-right',
+        isClosable: true,
+        duration: 5000,
+      })
+      setFormData({
+        name: "",
+        email: "",
+        salary: "",
+        gender: "",
+        qualification: "",
+        subjects: [],
+        phone: "",
+        dateOfBirth: null
+      });
+    } catch (errors) {
+      toast({
+        title: {error},
+        duration: 5000,
+        status: "error",
+        position: 'top-right',
+        isClosable: true,
+      })
+    }
   };
 
   return (
@@ -110,7 +102,7 @@ const AddTeacher = () => {
       <Stack spacing="8">
         <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
 
-          <Heading size={{ base: 'xs', md: 'sm' }}>Add New Teacher</Heading>
+          <Heading size={{ base: 'sm', md: 'md' }}>Register New Teacher</Heading>
 
         </Stack>
         <Box
@@ -176,12 +168,12 @@ const AddTeacher = () => {
               </FormControl>
 
               <Flex flexWrap="wrap">
-              {formData.subjects.map((subject, index) => (
-                <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
-              ))}
+                {formData.subjects.map((subject, index) => (
+                  <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
+                ))}
               </Flex>
 
-              <Button type="submit" colorScheme="blue">Submit</Button>
+              <Button type="submit" colorScheme="teal">{isLoading ? <Spinner />:  "Submit"}</Button>
             </Stack>
           </form>
         </Box>

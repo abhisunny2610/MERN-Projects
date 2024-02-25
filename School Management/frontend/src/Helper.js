@@ -40,3 +40,42 @@ export const getRandomColorScheme = () => {
   const randomIndex = Math.floor(Math.random() * colorSchemes.length);
   return colorSchemes[randomIndex];
 };
+
+ export const subjects = [
+    "English",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "History",
+    "Geography",
+    "Civics",
+    "Economics",
+    "Physical Education",
+    "Computer Science",
+    "Art / Drawing",
+    "Hindi",
+    "Music",
+    "Environmental Science",
+    "Moral Science / Ethics",
+    "Health Education",
+    "Home Science",
+    "General Knowledge",
+    "Sanskrit",
+    "Psychology",
+    "Business Studies",
+    "Accounting",
+    "Economics",
+    "Political Science",
+    "Sociology",
+    "Legal Studies",
+    "Statistics",
+    "Agricultural Science",
+    "Engineering Drawing",
+    "Information Technology",
+    "Design and Technology",
+    "Religious Studies",
+    "Media Studies",
+    "Theater Studies",
+    "Games"
+  ];
