@@ -1,3 +1,11 @@
+export const getErrorMessage = (error) => {
+    if (error.response) {
+        return error.response.data.message || 'Server Error';
+    } else {
+        return 'Network Error';
+    }
+};
+
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

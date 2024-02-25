@@ -24,7 +24,7 @@ import { getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admi
 const TeachersList = () => {
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState('');
-    const { teachers, singleTeacher } = useSelector((state) => state.adminTeacher)
+    const { teachers } = useSelector((state) => state.adminTeacher)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -37,7 +37,6 @@ const TeachersList = () => {
     };
 
     const handleViewClick = (id) => {
-        console.log('Viewing teacher with ID:', id);
         dispatch(getSingleTeacher(id))
         openModal()
     }

@@ -7,7 +7,7 @@ const router = Router()
 router.post("/register", [authenticateUser, isAdmin] ,registerTeacher)
 router.get("/:id", authenticateUser, getSingleTeacher)
 router.get("/", authenticateUser, getAllTeacher)
-router.put("/update/:id", authenticateUser, updateTeacher)
-router.delete("/delete/:id", [authenticateUser, isAdmin], deleteTeacher)
+router.put("/:id", authenticateUser, updateTeacher)
+router.delete("/:id", [authenticateUser, isAdmin], deleteTeacher)
 
 module.exports = router
