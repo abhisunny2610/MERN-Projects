@@ -18,7 +18,7 @@ const teacherSchema = new Schema({
     },
     profileImage: {
         type: String,
-        default: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fwoman%2F&psig=AOvVaw1iYfnUY32Zx3Z7nQ9omQjh&ust=1708666770702000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNC_oPGdvoQDFQAAAAAdAAAAABAE"
+        default: "https://thumbs.dreamstime.com/b/happy-student-16369910.jpg"
     },
     age: {
         type: Number,

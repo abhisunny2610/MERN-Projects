@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllNotices } from '../../../Redux/Slices/Admin/notice'
+import { deleteNotice, getAllNotices } from '../../../Redux/Slices/Admin/notice'
 import { formatDate } from '../../../Helper'
 
 const AllNotices = () => {
@@ -9,16 +9,20 @@ const AllNotices = () => {
     const dispatch = useDispatch()
     const { allNotices } = useSelector((state) => state.adminNotice)
 
+    const handleDeleteNotice = (id) => {
+        dispatch(deleteNotice(id))
+    }
+
     useEffect(() => {
         dispatch(getAllNotices())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
-
+            <Heading size="md">Notice List</Heading>
             {
                 (allNotices.length === 0) ? <Heading size="xl">No Notice Found</Heading> : (
-                    <Flex flexWrap="wrap">
+                    <Flex flexWrap="wrap" mt={5}>
                         {
                             allNotices?.map((notice) => {
                                 return (
@@ -28,11 +32,11 @@ const AllNotices = () => {
                                             <Text>{formatDate(notice?.createdAt)}</Text>
                                         </CardHeader>
                                         <CardBody>
-                                            <Text>{notice?.content}</Text>
+                                        <Box mt="2" as="div" dangerouslySetInnerHTML={{ __html: notice?.content }} />
                                         </CardBody>
                                         <CardFooter justifyContent="flex-end" display="flex">
                                             <Button mr={2} colorScheme='yellow' size="sm">Edit</Button>
-                                            <Button colorScheme='red' size="sm">Delete</Button>
+                                            <Button colorScheme='red' size="sm" onClick={()=> handleDeleteNotice(notice?._id)}>Delete</Button>
                                         </CardFooter>
                                     </Card>
                                 )

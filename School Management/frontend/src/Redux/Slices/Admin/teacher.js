@@ -96,7 +96,7 @@ const teacherSlice = createSlice({
             })
             .addCase(getAllTeachers.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.teachers.push(action.payload);
+                state.teachers = [...action.payload]
             })
             .addCase(getAllTeachers.rejected, (state, action) => {
                 state.isLoading = false;

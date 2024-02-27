@@ -29,7 +29,7 @@ const TeachersList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // filter the teacher on the basis of teacher name or email
-    const filteredTeachers = teachers[0]?.filter(
+    const filteredTeachers = teachers?.filter(
         teacher =>
             teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             teacher.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -94,7 +94,7 @@ const TeachersList = () => {
                                     <Td><HStack><Avatar name={teacher?.name} src={teacher?.profileImage} size='sm' /><Text>{teacher.name}</Text></HStack></Td>
                                     <Td>{teacher?.qualification}</Td>
                                     <Td>{teacher?.email}</Td>
-                                    <Td color={(teacher?.performance === "Excellent" || teacher?.performance === "Average") ? "green" : "red"}>{teacher?.performance}</Td>
+                                    <Td color={(teacher?.performance === "Excellent" || teacher?.performance === "Good") ? "green" : "red"}>{teacher?.performance}</Td>
                                     <Td>{formatDate(teacher?.dateOfJoining)}</Td>
                                     <Td>
                                         <HStack spacing='0'>

@@ -116,5 +116,4 @@ export const classes = [
     "XI Science",
     "XII Commerce",
     "XII Science"
-  ];
-  
+];

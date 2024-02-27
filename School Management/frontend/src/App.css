@@ -9,6 +9,30 @@
   width: 0px;
 }
 
+.ck-editor__top * {
+  border: none !important;
+}
+
+.ck-editor__top {
+  border: rgb(235, 235, 235) solid 1px !important;
+  border-bottom: none !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.ck-content {
+  border: rgb(235, 235, 235) solid 1px !important;
+}
+
+
+.ck-editor__editable {
+  height: 300px;
+  padding: 0.5rem 1rem !important;
+}
+
+.ck-editor__editable:focus {
+  box-shadow: none !important;
+}
+
 .admin-login {
   background:
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),

@@ -23,7 +23,7 @@ const studentSchema = new Schema({
     },
     profileImage: {
         type: String,
-        default: "https://unsplash.com/photos/man-standing-near-white-wall-d1UPkiFd04A"
+        default: "https://thumbs.dreamstime.com/b/happy-student-16369910.jpg"
     },
     parentGuardian: {
         name: {
@@ -54,8 +54,9 @@ const studentSchema = new Schema({
         default: 0
     },
     std: {
-        type: Schema.Types.ObjectId,
-        ref: "class",
+        type: String,
+        // ref: "class",
+        trim: true,
         require: true
     },
     address: {
@@ -95,3 +96,5 @@ const studentSchema = new Schema({
 
 const Student = model("Student", studentSchema)
 module.exports = Student
+
+//https://thumbs.dreamstime.com/b/happy-student-16369910.jpg

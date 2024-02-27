@@ -34,8 +34,6 @@ export default function SideBar() {
 
     const { user } = useSelector((state) => state.auth)
 
-    let role = user?.role
-
 
     return (
         <Box as="section" bg={useColorModeValue('gray.50', 'gray.700')} minH="100vh">
@@ -81,7 +79,7 @@ export default function SideBar() {
                         />
                         <VStack marginLeft="5px" spacing="0" alignItems="flex-start">
                             <Text fontWeight="bold" color='teal'>{user?.username}</Text>
-                            <Text>{capitalizeFirstLetter(role)}</Text>
+                            {user ? (<Text>{capitalizeFirstLetter(user?.role)}</Text>) : ""}
                         </VStack>
                     </Flex>
                 </Flex>
@@ -126,13 +124,13 @@ const SidebarContent = ({ ...props }) => (
             <NavItem to='/dashboard' icon={AiOutlineHome}>Dashboard</NavItem>
             <NavItem to='/teachers' icon={AiOutlineTeam}>All Teacher</NavItem>
             <NavItem to='/addteacher'icon={GoPersonAdd}>New Teacher</NavItem>
-            <NavItem icon={PiStudent}>Students</NavItem>
-            <NavItem icon={GoPersonAdd}>New Student</NavItem>
+            <NavItem to='/students' icon={PiStudent}>Students</NavItem>
+            <NavItem to='/addstudent' icon={GoPersonAdd}>New Student</NavItem>
             <NavItem to="/notices" icon={BsClipboard2Check}>Notices</NavItem>
-            <NavItem icon={BsClipboard2Plus}>New Notice</NavItem>
+            <NavItem to="/addnotice" icon={BsClipboard2Plus}>New Notice</NavItem>
             <NavItem icon={LiaCommentAltSolid}>Complains</NavItem>
             <NavItem icon={BsFolder2}>Projects</NavItem>
-            <NavItem icon={BsCalendarCheck}>Calendar</NavItem>
+            <NavItem to='/calendar' icon={BsCalendarCheck}>Calendar</NavItem>
             <NavItem icon={IoMdLogOut}><LogoutButton /></NavItem>
         </Flex>
     </Box>
