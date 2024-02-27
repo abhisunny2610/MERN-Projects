@@ -33,7 +33,7 @@ const AddTeacher = () => {
 
   const dispatch = useDispatch()
   const toast = useToast()
-  const { isLoading, error} = useSelector((state) => state.adminTeacher)
+  const { isLoading, error } = useSelector((state) => state.adminTeacher)
 
 
   const handleInputChange = (e) => {
@@ -88,7 +88,7 @@ const AddTeacher = () => {
       });
     } catch (errors) {
       toast({
-        title: {error},
+        title: { error },
         duration: 5000,
         status: "error",
         position: 'top-right',
@@ -173,7 +173,7 @@ const AddTeacher = () => {
                 ))}
               </Flex>
 
-              <Button type="submit" colorScheme="teal">{isLoading ? <Spinner />:  "Submit"}</Button>
+              <Button type="submit" colorScheme="teal">{isLoading ? <Spinner /> : "Submit"}</Button>
             </Stack>
           </form>
         </Box>

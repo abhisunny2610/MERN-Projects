@@ -1,9 +1,142 @@
-import React from 'react'
+import {
+    Box,
+    Button,
+    Container,
+    FormControl,
+    FormLabel,
+    Heading,
+    Input,
+    Stack,
+    Select,
+    Flex,
+    Badge,
+    useToast,
+    Spinner
+} from '@chakra-ui/react'
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { classes } from '../../../Helper';
+import { registerStudent } from '../../../Redux/Slices/Admin/student';
 
 const AddStudent = () => {
-  return (
-    <div>AddStudent</div>
-  )
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        gender: "",
+        std: "",
+        phone: "",
+        dateOfBirth: null
+    });
+
+    const dispatch = useDispatch()
+    const toast = useToast()
+    const { isLoading, error } = useSelector((state) => state.adminStudent)
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await dispatch(registerStudent(formData))
+            toast({
+                title: "Student Successfully Added",
+                status: "success",
+                position: 'top-right',
+                isClosable: true,
+                duration: 5000,
+            })
+            setFormData({
+                name: "",
+                email: "",
+                gender: "",
+                std: "",
+                phone: "",
+                dateOfBirth: null
+            });
+        } catch (errors) {
+            toast({
+                title: { error },
+                duration: 5000,
+                status: "error",
+                position: 'top-right',
+                isClosable: true,
+            })
+        }
+    };
+
+    return (
+        <Container>
+            <Stack spacing="8">
+                <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+
+                    <Heading size={{ base: 'sm', md: 'md' }}>Register New Student</Heading>
+
+                </Stack>
+                <Box
+                    py={{ base: '0', sm: '8' }}
+                    px={{ base: '4', sm: '10' }}
+                    bg={{ base: 'transparent', sm: 'bg.surface' }}
+                    boxShadow={{ base: 'none', sm: 'md' }}
+                    borderRadius={{ base: 'none', sm: 'xl' }}
+                >
+                    <form onSubmit={handleSubmit}>
+                        <Stack spacing={4}>
+                            <FormControl>
+                                <FormLabel>Name</FormLabel>
+                                <Input type="text" name="name" value={formData.name} onChange={handleInputChange} />
+                            </FormControl>
+
+                            <FormControl>
+                                <FormLabel>Email</FormLabel>
+                                <Input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+                            </FormControl>
+
+                            <Flex justify="space-between">
+                                <FormControl flex="1" mr={2}>
+                                    <FormLabel>Phone</FormLabel>
+                                    <Input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} />
+                                </FormControl>
+
+                                <FormControl flex="1">
+                                    <FormLabel>Gender</FormLabel>
+                                    <Select name="gender" value={formData.gender} onChange={handleInputChange} multiple={false}>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </Select>
+                                </FormControl>
+                            </Flex>
+
+                            <Flex justify="space-between">
+                                <FormControl flex="1" mr={2}>
+                                    <FormLabel>Class</FormLabel>
+                                    <Select name="std" value={formData.std} onChange={handleInputChange} multiple={false}>
+                                        {classes.map((std, index) => <option value={std} key={index}>{std}</option>)}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl flex="1">
+                                    <FormLabel>Date of Birth</FormLabel>
+                                    <Input type='date' name='dateOfBirth' selected={formData.dateOfBirth} onChange={handleInputChange} />
+                                </FormControl>
+                            </Flex>
+
+                            <Button type="submit" colorScheme="teal">{isLoading ? <Spinner /> : "Submit"}</Button>
+                        </Stack>
+                    </form>
+                </Box>
+            </Stack>
+        </Container>
+    )
 }
 
 export default AddStudent

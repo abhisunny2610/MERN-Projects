@@ -37,7 +37,7 @@ const registerStudent = expressAsyncHandler(async (req, res) => {
             studentId: studentId
         });
 
-        return res.status(201).send("Student successfully created.")
+        return res.status(201).json({message:"Student successfully created."})
 
     } catch (error) {
         console.error("Error occurred while creating user:", error);

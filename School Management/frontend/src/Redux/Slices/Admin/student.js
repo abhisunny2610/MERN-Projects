@@ -12,6 +12,17 @@ export const fetchAllStudents = createAsyncThunk("student/fetchAllStudents", asy
     }
 })
 
+// for register new student
+export const registerStudent = createAsyncThunk("student/registerStudent", async (credential, { rejectWithValue }) => {
+    try {
+        const response = await axios.post("/api/student/register", credential, getConfig())
+        console.log("----", response.data.message)
+        return response.data.message
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
+
 const initialState = {
     students: [],
     isLoading: false,
@@ -24,9 +35,9 @@ const studentSlice = createSlice({
     reducers: {
 
     },
-    extraReducers: (bulider) => {
+    extraReducers: (builder) => {
         // for fetching all the students
-        bulider
+        builder
             .addCase(fetchAllStudents.pending, (state) => {
                 state.isError = null;
                 state.isLoading = true
@@ -38,6 +49,20 @@ const studentSlice = createSlice({
             .addCase(fetchAllStudents.rejected, (state, action) => {
                 state.isError = action.payload;
                 state.isLoading = false
+            })
+
+        // for register new student
+        builder
+            .addCase(registerStudent.pending, (state) => {
+                state.isError = null;
+                state.isLoading = true
+            })
+            .addCase(registerStudent.fulfilled, (state) => {
+                state.isLoading = false
+            })
+            .addCase(registerStudent.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload
             })
     }
 })
