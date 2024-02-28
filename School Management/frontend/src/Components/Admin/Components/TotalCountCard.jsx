@@ -3,7 +3,7 @@ import React from 'react'
 
 const TotalCountCard = ({count, bgcolor, desc}) => {
     return (
-        <Card minW="200px" maxWidth="300px" bgColor={bgcolor} color="white" fontFamily="Open sans">
+        <Card minW="220px" maxWidth="220px" bgColor={bgcolor} color="white" fontFamily="Open sans">
             <CardBody>
                 <VStack justifyContent="space-between">
                     <Heading as="h4" fontSize="32px">{count}</Heading>

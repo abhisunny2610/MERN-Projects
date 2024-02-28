@@ -40,6 +40,43 @@ export const getRandomColorScheme = () => {
     const randomIndex = Math.floor(Math.random() * colorSchemes.length);
     return colorSchemes[randomIndex];
 };
+export const getPerformanceColor = (performance) => {
+    switch (performance.toLowerCase()) {
+        case 'outstanding':
+            return 'blue.500';
+        case 'excellent':
+            return 'green';
+        case 'good':
+            return 'yellow.400';
+        case 'average':
+            return 'orange.400';
+        case 'needs improvement':
+            return 'red.400';
+        default:
+            return 'red.400'; // Gray for unknown performance levels
+    }
+}
+
+
+
+// count males and females
+export const countGenders = (data) => {
+    let maleCounts = 0;
+    let femaleCounts = 0;
+    let otherCounts = 0;
+
+    data.forEach((item) => {
+        if (item.gender === "male") {
+            maleCounts++
+        } else if (item.gender === "other") {
+            otherCounts++
+        } else if (item.gender === "female") {
+            femaleCounts++
+        }
+    })
+
+    return { femaleCounts, maleCounts, otherCounts }
+}
 
 export const subjects = [
     "English",

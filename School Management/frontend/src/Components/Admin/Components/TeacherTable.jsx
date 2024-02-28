@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
-import { formatDate } from '../../../Helper';
+import { formatDate, getPerformanceColor } from '../../../Helper';
 import TeacherProfile from './TeacherProfile';
 import { deleteTeacher, getAllTeachers, getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher';
 import { Link, NavLink } from 'react-router-dom';
@@ -94,7 +94,7 @@ const TeachersList = () => {
                                     <Td><HStack><Avatar name={teacher?.name} src={teacher?.profileImage} size='sm' /><Text>{teacher.name}</Text></HStack></Td>
                                     <Td>{teacher?.qualification}</Td>
                                     <Td>{teacher?.email}</Td>
-                                    <Td color={(teacher?.performance === "Excellent" || teacher?.performance === "Good") ? "green" : "red"}>{teacher?.performance}</Td>
+                                    <Td color={getPerformanceColor(teacher?.performance)}>{teacher?.performance}</Td>
                                     <Td>{formatDate(teacher?.dateOfJoining)}</Td>
                                     <Td>
                                         <HStack spacing='0'>

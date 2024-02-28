@@ -12,7 +12,7 @@ import {
     Badge,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
-import { formatDate, getRandomColorScheme } from '../../../Helper'
+import { formatDate, getPerformanceColor, getRandomColorScheme } from '../../../Helper'
 
 
 const TeacherProfile = ({ onClose, isOpen }) => {
@@ -24,7 +24,7 @@ const TeacherProfile = ({ onClose, isOpen }) => {
             <Modal isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader textAlign='center' fontWeight="normal">Tiny Tots Inter College {singleTeacher?.teacherId}</ModalHeader>
+                    <ModalHeader textAlign='center' fontWeight="normal">Tiny Tots Inter College Teacher Profile</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <VStack spacing="0" >
@@ -32,21 +32,71 @@ const TeacherProfile = ({ onClose, isOpen }) => {
                             <Text fontSize="22px" fontWeight="bold">{singleTeacher?.name}</Text>
                             <Text>{singleTeacher?.qualification}</Text>
                         </VStack>
-                        <VStack spacing="2" marginTop="10px" alignItems="flex-start">
-                            <Text>Subject Taught: {singleTeacher?.subjects?.map((sub)=> <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</Text>
-                            <Text>Class Handled: {singleTeacher?.classesHandled?.map((sub)=> <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</Text>
-                            <Text>Gender : {singleTeacher?.gender}</Text>
-                            <Text>Age : {singleTeacher?.age}</Text>
-                            <Text>Date Of Birth : {formatDate(singleTeacher?.dateOfBirth)}</Text>
-                            <Text>Performance : {singleTeacher?.performance}</Text>
-                            <Text>Total Experience : {singleTeacher?.experience}</Text>
-                            <Text>Salary : {singleTeacher?.salary}</Text>
-                            <Text>Joining Date : {formatDate(singleTeacher?.dateOfJoining)}</Text>
-                            <Text>Email : {singleTeacher?.email}</Text>
-                            <Text>Contact : {singleTeacher?.contact?.phone}</Text>
-                            <Text>Responsibilities: {singleTeacher?.responsibilities?.map((sub)=> <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</Text>
-                            <Text>Last Updated : {formatDate(singleTeacher?.updatedAt)}</Text>
-                        </VStack>
+                        <table className='student-profile-table'>
+                            <caption>Personal Details</caption>
+                            <tbody>
+                                <tr>
+                                    <th>Teacher Id</th>
+                                    <td>{singleTeacher?.teacherId}</td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{singleTeacher?.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>Qualification</th>
+                                    <td>{singleTeacher?.qualification}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gender</th>
+                                    <td>{singleTeacher?.gender}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{singleTeacher?.email}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date of Birth</th>
+                                    <td>{formatDate(singleTeacher?.dateOfBirth)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Age</th>
+                                    <td>{singleTeacher?.age}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>{singleTeacher?.contact?.phone}</td>
+                                </tr>
+                                <tr>
+                                    <th>Subject Taught</th>
+                                    <td>{singleTeacher?.subjects?.map((sub) => <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Class Handled</th>
+                                    <td>{singleTeacher?.classesHandled?.map((sub) => <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Performance</th>
+                                    <td>{singleTeacher?.performance}</td>
+                                </tr>
+                                <tr>
+                                    <th>Salary</th>
+                                    <td>{singleTeacher?.salary}</td>
+                                </tr>
+                                <tr>
+                                    <th>Responsibilities</th>
+                                    <td>{singleTeacher?.responsibilities?.map((sub)=> <Badge colorScheme={getRandomColorScheme()} marginLeft="5px">{sub}</Badge>)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Joining Date</th>
+                                    <td>{formatDate(singleTeacher?.dateOfJoining)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Last Updated</th>
+                                    <td>{formatDate(singleTeacher?.updatedAt)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </ModalBody>
                 </ModalContent>
             </Modal>

@@ -72,8 +72,9 @@ const teacherSlice = createSlice({
         resetSingleTeacher: (state) => {
             state.singleTeacher = null;
         },
-        newFiveTeacher: (state) => {
-            state.recentFiveTeachers = state.teachers
+        getRecentFiveTeacher: (state) => {
+            const sortedTeachers = state.teachers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            state.recentFiveTeachers = sortedTeachers.slice(0, 5)
         }
     },
     extraReducers: (builder) => {
@@ -154,5 +155,5 @@ const teacherSlice = createSlice({
     }
 })
 
-export const { resetSingleTeacher } = teacherSlice.actions
+export const { resetSingleTeacher, getRecentFiveTeacher } = teacherSlice.actions
 export default teacherSlice.reducer
