@@ -102,4 +102,5 @@ const deleteStudent = expressAsyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { registerStudent, getSingleStudent, getAllStudent,updateStudent, deleteStudent }
+
+module.exports = { registerStudent, getSingleStudent, getAllStudent,updateStudent, deleteStudent, recentFiveTeachers }

@@ -7,7 +7,8 @@ const initialState = {
     singleTeacher: null,
     isLoading: false,
     error: null,
-    updateSuceesMsg: ""
+    updateSuceesMsg: "",
+    recentFiveTeachers: []
 }
 
 export const registerTeacher = createAsyncThunk('teachers/registerTeacher', async (credentials, { rejectWithValue }) => {
@@ -71,6 +72,9 @@ const teacherSlice = createSlice({
         resetSingleTeacher: (state) => {
             state.singleTeacher = null;
         },
+        newFiveTeacher: (state) => {
+            state.recentFiveTeachers = state.teachers
+        }
     },
     extraReducers: (builder) => {
 
