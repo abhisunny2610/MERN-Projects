@@ -50,7 +50,7 @@ export default function SideBar() {
                     top='0'
                     as="header"
                     align="center"
-                    justifyContent={{ base: 'space-between', md: 'flex-end' }}
+                    justifyContent={{ base: 'space-between', md: 'space-between' }}
                     w="full"
                     px="4"
                     borderBottomWidth="1px"
@@ -60,6 +60,7 @@ export default function SideBar() {
                     h="14"
                     zIndex='999'
                 >
+                    <Text display={{base: "none", md:"block"}} fontWeight="bold" fontFamily="Open sans" color="teal">Tiny Tots Inter College School Dashboard</Text>
                     <IconButton
                         aria-label="Menu"
                         display={{ base: 'inline-flex', md: 'none' }}
@@ -78,8 +79,8 @@ export default function SideBar() {
                             cursor="pointer"
                         />
                         <VStack marginLeft="5px" spacing="0" alignItems="flex-start">
-                            <Text fontWeight="bold" color='teal'>{user?.username}</Text>
-                            {user ? (<Text>{capitalizeFirstLetter(user?.role)}</Text>) : ""}
+                            <Text fontWeight="bold" color='teal' fontSize="14px" fontFamily="Open sans">{user?.username}</Text>
+                            {user ? (<Text fontSize={12}>{capitalizeFirstLetter(user?.role)}</Text>) : ""}
                         </VStack>
                     </Flex>
                 </Flex>
@@ -101,6 +102,7 @@ const SidebarContent = ({ ...props }) => (
         zIndex="sticky"
         h="full"
         pb="10"
+        fontFamily="Playfair Display"
         overflowX="hidden"
         overflowY="auto"
         bg={useColorModeValue('white', 'gray.800')}
@@ -154,6 +156,7 @@ const NavItem = ({ icon, children, to }) => {
                 align="center"
                 px="4"
                 py="3"
+                fontSize="14px"
                 cursor="pointer"
                 role="group"
                 fontWeight="semibold"

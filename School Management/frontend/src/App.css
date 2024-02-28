@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-:root {
-  --play-fair: "Playfair Display", serif;
-  --open-sans: "Open Sans", sans-serif;
-}
-
 ::-webkit-scrollbar {
   width: 0px;
 }
@@ -49,4 +44,43 @@
 .login-card {
   background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
 
+}
+
+/* .student-profile-table, .student-profile-table tr, .student-profile-table td{
+  border: 1px solid black;
+  padding: 5px;
+} */
+
+/* CSS styles for the student profile table */
+.student-profile-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.student-profile-table caption {
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.student-profile-table th,
+.student-profile-table td {
+  padding: 4px 8px;
+  border: 1px solid #dddddd;
+  text-align: left;
+  font-size: 12px;
+}
+
+.student-profile-table th {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect for better interaction */
+.student-profile-table tbody tr:hover {
+  background-color: #e5e5e5;
+}
+
+/* Apply a bit of padding to the last cell in each row */
+.student-profile-table td:last-child {
+  padding-right: 15px;
 }

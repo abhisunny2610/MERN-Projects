@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     Box,
     Flex,
@@ -19,12 +19,14 @@ import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../../Helper';
 import { Link } from 'react-router-dom';
+import { deleteStudent, resetSingleStudent, singleStudent } from '../../../Redux/Slices/Admin/student';
+import StudentProfile from './StudentProfile';
 
 const StudentList = () => {
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState('');
     const { students } = useSelector((state) => state.adminStudent)
-    // const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // filter the teacher on the basis of teacher name or email
     const filteredStudents = students?.filter(
@@ -35,26 +37,26 @@ const StudentList = () => {
 
 
     // for open the modal
-    // const openModal = () => {
-    //     setIsModalOpen(true);
-    // };
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
     // for close the modal
-    // const closeModal = () => {
-    // setIsModalOpen(false);
-    // dispatch(resetSingleTeacher())
-    // };
+    const closeModal = () => {
+    setIsModalOpen(false);
+    dispatch(resetSingleStudent())
+    };
 
     // to handle the view profile and open the modal
-    // const handleViewClick = (id) => {
-    //     dispatch(getSingleTeacher(id))
-    //     openModal()
-    // }
+    const handleViewClick = (id) => {
+        dispatch(singleStudent(id))
+        openModal()
+    }
 
     // for delete the teacher
-    // const handleDeleteTeacher = (id) => {
-    //     dispatch(deleteTeacher(id))
-    // }
+    const handleDeleteStudent = (id) => {
+        dispatch(deleteStudent(id))
+    }
 
     return (
         <Box>
@@ -70,7 +72,7 @@ const StudentList = () => {
                     />
                 </Box>
             </Flex>
-            {/* <TeacherProfile isOpen={isModalOpen} onClose={closeModal} x /> */}
+            <StudentProfile isOpen={isModalOpen} onClose={closeModal} x />
             <Table variant="striped" colorScheme="gray" fontSize='12px' size='sm'>
                 <Thead>
                     <Tr>
@@ -86,21 +88,21 @@ const StudentList = () => {
                 </Thead>
                 <Tbody>
                     {
-                        filteredStudents?.map((studnet) => {
+                        filteredStudents?.map((student) => {
                             return (
-                                <Tr key={studnet._id}>
-                                    <Td>{studnet?.studentId}</Td>
-                                    <Td><HStack><Avatar name={studnet?.name} src={studnet?.profileImage} size='sm' /><Text>{studnet.name}</Text></HStack></Td>
-                                    <Td>{studnet?.std}</Td>
-                                    <Td>{studnet?.email}</Td>
-                                    <Td>{studnet?.gender}</Td>
-                                    <Td>{studnet?.parentGuardian?.name}</Td>
-                                    <Td>{formatDate(studnet.dateOfBirth)}</Td>
+                                <Tr key={student._id}fontFamily="Playfair Display">
+                                    <Td>{student?.studentId}</Td>
+                                    <Td><HStack><Avatar name={student?.name} src={student?.profileImage} size='sm' /><Text>{student.name}</Text></HStack></Td>
+                                    <Td>{student?.std}</Td>
+                                    <Td>{student?.email}</Td>
+                                    <Td>{student?.gender}</Td>
+                                    <Td>{student?.parentGuardian?.name}</Td>
+                                    <Td>{formatDate(student.dateOfBirth)}</Td>
                                     <Td>
                                         <HStack spacing='0'>
-                                            <IconButton icon={<ViewIcon color="teal" />} size='sm' background="none" />
+                                            <IconButton icon={<ViewIcon color="teal" />} size='sm' background="none" onClick={()=> handleViewClick(student?._id)} />
                                             <Link style={{textDecoration: "none"}}><IconButton icon={<EditIcon color="orange" />} size='sm' background="none" /></Link>
-                                            <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" />
+                                            <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" onClick={(e) => handleDeleteStudent(student?._id)} />
                                         </HStack></Td>
                                 </Tr>
                             )

@@ -16,8 +16,27 @@ export const fetchAllStudents = createAsyncThunk("student/fetchAllStudents", asy
 export const registerStudent = createAsyncThunk("student/registerStudent", async (credential, { rejectWithValue }) => {
     try {
         const response = await axios.post("/api/student/register", credential, getConfig())
-        console.log("----", response.data.message)
         return response.data.message
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
+
+// for delete the student
+export const deleteStudent = createAsyncThunk("student/deleteStudent", async (id, { rejectWithValue }) => {
+    try {
+        const response = await axios.delete(`/api/student/${id}`, getConfig())
+        return id
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
+
+// for fetching single student details
+export const singleStudent = createAsyncThunk("student/singleStudent", async (id, { rejectWithValue }) => {
+    try {
+        const response = await axios.get(`/api/student/${id}`, getConfig())
+        return response.data.student
     } catch (error) {
         return rejectWithValue(getErrorMessage(error))
     }
@@ -26,14 +45,18 @@ export const registerStudent = createAsyncThunk("student/registerStudent", async
 const initialState = {
     students: [],
     isLoading: false,
-    isError: null
+    isError: null,
+    singleLoading: false,
+    singleStudent: null
 }
 
 const studentSlice = createSlice({
     name: "adminStudent",
     initialState,
     reducers: {
-
+        resetSingleStudent : (state) => {
+            state.singleStudent = null
+        }
     },
     extraReducers: (builder) => {
         // for fetching all the students
@@ -43,7 +66,7 @@ const studentSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(fetchAllStudents.fulfilled, (state, action) => {
-                state.isError = false;
+                state.isLoading = false;
                 state.students = [...action.payload]
             })
             .addCase(fetchAllStudents.rejected, (state, action) => {
@@ -62,9 +85,40 @@ const studentSlice = createSlice({
             })
             .addCase(registerStudent.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload
+                state.isError = action.payload
+            })
+
+        // for delete the student
+        builder
+            .addCase(deleteStudent.pending, (state) => {
+                state.isLoading = true;
+                state.isError = null
+            })
+            .addCase(deleteStudent.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.students = state.students.filter((student) => student._id !== action.payload)
+            })
+            .addCase(deleteStudent.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = action.payload
+            })
+
+        // for fetching the single student data
+        builder
+            .addCase(singleStudent.pending, (state) => {
+                state.singleLoading = true;
+                state.isError = null
+            })
+            .addCase(singleStudent.fulfilled, (state, action) => {
+                state.singleLoading = false;
+                state.singleStudent = action.payload
+            })
+            .addCase(singleStudent.rejected, (state, action) => {
+                state.singleLoading = false;
+                state.isError = action.payload
             })
     }
 })
 
+export const {resetSingleStudent} = studentSlice.actions
 export default studentSlice.reducer

@@ -26,12 +26,12 @@ const AllNotices = () => {
                         {
                             allNotices?.map((notice) => {
                                 return (
-                                    <Card size="sm" maxW="350px" mr={5} mb={5} key={notice?._id} fontFamily={"play-fair"}>
+                                    <Card size="sm" maxW="350px" mr={5} mb={5} key={notice?._id}>
                                         <CardHeader>
                                             <Heading size='sm'>{notice?.publishedBy?.username} <Badge p={0.5} borderRadius={5} colorScheme='green'>({notice?.publishedBy?.role})</Badge></Heading>
                                             <Text>{formatDate(notice?.createdAt)}</Text>
                                         </CardHeader>
-                                        <CardBody>
+                                        <CardBody  fontFamily="Playfair Display">
                                         <Box mt="2" as="div" dangerouslySetInnerHTML={{ __html: notice?.content }} />
                                         </CardBody>
                                         <CardFooter justifyContent="flex-end" display="flex">
