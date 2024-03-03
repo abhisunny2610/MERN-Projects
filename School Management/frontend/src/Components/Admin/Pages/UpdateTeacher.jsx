@@ -15,13 +15,14 @@ import {
 } from '@chakra-ui/react'
 import { classes, subjects, teacherResponsibilities } from '../../../Helper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSingleTeacher } from '../../../Redux/Slices/Admin/teacher'
-import { useParams } from 'react-router-dom'
+import { getSingleTeacher, updateTeacher } from '../../../Redux/Slices/Admin/teacher'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const UpdateTeacher = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { singleTeacher } = useSelector((state) => state.adminTeacher)
     const [data, setData] = useState({})
 
@@ -36,34 +37,26 @@ const UpdateTeacher = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         const [parent, child] = name.split('.');
-        
+
         if (child) {
-            // If child key is present, update nested state
             setData((prevData) => ({
                 ...prevData,
                 [parent]: {
-                    ...(prevData[parent] || {}), // Initialize nested object if it doesn't exist
+                    ...(prevData[parent] || {}),
                     [child]: value,
                 },
             }));
-        } else if (name === "salary" || name === "experience" || name === "age") {
-            // Update state for non-array, numeric fields
+        } else if (["salary", "experience", "age"].includes(name)) {
             setData({
                 ...data,
-                [name]: parseInt(value)
-            });
-        } else if (name === "subjects" || name === "responsibilities") {
-            // Update state for array fields (subjects and responsibilities)
+                [name]: parseInt(value) || 0, 
+            })
+        } else if (name === "subjects" || name === "responsibilities" || name === "classesHandled") {
             const key = name;
             const newValue = value;
-            
-            // Ensure data[key] is an array or initialize it if undefined
             const newArray = Array.isArray(data[key]) ? [...data[key]] : [];
-            
-            // Check if the new value already exists in the array
+
             const valueExists = newArray.includes(newValue);
-            
-            // Update state based on value existence
             setData((prevData) => ({
                 ...prevData,
                 [key]: valueExists
@@ -71,15 +64,16 @@ const UpdateTeacher = () => {
                     : [...newArray, newValue]
             }));
         } else {
-            // Update state for other fields
+            
             setData({
                 ...data,
                 [name]: value
             });
         }
     };
-    
-    
+
+
+
 
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
@@ -91,11 +85,9 @@ const UpdateTeacher = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("------> Updated Date", data)
+        dispatch(updateTeacher({ id, credentials: data }))
+        navigate('/teachers')
     }
-
-
-    // console.log("Teacher for update", data)
 
 
     return (
@@ -155,29 +147,29 @@ const UpdateTeacher = () => {
                             <Flex justify="space-between">
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>Street</FormLabel>
-                                    <Input type="text" name="street" value={data?.address?.street || ""} onChange={handleChange} />
+                                    <Input type="text" name="address.street" value={data?.address?.street || ""} onChange={handleChange} />
                                 </FormControl>
 
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>City</FormLabel>
-                                    <Input type="text" name="city" value={data?.address?.city || ""} onChange={handleChange} />
+                                    <Input type="text" name="address.city" value={data?.address?.city || ""} onChange={handleChange} />
                                 </FormControl>
 
                                 <FormControl flex="1">
                                     <FormLabel>State</FormLabel>
-                                    <Input type="text" name="state" value={data?.address?.state || ''} onChange={handleChange} />
+                                    <Input type="text" name="address.state" value={data?.address?.state || ''} onChange={handleChange} />
                                 </FormControl>
                             </Flex>
 
                             <Flex justify="space-between">
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>Country</FormLabel>
-                                    <Input type="text" name="country" value={data?.address?.country || ""} onChange={handleChange} />
+                                    <Input type="text" name="address.country" value={data?.address?.country || ""} onChange={handleChange} />
                                 </FormControl>
 
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>Postal Code</FormLabel>
-                                    <Input type="text" name="postalCode" value={data?.address?.postalCode || ""} onChange={handleChange} />
+                                    <Input type="text" name="address.postalCode" value={data?.address?.postalCode || ""} onChange={handleChange} />
                                 </FormControl>
 
                                 <FormControl flex="1">
@@ -210,7 +202,7 @@ const UpdateTeacher = () => {
 
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>Phone</FormLabel>
-                                    <Input type="tel" name="phone" value={data?.contact?.phone} onChange={handleChange} />
+                                    <Input type="tel" name="contact.phone" value={data?.contact?.phone} onChange={handleChange} />
                                 </FormControl>
 
                                 <FormControl flex="1">
@@ -223,13 +215,7 @@ const UpdateTeacher = () => {
                             </Flex>
 
                             <Flex justify="space-between">
-                                <FormControl flex="1" mr={2}>
-                                    <FormLabel>Salary</FormLabel>
-                                    <Input type="number" name="salary" value={data?.salary}
-                                        onChange={handleChange}
-                                    />
-                                </FormControl>
-
+                            
                                 <FormControl flex="1" mr={2}>
                                     <FormLabel>Joining Date</FormLabel>
                                     <Input type='date' name='dateOfJoining'
@@ -270,18 +256,19 @@ const UpdateTeacher = () => {
 
                             <Flex flexWrap="wrap" justifyContent="space-between">
                                 <Box flex={1} mr={2}>
-                                    {data?.subjects?.map((subject, index) => (
+                                    {(data?.subjects || []).map((subject, index) => (
                                         <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
                                     ))}
                                 </Box>
                                 <Box flex={1}>
-                                    {data?.classesHandled?.map((subject, index) => (
-                                        <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
-                                    ))}
+                                {data?.classesHandled?.map((subject, index) => (
+                                    <Badge marginRight="5px" marginTop="5px" key={index}>{subject}</Badge>
+                                ))}
                                 </Box>
                             </Flex>
+
                             <FormControl>
-                                <Checkbox  isChecked={data?.isPermanent} name="isPermanent" onChange={handleCheckboxChange}>
+                                <Checkbox isChecked={data?.isPermanent} name="isPermanent" onChange={handleCheckboxChange}>
                                     Is Permanent
                                 </Checkbox>
                             </FormControl>
