@@ -33,7 +33,7 @@ export const getConfig = () => {
     };
 };
 
-const colorSchemes = ['blue', 'green', 'yellow', 'red', 'purple', 'teal', 'orange', 'cyan', 'gray', 'pink'];
+const colorSchemes = ['blue', 'green', 'yellow', 'red', 'purple', 'teal'];
 
 export const getRandomColorScheme = () => {
     // Generate a random index to select a color scheme from the array

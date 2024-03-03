@@ -99,7 +99,7 @@ const TeachersList = () => {
                                     <Td>
                                         <HStack spacing='0'>
                                             <IconButton icon={<ViewIcon color="teal" />} size='sm' background="none" onClick={() => handleViewClick(teacher._id)} />
-                                            <Link style={{textDecoration: "none"}} to={`/updateteacher/${teacher._id}`} ><IconButton icon={<EditIcon color="orange" />} size='sm' background="none" /></Link>
+                                            <Link style={{textDecoration: "none"}} to={`/updateteacher/${teacher?._id}`} ><IconButton icon={<EditIcon color="orange" />} size='sm' background="none" /></Link>
                                             <IconButton icon={<DeleteIcon color="red" />} size='sm' background="none" onClick={() => handleDeleteTeacher(teacher._id)} />
                                         </HStack></Td>
                                 </Tr>
