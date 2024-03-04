@@ -14,6 +14,7 @@ import {
     Text,
     Heading,
     IconButton,
+    useToast,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +25,7 @@ import StudentProfile from './StudentProfile';
 
 const StudentList = () => {
     const dispatch = useDispatch()
+    const toast = useToast()
     const [searchTerm, setSearchTerm] = useState('');
     const { students } = useSelector((state) => state.adminStudent)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,17 +58,24 @@ const StudentList = () => {
     // for delete the teacher
     const handleDeleteStudent = (id) => {
         dispatch(deleteStudent(id))
+        toast({
+            title: "Student Deleted",
+            status: "success",
+            position: 'top-right',
+            isClosable: true,
+            duration: 5000,
+          })
     }
 
     return (
         <Box>
             <Flex align="center" justify="space-between" mb={2}>
                 <Box>
-                    <Heading as='h3' size="md">Student List</Heading>
+                    <Heading as='h3' size="md">Student List - {students.length}</Heading>
                 </Box>
                 <Box>
                     <Input
-                        placeholder="Search Teachers"
+                        placeholder="Search Students"
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />

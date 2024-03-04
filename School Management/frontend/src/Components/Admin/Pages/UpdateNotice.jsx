@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -8,6 +8,7 @@ import { updateNotice } from '../../../Redux/Slices/Admin/notice'
 const UpdateNotice = ({ isOpen, onClose}) => {
 
     const dispatch = useDispatch()
+    const toast = useToast()
     const [content, setContent] = useState("")
     const {singleNotice} = useSelector((state)=> state.adminNotice)
     const id = singleNotice?._id
@@ -19,9 +20,17 @@ const UpdateNotice = ({ isOpen, onClose}) => {
         setContent(singleNotice?.content)
     }, [singleNotice])
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
-        dispatch(updateNotice({ id: id, content: content }));
+        await dispatch(updateNotice({ id: id, content: content }));
+        onClose()
+        toast({
+            title: "Notice Updated",
+            status: "success",
+            position: 'top-right',
+            isClosable: true,
+            duration: 5000,
+          })
     }
 
     return (
@@ -42,7 +51,7 @@ const UpdateNotice = ({ isOpen, onClose}) => {
                             data={content}
                             />
 
-                            <Button onClick={handleSubmit} type='submit'>Submit</Button>
+                            <Button mt={2} colorScheme='teal' size="sm" onClick={handleSubmit} type='submit'>Submit</Button>
                         </form>
                     </ModalBody>
                 </ModalContent>

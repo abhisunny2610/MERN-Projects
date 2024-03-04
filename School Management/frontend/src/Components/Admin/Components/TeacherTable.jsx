@@ -14,6 +14,7 @@ import {
     Text,
     Heading,
     IconButton,
+    useToast,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, ViewIcon } from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +25,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 const TeachersList = () => {
     const dispatch = useDispatch()
+    const toast = useToast()
     const [searchTerm, setSearchTerm] = useState('');
     const { teachers } = useSelector((state) => state.adminTeacher)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,14 +58,22 @@ const TeachersList = () => {
     // for delete the teacher
     const handleDeleteTeacher = (id) => {
         dispatch(deleteTeacher(id))
+        toast({
+            title: "Teacher Deleted",
+            status: "success",
+            position: 'top-right',
+            isClosable: true,
+            duration: 5000,
+          })
     }
 
     return (
         <Box>
             <Flex align="center" justify="space-between" mb={2}>
                 <Box>
-                    <Heading as='h3' size="md">Teachers List</Heading>
+                    <Heading as='h3' size="md">Teachers List - {teachers.length}</Heading>
                 </Box>
+                
                 <Box>
                     <Input
                         placeholder="Search Teachers"

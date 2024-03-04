@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Badge, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text, useToast } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteNotice, getAllNotices, getsingleNotice, resetSingleNotice } from '../../../Redux/Slices/Admin/notice'
 import { formatDate } from '../../../Helper'
@@ -8,6 +8,7 @@ import UpdateNotice from './UpdateNotice'
 const AllNotices = () => {
 
     const dispatch = useDispatch()
+    const toast = useToast()
     const { allNotices } = useSelector((state) => state.adminNotice)
     const [isModelOpen, setIsModelOpen] = useState(false)
     const [shouldUpdate, setShouldUpdate] = useState(false)
@@ -29,6 +30,13 @@ const AllNotices = () => {
 
     const handleDeleteNotice = (id) => {
         dispatch(deleteNotice(id))
+        toast({
+            title: "Notice Deleted",
+            status: "success",
+            position: 'top-right',
+            isClosable: true,
+            duration: 5000,
+          })
     }
 
     useEffect(() => {

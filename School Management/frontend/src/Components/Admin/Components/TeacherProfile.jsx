@@ -95,6 +95,10 @@ const TeacherProfile = ({ onClose, isOpen }) => {
                                     <th>Last Updated</th>
                                     <td>{formatDate(singleTeacher?.updatedAt)}</td>
                                 </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>{singleTeacher?.address?.street}, {singleTeacher?.address?.city}, {singleTeacher?.address?.state}, {singleTeacher?.address?.country} - {singleTeacher?.address?.postalCode}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </ModalBody>

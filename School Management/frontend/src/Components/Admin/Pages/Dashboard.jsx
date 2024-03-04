@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TotalCountCard from '../Components/TotalCountCard'
-import { Button, Card, CardBody, HStack, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Button, Card, CardBody, HStack, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllNotices } from '../../../Redux/Slices/Admin/notice'
 import { getAllTeachers, getRecentFiveTeacher, getSingleTeacher, resetSingleTeacher } from '../../../Redux/Slices/Admin/teacher'
@@ -9,6 +9,7 @@ import TeacherProfile from '../Components/TeacherProfile'
 import { countGenders } from '../../../Helper'
 import GenderChart from '../Charts/GenderChart'
 import TeacherLineChart from '../Charts/TeacherLineChart'
+import Calendar from './Calander'
 
 
 const Dashboard = () => {
@@ -59,50 +60,57 @@ const Dashboard = () => {
             </HStack>
             <TeacherProfile isOpen={isModalOpen} onClose={closeModal} x />
             <HStack alignItems={"flex-start"}>
-                <Card mt="3" minW="200px" maxW="410px" flex={1}>
-                    <Text pl="3" fontWeight="500">Recent Added Teachers</Text>
-                    <CardBody>
-                        <Table size={"sm"} mt={3}>
-                            <Thead>
-                                <Tr>
-                                    <Th>Id</Th>
-                                    <Th>Name</Th>
-                                    <Th>Qualification</Th>
-                                    <Th>Actions</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {
-                                    recentFiveTeachers.map((teacher, index) => {
-                                        return (<Tr key={index}>
-                                            <Td>{teacher?.teacherId}</Td>
-                                            <Td>{teacher?.name}</Td>
-                                            <Td>{teacher?.qualification}</Td>
-                                            <Td><Button size='sm' colorScheme='blue' onClick={() => handleViewClick(teacher._id)}>View</Button></Td>
-                                        </Tr>
-                                        )
-                                    })
-                                }
-                            </Tbody>
-                        </Table>
-                    </CardBody>
-                </Card>
-                <Card mt="3" minW="30px" flex={1}>
-                    <Text pl="3" fontWeight="500">Teacher Gender Counts</Text>
-                    <CardBody>
-                        <GenderChart femaleCounts={femaleCounts} maleCounts={maleCounts} otherCounts={otherCounts} />
-                    </CardBody>
-                </Card>
+                <VStack>
+                    <Card mt="3" width="100%" flex={1}>
+                        <Text pl="3" fontWeight="500">Recent Added Teachers</Text>
+                        <CardBody>
+                            <Table size={"sm"} mt={3}>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Id</Th>
+                                        <Th>Name</Th>
+                                        <Th>Qualification</Th>
+                                        <Th>Actions</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {
+                                        recentFiveTeachers.map((teacher, index) => {
+                                            return (<Tr key={index}>
+                                                <Td>{teacher?.teacherId}</Td>
+                                                <Td>{teacher?.name}</Td>
+                                                <Td>{teacher?.qualification}</Td>
+                                                <Td><Button size='sm' colorScheme='blue' onClick={() => handleViewClick(teacher._id)}>View</Button></Td>
+                                            </Tr>
+                                            )
+                                        })
+                                    }
+                                </Tbody>
+                            </Table>
+                        </CardBody>
+                    </Card>
+                    <Card w="100%">
+                        <Text pl="3" fontWeight="500">Teacher Added Per Month</Text>
+                        <CardBody>
+                            <TeacherLineChart teacherData={teachers} />
+                        </CardBody>
+                    </Card>
+                </VStack>
+                <VStack flex={1} mt={3}>
+                    <Card width="100%">
+                        <Text pl="3" fontWeight="500">Teacher Gender Counts</Text>
+                        <CardBody>
+                            <GenderChart femaleCounts={femaleCounts} maleCounts={maleCounts} otherCounts={otherCounts} />
+                        </CardBody>
+                    </Card>
+                    <Card width="100%" height="370px" p={2} overflowY="hidden">
+                        <Calendar />
+                    </Card>
+                </VStack>
             </HStack>
             <HStack>
-                <Card mt="3" minW="400px" maxW="510px">
-                    <Text pl="3" fontWeight="500">Teacher Added Per Month</Text>
-                    <CardBody>
-                        <TeacherLineChart teacherData={teachers} />
-                    </CardBody>
-                </Card>
+
             </HStack>
-            <p>Welcome to the dashboard!</p>
         </>
     )
 }

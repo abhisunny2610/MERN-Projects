@@ -12,6 +12,7 @@ import {
     Input,
     Select,
     Stack,
+    useToast,
 } from '@chakra-ui/react'
 import { classes, subjects, teacherResponsibilities } from '../../../Helper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +24,7 @@ const UpdateTeacher = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const toast = useToast()
     const { singleTeacher } = useSelector((state) => state.adminTeacher)
     const [data, setData] = useState({})
 
@@ -86,6 +88,13 @@ const UpdateTeacher = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(updateTeacher({ id, credentials: data }))
+        toast({
+            title: "Teacher Updated",
+            status: "success",
+            position: 'top-right',
+            isClosable: true,
+            duration: 5000,
+          })
         navigate('/teachers')
     }
 
