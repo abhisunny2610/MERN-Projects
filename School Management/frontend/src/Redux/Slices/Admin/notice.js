@@ -7,7 +7,7 @@ const initialState = {
     isLoading: false,
     isError: null,
     successMessage: null,
-    singleNotice : null
+    singleNotice: null
 }
 
 export const getAllNotices = createAsyncThunk('notice/getAllNotice', async (args, { rejectWithValue }) => {
@@ -37,7 +37,7 @@ export const deleteNotice = createAsyncThunk('notice/deleteNotice', async (id, {
     }
 })
 
-export const getsingleNotice = createAsyncThunk('notice/singleNotice', async(id, {rejectWithValue})=> {
+export const getsingleNotice = createAsyncThunk('notice/singleNotice', async (id, { rejectWithValue }) => {
     try {
         const response = await axios.get(`/api/notice/${id}`)
         return response.data.notice
@@ -46,6 +46,14 @@ export const getsingleNotice = createAsyncThunk('notice/singleNotice', async(id,
     }
 })
 
+export const updateNotice = createAsyncThunk('notice/updateNotice', async ({ id, content }, { rejectWithValue }) => {
+    try {
+        const response = await axios.put(`/api/notice/${id}`, { content: content }, getConfig())
+        return id
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
 
 const noticeSlice = createSlice({
     name: "adminNotice",
@@ -85,10 +93,10 @@ const noticeSlice = createSlice({
                 state.isLoading = false;
                 state.isError = action.payload
             })
-        
+
         // for delete the notice
         builder
-            .addCase(deleteNotice.pending, (state)=> {
+            .addCase(deleteNotice.pending, (state) => {
                 state.isLoading = true;
                 state.isError = null
             })
@@ -102,7 +110,7 @@ const noticeSlice = createSlice({
             })
 
         builder
-            .addCase(getsingleNotice.pending, (state)=> {
+            .addCase(getsingleNotice.pending, (state) => {
                 state.isLoading = true;
                 state.isError = null
             })
@@ -114,8 +122,21 @@ const noticeSlice = createSlice({
                 state.isLoading = false;
                 state.isError = action.payload
             })
+
+        builder
+            .addCase(updateNotice.pending, (state) => {
+                state.isLoading = true;
+                state.isError = null
+            })
+            .addCase(updateNotice.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(updateNotice.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = action.payload
+            })
     }
 })
 
-export const {resetSingleNotice} = noticeSlice.actions
+export const { resetSingleNotice } = noticeSlice.actions
 export default noticeSlice.reducer

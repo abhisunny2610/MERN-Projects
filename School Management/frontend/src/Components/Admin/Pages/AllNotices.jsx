@@ -10,6 +10,7 @@ const AllNotices = () => {
     const dispatch = useDispatch()
     const { allNotices } = useSelector((state) => state.adminNotice)
     const [isModelOpen, setIsModelOpen] = useState(false)
+    const [shouldUpdate, setShouldUpdate] = useState(false)
 
     const openModel = () => {
         setIsModelOpen(true)
@@ -18,6 +19,7 @@ const AllNotices = () => {
     const closeModel = () => {
         setIsModelOpen(false)
         dispatch(resetSingleNotice())
+        setShouldUpdate(prev => !prev)
     }
 
     const handleViewClick = (id) => {
@@ -31,7 +33,7 @@ const AllNotices = () => {
 
     useEffect(() => {
         dispatch(getAllNotices())
-    }, [dispatch])
+    }, [dispatch, shouldUpdate])
 
     return (
         <>

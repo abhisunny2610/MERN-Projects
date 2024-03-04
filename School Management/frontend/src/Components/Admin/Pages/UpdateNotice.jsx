@@ -2,19 +2,26 @@ import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButt
 import React, { useEffect, useState } from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateNotice } from '../../../Redux/Slices/Admin/notice'
 
 const UpdateNotice = ({ isOpen, onClose}) => {
 
+    const dispatch = useDispatch()
     const [content, setContent] = useState("")
     const {singleNotice} = useSelector((state)=> state.adminNotice)
+    const id = singleNotice?._id
+
+
+    console.log("-----", singleNotice)
 
     useEffect(()=> {
         setContent(singleNotice?.content)
     }, [singleNotice])
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        dispatch(updateNotice({ id: id, content: content }));
     }
 
     return (
@@ -35,7 +42,7 @@ const UpdateNotice = ({ isOpen, onClose}) => {
                             data={content}
                             />
 
-                            <Button onClick={handleSubmit}>Submit</Button>
+                            <Button onClick={handleSubmit} type='submit'>Submit</Button>
                         </form>
                     </ModalBody>
                 </ModalContent>
