@@ -72,7 +72,7 @@ const TeachersList = () => {
                     />
                 </Box>
             </Flex>
-            <TeacherProfile isOpen={isModalOpen} onClose={closeModal} x />
+            <TeacherProfile isOpen={isModalOpen} onClose={closeModal}  />
             <Table variant="striped" colorScheme="gray" fontSize='12px' size='sm'>
                 <Thead>
                     <Tr>

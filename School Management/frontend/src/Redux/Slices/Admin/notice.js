@@ -6,7 +6,8 @@ const initialState = {
     allNotices: [],
     isLoading: false,
     isError: null,
-    successMessage: null
+    successMessage: null,
+    singleNotice : null
 }
 
 export const getAllNotices = createAsyncThunk('notice/getAllNotice', async (args, { rejectWithValue }) => {
@@ -36,12 +37,23 @@ export const deleteNotice = createAsyncThunk('notice/deleteNotice', async (id, {
     }
 })
 
+export const getsingleNotice = createAsyncThunk('notice/singleNotice', async(id, {rejectWithValue})=> {
+    try {
+        const response = await axios.get(`/api/notice/${id}`)
+        return response.data.notice
+    } catch (error) {
+        return rejectWithValue(getErrorMessage(error))
+    }
+})
+
 
 const noticeSlice = createSlice({
     name: "adminNotice",
     initialState,
     reducers: {
-
+        resetSingleNotice: (state) => {
+            state.singleNotice = null;
+        },
     },
     extraReducers: (builder) => {
         // for fetching all the notices
@@ -88,7 +100,22 @@ const noticeSlice = createSlice({
                 state.isLoading = false;
                 state.isError = action.payload
             })
+
+        builder
+            .addCase(getsingleNotice.pending, (state)=> {
+                state.isLoading = true;
+                state.isError = null
+            })
+            .addCase(getsingleNotice.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.singleNotice = action.payload
+            })
+            .addCase(getsingleNotice.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = action.payload
+            })
     }
 })
 
+export const {resetSingleNotice} = noticeSlice.actions
 export default noticeSlice.reducer
