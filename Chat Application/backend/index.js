@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { handleErrors } = require('./MiddleWare/errorHandler')
-const path = require("path");
 
 // routers
 const IndexRoute = require("./Routes/index")
@@ -34,25 +33,6 @@ db.once('open', async () => {
 
 app.use("/",IndexRoute)
 
-
-// --------------------------deployment------------------------------
-
-const __dirname1 = path.resolve();
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../frontend/build")));
-
-  app.get("*", (req, res) =>
-    res.sendFile(path.join(__dirname1, "../frontend/build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  });
-}
-// --------------------------deployment------------------------------
-
-
 app.use(handleErrors)
 
 const server = app.listen(PORT, () => console.log("Server started on port " + PORT))
@@ -65,17 +45,14 @@ const io = require('socket.io')(server, {
 })
 
 io.on("connection", (socket) => {
-    // console.log("Connected to socket.io")
 
     socket.on("setup", (userData) => {
         socket.join(userData._id);
-        // console.log("userid", userData._id)
         socket.emit("connected");
     })
 
     socket.on("join chat", (room) => {
         socket.join(room)
-        // console.log("User joined room" + room)
     })
 
     socket.on("typing", (room)=> socket.in(room).emit("typing"))
@@ -84,7 +61,7 @@ io.on("connection", (socket) => {
     socket.on("new message", (newMessageReceived) => {
         var chat = newMessageReceived.chat
 
-        if (!chat.users) return  // console.log("chat.users not defined")
+        if (!chat.users) return 
 
         chat.users.forEach(user => {
             if (user._id == newMessageReceived.sender._id) return

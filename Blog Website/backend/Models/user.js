@@ -60,7 +60,7 @@ UserSchema.pre("save" , async function (next) {
     next() ;
 
 })
-
+ 
 
 UserSchema.methods.generateJwtFromUser  = function(){
     

@@ -1,4 +1,4 @@
-const {Schema, model} = require("mongoose")
+const { Schema, model } = require("mongoose")
 const { schema } = require("./user")
 
 const classSchema = new Schema({
@@ -12,15 +12,16 @@ const classSchema = new Schema({
         ref: "teacher",
         required: true
     },
-    students:{
-        type: [Schema.Types.ObjectId],
+    students: [{
+        type: Schema.Types.ObjectId,
         ref: "student"
-    },
-    totalStudent:{
-        type: Number,
-        trim: true
-    }
-}, {timestamps: true})
+    }],
+    teachers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "teacher"
+        }]
+}, { timestamps: true })
 
 const Class = model("class", classSchema)
 module.exports = Class
